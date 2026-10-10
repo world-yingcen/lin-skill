@@ -1,0 +1,4 @@
+interface:
+  display_name: "LIN 網頁切版與校稿"
+  short_description: "依 LIN 的 HTML、SCSS 與 JavaScript 規範完成網頁切版、共用元件及視覺校稿"
+  default_prompt: "使用 $lin-frontend，先讀目前工程與設計依據，再依 LIN 切版規範完成這次實作及校稿。"
