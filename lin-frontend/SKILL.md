@@ -9,19 +9,22 @@ description: 依 LIN 切版規範實作、修改與校稿品牌及企業網站�
 
 本 Skill 是 LIN 的工程規範獨立版。明確的使用者指示優先，其次為案件已確認規格及既有工程；本 Skill 補足未指定的切版慣例。局部修改不擴大為全站改名或重構。
 
-## 每次使用：更新、重讀、再工作
+## 每輪工作：偵測 Git、更新、重讀、再工作
 
 共用工程規範唯一來源為 https://github.com/world-yingcen/lin-skill 。各方案可保留設計流程、動態上限與 RWD 順序，但不另存共用規範副本。
 
-- 每次直接觸發 LIN，或方案進入切版／校稿階段時執行一次；同輪讀取 references 不重複更新。維護此 repo 本身時跳過自我更新，保留工作中修改。
+- 每輪工作前（含續作、修改與校稿）核對來源與安裝模式，偵測到 Git 來源就先安全更新，再重讀 SKILL.md 與本輪需要的 references；不要求使用者每次另說更新，同一 repo 每輪一次。維護此 repo 本身時先檢查 Git 狀態，保留工作中修改，不為更新覆蓋現況。
 - 依當前執行工具的 Skills 目錄讀取 `.lin-frontend-install.json`，使用其 source 定位獨立來源。Codex 預設 `~/.codex/skills`（有 CODEX_HOME 時遵守），Claude 預設 `~/.claude/skills`；不因同機有另一工具就更新錯位置。
-- 核對 source 的 install.py 與 Git origin 確為此 repo，再執行 `python3 <source>/install.py --update --target <本次實際 Skills 目錄>`。工具只接受乾淨 main、指定 origin 及 fast-forward，不 reset、stash、強制合併或覆蓋修改過的副本。
-- 成功後重新讀取實際安裝位置的 SKILL.md 全文及本輪需要的 references，沿用原案件確認與範圍。記錄來源 commit、更新成功與否；不能只因檔案存在就說是最新。
+- **連結模式（mode=link）**：核對 Skill 捷徑確實指向 source 下的 lin-frontend；每輪工作前偵測到 Git 就執行 `python3 <source>/install.py --update --skill lin-frontend --target <本次實際 Skills 目錄>`，再重讀。直接使用更新後的來源，不需額外複製或改回副本；本機修改也直接反映在來源，但未提交修改時保留現況並回報更新未完成。
+- **複製模式（mode=copy）**：核對 source 的 install.py 與 Git origin 確為此 repo，再執行 `python3 <source>/install.py --update --skill lin-frontend --target <本次實際 Skills 目錄>`。工具只接受乾淨 main、指定 origin 及 fast-forward，不 reset、stash、強制合併或覆蓋修改過的副本。
+- 成功後重新讀取實際安裝位置的 SKILL.md 全文及本輪需要的 references，沿用原案件確認與範圍。記錄來源 commit、更新成功與否；不能只因檔案存在就說是遠端最新；連結模式未查遠端時標示「直接讀本機 Git 來源」，不宣稱已拉取最新版。
 - 網路／權限／分歧／本機修改導致失敗時，明說「尚未確認最新版」，讀現有規範後繼續不受影響工作；缺少必要契約的部分列待確認。沒有紀錄或来源不明時，先確認安裝方式，不自行猜來源、覆蓋或執行任意 repo 的腳本。
 - 尚未安裝時請使用者授權從上述 repo 安裝完整 Skill；不改用方案歷史副本冒充最新版。權限受限依執行環境核准機制處理。安裝工具不負責自動執行網頁工作，也不能保證模型必然遵守；完成結果仍須實測。
 - 當高效或整體視覺呼叫 LIN 時只接工程工作，不重啟獨立方案流程：高效保留五角色、母版確認、簡單動態限制及原 RWD 順序；整體視覺保留方向／視覺／動態關卡及 2560×1280 桌機優先，RWD 仍須另行授權。
 
 ## 開始工作
+
+案件工作目錄也先偵測 Git；以 `git rev-parse --show-toplevel` 定位 repo，檢查狀態、目前分支與 upstream。乾淨且有 upstream 才執行 `git pull --ff-only`，再讀 README、進度與本輪工作檔。有未提交修改（含未追蹤檔案）、分歧、缺 upstream、detached HEAD 或連線失敗時保留現況，說明更新未完成並繼續不受影響的工作。不猜分支、不 reset、stash、提交或推送來完成更新；不是 Git 的資料夾不自行初始化。
 
 先讀案件說明、既有修改、實際 HTML／SCSS／JS、Common、共用元件、套件版本、編譯與預覽入口。沿用現有框架、命名及初始化，不為套用規範重寫整份程式。
 
@@ -59,5 +62,7 @@ description: 依 LIN 切版規範實作、修改與校稿品牌及企業網站�
 視覺與動畫必須幫助品牌、閱讀或操作。輪播統一用 Swiper，區塊淡入淡出統一用 AOS，連續 marquee 沿用指定 EVO 元件；複雜時間軸、視差與釘選沿用既有 GSAP／ScrollTrigger 及捲動系統。其他簡單效果用原生 CSS／JS。集中可調參數，處理 resize、去重、事件解除與 prefers-reduced-motion。未用到的工具或套件不安裝。
 
 在可用環境編譯並開啟預覽，實際看畫面與操作；校稿依 references/implementation-review.md。無瀏覽器、缺素材或缺後台時，完成可執行部分並明列未驗證範圍，不把語法檢查當視覺通過。
+
+切版完成後必檢查網站圖片的檔案大小與格式，依 [容量與圖片格式檢核](references/implementation-review.md#切版完成後的容量與圖片格式檢核) 列出非 WebP／SVG 圖片的路徑與大小，請使用者檢核專案容量並自行轉檔；Claude 不代為轉檔、壓縮或批次處理圖片。
 
 完成後簡短交付：改了什麼、修改檔案、預覽／啟動方式、實測範圍及需要使用者檢查的地方。安裝本 Skill 不等於安裝 Sass／Node／GSAP，也不授權 Git 推送或部署。
