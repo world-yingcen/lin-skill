@@ -42,7 +42,7 @@ description: 依 LIN 切版規範實作、修改與校稿品牌及企業網站�
 
 HTML 的 `<header>` 標籤只用於全站 Navi／主要導覽；其他區塊、內頁標題、卡片與搜尋結果標題區一律不用 `<header>`，改用保留原 class 的 `<div>` 等容器。詳見 [HTML／SCSS](references/html-css-rules.md#t04html命名與語意)，校稿時須檢查。
 
-每個完整頁面必須有且只有一個 `<h1>`；`<h2>`～`<h6>` 依內容父子關係逐層安排，不往下跳級、不用標題標籤控制字級。校稿以共用元件及 JS 載入後的完整 DOM 核對，詳見 [HTML／SCSS](references/html-css-rules.md)。
+**公司內部規定：每個完整頁面必須有且只有一個 `<h1>`**，不是 Google 的排名硬性要求；`<h2>`～`<h6>` 依內容父子關係逐層安排，不往下跳級、不用標題標籤控制字級。校稿以共用元件及 JS 載入後的完整 DOM 核對，詳見 [HTML／SCSS](references/html-css-rules.md)。
 
 ## 按需讀取規範
 
@@ -51,6 +51,7 @@ HTML 的 `<header>` 標籤只用於全站 Navi／主要導覽；其他區塊、�
 | 任務 | 必讀 |
 |---|---|
 | HTML、SCSS、Common、命名、版面與互動狀態 | [HTML／SCSS](references/html-css-rules.md) |
+| 每頁 title、描述、標題、圖片、連結與載入效能 | [切版端 SEO 責任](references/frontend-seo.md) |
 | JavaScript、Swiper、AOS、GSAP 初始化與清理 | [JavaScript](references/javascript-rules.md) |
 | EVO 第三方套件載入、data-vendor、Lenis 開放狀態 | [系統套件載入契約](references/evo-vendor-libraries.md) |
 | Header、Footer、Nav、內頁與平台功能 | [共用頁面](references/shared-page-rules.md) |
@@ -72,5 +73,7 @@ HTML 的 `<header>` 標籤只用於全站 Navi／主要導覽；其他區塊、�
 在可用環境編譯並開啟預覽，實際看畫面與操作；校稿依 references/implementation-review.md。無瀏覽器、缺素材或缺後台時，完成可執行部分並明列未驗證範圍，不把語法檢查當視覺通過。
 
 切版完成後必檢查網站圖片的檔案大小與格式，依 [容量與圖片格式檢核](references/implementation-review.md#切版完成後的容量與圖片格式檢核) 列出非 WebP／SVG 圖片的路徑與大小，請使用者檢核專案容量並自行轉檔；Claude 不代為轉檔、壓縮或批次處理圖片。
+
+切版與交付前必依 [切版端 SEO 責任](references/frontend-seo.md) 逐頁檢查 title、描述、標題層級、圖片、連結與載入效能，列明已完成及工程師待確認項目。
 
 完成後簡短交付：改了什麼、修改檔案、預覽／啟動方式、實測範圍及需要使用者檢查的地方。安裝本 Skill 不等於安裝 Sass／Node／GSAP，也不授權 Git 推送或部署。
