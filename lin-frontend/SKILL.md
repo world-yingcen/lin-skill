@@ -32,6 +32,8 @@ description: 依 LIN 切版規範實作、修改與校稿品牌及企業網站�
 
 預計使用 EVO 後台的案件，切版前必讀 [EVO 範本查核](references/evo-preflight.md)。由 AI 查工程師套件，在切版時同步實作已核對的逐筆編輯結構與欄位標記，不只列成後續轉檔待辦；同一份來源仍提供完整靜態校稿與互動。設計師不用判斷技術標記；缺契約逐區列待確認。工程師後續處理匯入、必要接入及編輯／儲存／發布驗證，不自動啟動匯入或打包。
 
+每個案件都要有搜尋結果頁，首次網站製作時納入必備頁面，不能只做 Header 搜尋按鈕。製作前必讀 [搜尋頁指定參考](references/evo-search-reference.md)，沿用已核對結構，樣式配合本案首頁；既有案局部修正若尚未有搜尋頁，列為待補項目，不因局部修正擅自重做整站。
+
 設計稿是主要視覺依據。核對容器、區塊高度、留白、字型與字重、行高、圖片比例與裁切、對齊及互動狀態；有 Figma 或參考圖時實看，不憑文字印象還原。字型需確認實際載入，缺檔或暫代素材如實標記。
 
 尺寸、頁面、RWD、功能及交付方式依本案要求，不固定 2560×1280。完整網站任務須涵蓋 desktop、tablet、mobile；使用者明確限定桌機／區塊時依範圍執行。局部修改保留既有 responsive，檢查可能受影響的斷點，不藉此另設整套手機版。
@@ -51,6 +53,7 @@ description: 依 LIN 切版規範實作、修改與校稿品牌及企業網站�
 | 連續 marquee | [marquee 指定參考](references/evo-marquee-reference.md) |
 | 內頁 breadcrumb | [breadcrumb001 指定參考](references/evo-breadcrumb-reference.md) |
 | FAQ | [tpl-faq001 指定參考](references/evo-faq-reference.md) |
+| 每案必備搜尋頁、Header 搜尋導向與結果狀態 | [搜尋頁指定參考](references/evo-search-reference.md) |
 | 開始修改、共用影響檢查與交付校稿 | [實作與校稿](references/implementation-review.md) |
 
 規範是工程約定，不能代替品牌構圖或素材。EVO 的 container、系統選單與版權列規定依對應文件適用範圍執行；其他框架不捏造 EVO 元件或後台資料綁定。

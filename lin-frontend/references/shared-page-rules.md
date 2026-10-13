@@ -10,6 +10,8 @@ EVO 選單、root、漢堡、按鈕與語系以使用者指定的 [evo266200 Hea
 
 內頁麵包屑以 [evo263525 breadcrumb001 參考](evo-breadcrumb-reference.md) 為工程依據，保留其語意結構、class、data 屬性與目前頁標示，集中管理內頁共用樣式。
 
+每個案件都要完成搜尋結果頁，與共用 Header／Footer、Cookie 提示及隱私權政策頁一起納入首次網站製作的頁面清單。結構統一依 [evo266200 搜尋頁指定參考](evo-search-reference.md)，製作前必讀；搜尋入口必須連到本案搜尋頁，不能只有按鈕或空連結。樣式沿用本案首頁與共用變數，正式搜尋資料由本案平台提供。
+
 FAQ 以 [禾雅 tpl-faq001 參考](evo-faq-reference.md) 為工程依據，沿用原生 details／summary 收合、Q 標記與資料契約，樣式配合本案首頁。
 
 首內頁在對應位置使用以下共用載入容器，每頁各一個：
