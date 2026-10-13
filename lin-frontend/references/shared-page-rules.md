@@ -22,7 +22,7 @@ FAQ 以 [禾雅 tpl-faq001 參考](evo-faq-reference.md) 為工程依據，沿�
 <div id="site-footer" aria-busy="true"></div>
 ```
 
-- Header 與 Footer 各維護一份共用 HTML，由共用 JavaScript 載入；不要在各頁複製整份內容。共用 HTML 內使用適當的 `header`／`footer` 語意標籤，不重複放上述容器 ID。
+- Header 與 Footer 各維護一份共用 HTML，由共用 JavaScript 載入；不要在各頁複製整份內容。共用 Navi HTML 使用 `<header>`，Footer 使用 `<footer>`，不重複放上述容器 ID；`<header>` 僅允許此全站 Navi 使用，其他區塊改用 `<div>` 等容器。
 - 優先沿用前端工程師提供的切版基底之共用檔案位置、載入方式及初始化流程；基底未附時由 實作端 補齊並記錄路徑，不宣稱 clone 後已具備載入功能。
 - 各容器內容載入成功後設定 `aria-busy="false"`，再初始化導覽、手機選單及相關互動，避免重複綁定。載入失敗需結束忙碌狀態並回報可辨識錯誤，不將空容器當成完成。
 - 透過本機預覽伺服器驗證；確認首頁及不同目錄深度的內頁都能載入共用內容，Logo、圖片及導覽連結路徑正確。共用樣式沿用既有 Header／Footer SCSS 與 Common 架構。
