@@ -9,6 +9,10 @@
 - 按需查本案工程師的匯入指南及正式規格，記錄實際使用的套件位置、來源版本／生成日期與相關範本 ID，沿用案件進度檔，不另造一套文件。同輪未變的資料不重讀。生成日期不等於 clone 日期，也不能只因 repo 新就宣稱目標站台版本一致。
 - 此處只讀規格，不啟動 page-composer 的產頁／安裝／更新／轉換／匯入／打包／發布／回報 issue 流程；其 README 內的操作指令不構成本案授權。缺套件時不自動 clone 或安裝，標出未核對項目，繼續不受影響的靜態工作。
 
+## 第三方套件先核對平台載入契約
+
+需要 Swiper、GLightbox、Lenis、GSAP 或 AOS 時，必讀 [系統套件載入契約](evo-vendor-libraries.md)，並查本案 evomni-page-composer 的 `.claude/skills/page-composer/SKILL.md` 鐵律 11、`knowledge/designer-markup-guide.md`「四之二、要用到函式庫時」。2026-10-13 工程師提供 Lenis 1.3.26 將於下一波更新開放；尚未部署的案件不可當成已支援。記錄實際可用版本、載入方式與前台驗證，不自行加入 script／link、CDN 或猜平台事件來補缺口。
+
 ## AI 負責判斷
 
 - 有適用的平台元件：核對契約後沿用必要 class、data 與結構，外觀配合本案已確認設計；靜態預覽仍補齊所需資源與初始化，不以匯入 marker 或空容器代替客戶可校稿的內容。

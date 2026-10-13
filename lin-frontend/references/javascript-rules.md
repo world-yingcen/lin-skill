@@ -4,6 +4,8 @@
 
 ## T10｜JavaScript 結構與初始化
 
+EVO 平台案件使用第三方套件前，必讀 [系統套件載入契約](evo-vendor-libraries.md)：Swiper／GLightbox／Lenis 使用已核對的 data-vendor 宣告，GSAP／AOS 由編輯器工具列啟用，不自行加套件 script／link 或 CDN。Lenis 尚待系統更新，先確認本案版本支援，不預設已可用；非 EVO 工程沿用案件既有載入方式。
+
 - 沿用案件既有套件版本與載入方式；一般簡單功能可由原生 JavaScript 完成時，不額外加入大型套件。輪播統一依 T11 使用 Swiper，網站區塊淡入淡出統一使用 AOS。
 
 - 切版時就按用途拆分 JavaScript：`js/header.js` 負責選單、漢堡、語系等 Header 互動；`js/footer.js` 負責 Footer 互動、回頂部及全站共用初始化。檔名表示程式分工，footer.js 可控制整個頁面，不限 Footer 元素。
@@ -19,7 +21,7 @@
 - 禁止 eval、new Function、inline on*、javascript: URL 及未限縮範圍的全域 DOM 操作。一般外觀與互動狀態以 class 控制，樣式集中在 SCSS。
 - 需要依實際內容或畫面即時計算的尺寸、位置，可由 JavaScript 設定 element.style，例如依內容計算展開高度；註明用途，尺寸或狀態改變時更新，結束使用時清理自身設定，避免留下過期值。不要用行內樣式取代一般 SCSS。
 - Swiper 等套件自行產生的必要行內樣式正常保留，不任意清除；需要重建或移除元件時依套件生命週期處理，不把執行中產生的樣式抄回 HTML 原始檔。
-- 預覽保留實際需要的 CSS／JS 載入，套件先於初始化程式。來源與版本沿用案件。
+- 獨立靜態預覽沿用案件已核對的 CSS／JS 與套件環境，套件先於初始化程式；預覽專用引用不混入 EVO 匯入版型。EVO 套件改由系統 vendor 宣告／編輯器工具列載入，不自行加 script／link。來源與版本依本案實際契約。
 - 有 Node 時對修改的 JS 執行 `node --check`；工具缺少要記未驗證，不能當成通過。語法檢查後仍須實際操作與查 console。
 
 ## T11｜Swiper、AOS 與網站動態

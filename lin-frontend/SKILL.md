@@ -50,6 +50,7 @@ HTML 的 `<header>` 標籤只用於全站 Navi／主要導覽；其他區塊、�
 |---|---|
 | HTML、SCSS、Common、命名、版面與互動狀態 | [HTML／SCSS](references/html-css-rules.md) |
 | JavaScript、Swiper、AOS、GSAP 初始化與清理 | [JavaScript](references/javascript-rules.md) |
+| EVO 第三方套件載入、data-vendor、Lenis 開放狀態 | [系統套件載入契約](references/evo-vendor-libraries.md) |
 | Header、Footer、Nav、內頁與平台功能 | [共用頁面](references/shared-page-rules.md) |
 | EVO 選單、漢堡、按鈕、語系 | [Header 指定參考](references/evo-header-reference.md) |
 | 連續 marquee | [marquee 指定參考](references/evo-marquee-reference.md) |
