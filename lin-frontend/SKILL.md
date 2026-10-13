@@ -42,6 +42,8 @@ description: 依 LIN 切版規範實作、修改與校稿品牌及企業網站�
 
 HTML 的 `<header>` 標籤只用於全站 Navi／主要導覽；其他區塊、內頁標題、卡片與搜尋結果標題區一律不用 `<header>`，改用保留原 class 的 `<div>` 等容器。詳見 [HTML／SCSS](references/html-css-rules.md#t04html命名與語意)，校稿時須檢查。
 
+每個完整頁面必須有且只有一個 `<h1>`；`<h2>`～`<h6>` 依內容父子關係逐層安排，不往下跳級、不用標題標籤控制字級。校稿以共用元件及 JS 載入後的完整 DOM 核對，詳見 [HTML／SCSS](references/html-css-rules.md)。
+
 ## 按需讀取規範
 
 涉及下列項目時完整讀取對應文件；同輪未變的文件不用重讀。
