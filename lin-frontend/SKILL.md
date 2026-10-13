@@ -61,6 +61,7 @@ HTML 的 `<header>` 標籤只用於全站 Navi／主要導覽；其他區塊、�
 | FAQ | [tpl-faq001 指定參考](references/evo-faq-reference.md) |
 | 每案必備搜尋頁、Header 搜尋導向與結果狀態 | [搜尋頁指定參考](references/evo-search-reference.md) |
 | 開始修改、共用影響檢查與交付校稿 | [實作與校稿](references/implementation-review.md) |
+| 切版完成、功能修改後與交付工程師 | [工程師交接說明](references/engineer-handoff.md) |
 
 規範是工程約定，不能代替品牌構圖或素材。EVO 的 container、系統選單與版權列規定依對應文件適用範圍執行；其他框架不捏造 EVO 元件或後台資料綁定。
 
@@ -75,5 +76,7 @@ HTML 的 `<header>` 標籤只用於全站 Navi／主要導覽；其他區塊、�
 切版完成後必檢查網站圖片的檔案大小與格式，依 [容量與圖片格式檢核](references/implementation-review.md#切版完成後的容量與圖片格式檢核) 列出非 WebP／SVG 圖片的路徑與大小，請使用者檢核專案容量並自行轉檔；Claude 不代為轉檔、壓縮或批次處理圖片。
 
 切版與交付前必依 [切版端 SEO 責任](references/frontend-seo.md) 逐頁檢查 title、描述、標題層級、圖片、連結與載入效能，列明已完成及工程師待確認項目。
+
+切版完成後必須建立或更新本案唯一的 `工程師交接說明.md`，依 [交接規範](references/engineer-handoff.md) 整理實際檔案、功能注意事項、後台可編輯需求、待串接及驗收狀態；功能或資源改動後同步更新，回報文件位置，不只留在聊天裡。
 
 完成後簡短交付：改了什麼、修改檔案、預覽／啟動方式、實測範圍及需要使用者檢查的地方。安裝本 Skill 不等於安裝 Sass／Node／GSAP，也不授權 Git 推送或部署。
