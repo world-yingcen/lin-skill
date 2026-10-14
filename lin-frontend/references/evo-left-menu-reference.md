@@ -1,12 +1,12 @@
 # EVO 產品分類選單｜left_menu001
 
-指定參考：[evo265987 產品分類頁](http://192.168.168.99/php83/sites/evo265987/public/zh-tw/product/category/product-uhh449fi?via=21)。沿用系統 `left_menu001` 的 HTML 與操作，**CSS 可依案件調整，公版 HTML／JS 不可修改**。不為恢復桌機外觀而換回舊結構或另寫選單 JS。
+指定參考：[evo265987 產品分類頁](http://192.168.168.99/php83/sites/evo265987/public/zh-tw/product/category/product-uhh449fi?via=21)。沿用系統 `left_menu001` 的 HTML 與操作，**桌機外觀可依案件調整，手機版下拉的操作邏輯是公版，不可改寫或另綁一套事件**；保留原生下拉所需結構與識別。詢問車／搜尋頁的 HTML／JS 不可修改限制，不擴及整個產品頁或所有分類選單排版。不為恢復桌機外觀而換回舊結構或另寫選單 JS。
 
 ## 原生結構與操作
 
 已核對來源包含 `data-template-id="left_menu001"`、`data-component="left-menu"`、`.tpl-leftmenu001-container`、`.tpl-leftmenu001-dropdown-trigger`／`.tpl-leftmenu001-dropdown-label`、`.tpl-leftmenu001-title`、`.tpl-leftmenu001-item`／`.tpl-leftmenu001-link`／`.tpl-leftmenu001-toggle`、`.tpl-leftmenu001-submenu-item`／`.tpl-leftmenu001-submenu-link`；保留原生 data-param、狀態 class 與連結。實例 class、分類 ID 與路由由本案平台提供，不複製參考值。
 
-分類文字負責導頁，箭頭獨立展開子分類；下拉標籤顯示目前分類，無子分類不顯示箭頭。這些操作由原生系統負責，若本案版本不符，記錄差異交工程師，不改 HTML／JS 補做。
+分類文字負責導頁，箭頭獨立展開子分類；下拉標籤顯示目前分類，無子分類不顯示箭頭。這些操作由原生系統負責，若本案版本不符，記錄差異交工程師，不改寫手機版下拉公版邏輯或另綁事件補做。
 
 ## 案件 CSS
 

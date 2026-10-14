@@ -1,6 +1,6 @@
 # 每案必備搜尋頁｜evo266200 指定參考
 
-每個案件都要有搜尋結果頁，首次網站製作就納入必備頁面與校稿，不只做 Header 搜尋入口。使用者於 2026-10-13 指定依照 [evo266200 搜尋頁](http://192.168.168.99/php83/sites/evo266200/public/zh-TW/search?keyword=%E9%9B%BB%E6%A2%AF) 的結構；**搜尋結果區是 EVO 系統共用頁，HTML 結構與 CSS 都要與指定參考一致，不做品牌版型轉譯。** 只替換本案搜尋資料、圖片、連結、keyword 與筆數；共用 Header／Footer 使用本案版本。系統搜尋區的布局、字級、對齊、間距、卡片外觀與斷點原樣保留，RWD 驗收範圍依案件約定。
+每個案件都要有搜尋結果頁，首次網站製作就納入必備頁面與校稿，不只做 Header 搜尋入口。使用者於 2026-10-13 指定依照 [evo266200 搜尋頁](http://192.168.168.99/php83/sites/evo266200/public/zh-TW/search?keyword=%E9%9B%BB%E6%A2%AF) 的結構；**搜尋結果區是 EVO 系統共用頁，公版 HTML／JS 不可修改；CSS 可以依案件確認需求調整。** 只替換本案搜尋資料、圖片、連結、keyword 與筆數；共用 Header／Footer 使用本案版本。未指定 CSS 調整時，系統搜尋區的布局、字級、對齊、間距、卡片外觀與斷點忠實沿用參考；有確認調整時記錄差異，RWD 驗收範圍依案件約定。
 
 ## 已核對來源
 
@@ -11,7 +11,7 @@
 - 直接沿用下列系統結果區 HTML，保留 `#search-result > .page-container.search-result`、關鍵字標題、筆數、結果清單、卡片與空狀態。標題保留 `"關鍵字" 的搜尋結果`，不得改成品牌標語或「搜尋你喜歡的設計」。
 - 不加入參考沒有的站內搜尋小標、頁面內搜尋表單、Hero／Banner、頁籤或裝飾；搜尋輸入沿用共用 Header。不得新增 `.search-page`、`.section-spacing`、`.container-85` 等改變系統容器的 class，或使用通用品牌標題／卡片樣式取代系統樣式。
 - 靜態示範／未串接狀態記在交付文件或回報，不把「靜態預覽」說明塞進正式搜尋結果區，改變參考版面。
-- CSS 以本文件附帶的原始檔為唯一固定基準。不要只沿用 class 卻重新寫一套置中大標題、搜尋框、漸層背景、圓角陰影卡片或不同 gap 的 CSS。
+- CSS 以本文件附帶的原始檔為來源基準；可另加案件已確認的 CSS 調整，保留來源檔與原生選擇器，不改公版 HTML／JS。不要只沿用 class 卻重新寫一套置中大標題、搜尋框、漸層背景、圓角陰影卡片或不同 gap 的 CSS。
 
 ## 結果頁結構
 
@@ -90,9 +90,9 @@
 
 ## 樣式與搜尋入口
 
-- 將 [系統搜尋 CSS](../assets/search/search.css) 原樣複製至本案搜尋頁資源位置並實際載入，保留全部 selector、宣告、media query、系統 `--search-result-*` 預設值及後載入的系統搜尋覆寫；不得為配合首頁另外改寫、覆寫或追加搜尋頁皮膚。需配合既有資源管線時，確認編譯輸出與原始 CSS 的搜尋樣式完全等效。
+- 將 [系統搜尋 CSS](../assets/search/search.css) 原樣複製至本案搜尋頁資源位置並實際載入，保留全部 selector、宣告、media query、系統 `--search-result-*` 預設值及後載入的系統搜尋覆寫；可在基準之後載入案件已確認的 CSS 調整，不直接修改來源檔或公版 HTML／JS；未指定調整時不得自行重新設計。需配合既有資源管線時，確認基準樣式保真、案件調整按預期生效。
 - 參考容器為 `width: var(--ContainerDefaultWidth)`、`max-width: calc(95% - 30px)`，padding 為 `calc(var(--NaviHeight, 80px) * 2) 0 var(--SectionPadding, 80px)`；標題區靠左且有底線。清單三欄、1200px 以下兩欄、768px 以下一欄，gap 為 `3rem var(--search-result-gap)`，圖片 1:1，摘要最多三行。不得改成其他 Common 容器或品牌卡片比例。
-- 原始 CSS 已使用的 `--ContainerDefaultWidth`、`--NaviHeight`、`--SectionPadding` 與按鈕等系統共用變數，沿用本案既有值；不額外加入品牌覆寫。若全站 Common 的 h1、a、卡片或 section 規則污染搜尋區，修正載入順序或造成污染的 selector，使系統搜尋 CSS 生效，不以另加一套覆寫樣式掩蓋。
+- 原始 CSS 已使用的 `--ContainerDefaultWidth`、`--NaviHeight`、`--SectionPadding` 與按鈕等系統共用變數，沿用本案既有值；額外外觀覆寫須符合本案已確認需求並記錄來源。若全站 Common 的 h1、a、卡片或 section 規則污染搜尋區，修正載入順序或造成污染的 selector，使系統搜尋 CSS 生效，不以未經案件確認的另一套樣式掩蓋。
 - Header 搜尋入口沿用本案 [Header 指定參考](evo-header-reference.md)。來源使用 `header_search_full`、`data-component="search"`、`data-scope="global"`、`data-search-url-base` 及既有 toggle／search-panel／search-input／submit／close 契約；搜尋目標改成本案路徑，保留 `keyword` 查詢參數與 URL 編碼。不能把內網 IP、evo266200 或參考站語系寫死到其他案。
 - 靜態預覽提供可操作入口與明確標示的示範資料，可使用 `search.html?keyword=...`；正式 EVO 沿用平台的 `/{locale}/search?keyword=...` 及資料來源。使用既有初始化，不另寫重複搜尋處理器；顯示關鍵字時以文字方式輸出，不把使用者輸入當 HTML。
 - 來源 CSS 有 tabs 相關樣式，但此次回應未輸出頁籤或分頁；不可只憑 CSS 自行加入功能或宣稱已核對其後台契約。追蹤碼與平台 API 也不因參考 HTML 出現就自動跨案新增。
@@ -118,7 +118,7 @@
 
 ## 交付檢查
 
-完成前必須用相同 viewport 與同類資料狀態，對照指定參考與本案搜尋結果區：容器、標題位置與比例、底線、筆數、欄數與 gap、圖片比例、卡片邊框／陰影、更多連結及空狀態都須一致。逐項查 DOM、CSS 載入與 computed style；只有結構相同或功能可用不算通過。不能因風格符合首頁就判定搜尋頁合格；未實際對照畫面則明列視覺待驗。
+完成前必須用相同 viewport 與同類資料狀態，對照指定參考與本案搜尋結果區：容器、標題位置與比例、底線、筆數、欄數與 gap、圖片比例、卡片邊框／陰影、更多連結及空狀態依系統基準核對；有已確認 CSS 調整的項目依案件確認值驗收並記錄差異。逐項查 DOM、CSS 載入與 computed style；只有結構相同或功能可用不算通過。不能因風格符合首頁就判定搜尋頁合格；未實際對照畫面則明列視覺待驗。
 
 搜尋頁列入案件頁面清單與工程師交付對照表，記錄預覽入口、SCSS／CSS、必要 JS 與正式串接狀態。實測搜尋開關、Enter／送出、中文及特殊字元 keyword、結果筆數、文章／產品卡片、無圖、無結果、返回首頁與共用導覽；空白 keyword 依本案既有平台規則處理，不自造結果。檢查本案範圍內的 RWD 與鍵盤操作。缺正式資料或平台環境時明列「靜態示範／整合後待驗」，不把校稿通過當成正式全站搜尋已完成。
 
