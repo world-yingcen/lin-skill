@@ -38,6 +38,8 @@ description: 依 Lin-EVO 切版規範實作、修改與校稿品牌及企業網�
 
 尺寸、頁面、RWD、功能及交付方式依本案要求，不固定 2560×1280。完整網站任務須涵蓋 desktop、tablet、mobile；使用者明確限定桌機／區塊時依範圍執行。局部修改保留既有 responsive，檢查可能受影響的斷點，不藉此另設整套手機版。
 
+HTML、CSS、JavaScript 與互動套件的寫法，以過去五年內發行且仍屬大眾使用範圍的 Chrome、Edge、Firefox、Safari 與 iOS Safari 可穩定支援為基準；案件既有 browser support／Browserslist 或平台契約更嚴格時，以較嚴格者為準。不把實驗性、需旗標開啟或支援仍不完整的功能當成唯一實作；確有需要時先查相容性，並提供不影響內容閱讀與主要操作的 fallback 或漸進增強。不得只因最新版瀏覽器可用就宣稱相容性完成，交付時記錄實際測試的瀏覽器與版本。
+
 資訊足夠就直接做；小幅不確定先依現況判斷。只有選擇會改變已確認設計、重大架構或不可逆結果時才提出具體方案請使用者決定，已有授權不重問。
 
 HTML 的 `<header>` 標籤只用於全站 Navi／主要導覽；其他區塊、內頁標題、卡片與搜尋結果標題區一律不用 `<header>`，改用保留原 class 的 `<div>` 等容器。詳見 [HTML／SCSS](references/html-css-rules.md#t04html命名與語意)，校稿時須檢查。
