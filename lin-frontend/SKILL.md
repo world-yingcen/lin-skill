@@ -44,6 +44,8 @@ HTML 的 `<header>` 標籤只用於全站 Navi／主要導覽；其他區塊、�
 
 **公司內部規定：每個完整頁面必須有且只有一個 `<h1>`**，不是 Google 的排名硬性要求；`<h2>`～`<h6>` 依內容父子關係逐層安排，不往下跳級、不用標題標籤控制字級。校稿以共用元件及 JS 載入後的完整 DOM 核對，詳見 [HTML／SCSS](references/html-css-rules.md)。
 
+詢問車為不可改動的 EVO 公版功能；有使用需求時必依 [指定功能架構](references/evo-inquiry-cart-reference.md) 沿用產品加入、Header 清單、確認頁與原生表單，不自行重做功能或資料保存。
+
 ## 按需讀取規範
 
 涉及下列項目時完整讀取對應文件；同輪未變的文件不用重讀。
@@ -61,6 +63,7 @@ HTML 的 `<header>` 標籤只用於全站 Navi／主要導覽；其他區塊、�
 | 內頁 breadcrumb | [breadcrumb001 指定參考](references/evo-breadcrumb-reference.md) |
 | FAQ | [tpl-faq001 指定參考](references/evo-faq-reference.md) |
 | 每案必備搜尋頁、Header 搜尋導向與結果狀態 | [搜尋頁指定參考](references/evo-search-reference.md) |
+| 產品加入詢問車、Header 清單、詢問表單 | [系統公版詢問車](references/evo-inquiry-cart-reference.md) |
 | 開始修改、共用影響檢查與交付校稿 | [實作與校稿](references/implementation-review.md) |
 | 切版完成、功能修改後與交付工程師 | [工程師交接說明](references/engineer-handoff.md) |
 
