@@ -1,26 +1,26 @@
 ---
-name: lin-frontend
-description: 依 LIN 切版規範實作、修改與校稿品牌及企業網站的 HTML、SCSS、JavaScript、Swiper 與共用頁面，適用 Figma／設計稿轉網頁及既有前端修正。依案件決定尺寸與 RWD 範圍；不啟動品牌提案、Eagle 整理或整體視覺方案確認流程。
+name: Lin-EVO
+description: 依 Lin-EVO 切版規範實作、修改與校稿品牌及企業網站的 HTML、SCSS、JavaScript、Swiper 與共用頁面，適用 Figma／設計稿轉網頁及既有前端修正。依案件決定尺寸與 RWD 範圍；不啟動品牌提案、Eagle 整理或整體視覺方案確認流程。
 ---
 
-# LIN 網頁切版與校稿
+# Lin-EVO 網頁切版與校稿
 
 把使用者視為網頁設計師／前端實作者。以繁體中文與台灣用語溝通，先做出完整可用的授權成果，再討論細節；說明問題時直接給可執行的修正。
 
-本 Skill 是 LIN 的工程規範獨立版。明確的使用者指示優先，其次為案件已確認規格及既有工程；本 Skill 補足未指定的切版慣例。局部修改不擴大為全站改名或重構。
+本 Skill 是 Lin-EVO 的工程規範獨立版。明確的使用者指示優先，其次為案件已確認規格及既有工程；本 Skill 補足未指定的切版慣例。局部修改不擴大為全站改名或重構。
 
 ## 每輪工作：偵測 Git、更新、重讀、再工作
 
 共用工程規範唯一來源為 https://github.com/world-yingcen/lin-skill 。各方案可保留設計流程、動態上限與 RWD 順序，但不另存共用規範副本。
 
 - 每輪工作前（含續作、修改與校稿）核對來源與安裝模式，偵測到 Git 來源就先安全更新，再重讀 SKILL.md 與本輪需要的 references；不要求使用者每次另說更新，同一 repo 每輪一次。維護此 repo 本身時先檢查 Git 狀態，保留工作中修改，不為更新覆蓋現況。
-- 依當前執行工具的 Skills 目錄讀取 `.lin-frontend-install.json`，使用其 source 定位獨立來源。Codex 預設 `~/.codex/skills`（有 CODEX_HOME 時遵守），Claude 預設 `~/.claude/skills`；不因同機有另一工具就更新錯位置。
-- **連結模式（mode=link）**：核對 Skill 捷徑確實指向 source 下的 lin-frontend；每輪工作前偵測到 Git 就執行 `python3 <source>/install.py --update --skill lin-frontend --target <本次實際 Skills 目錄>`，再重讀。直接使用更新後的來源，不需額外複製或改回副本；本機修改也直接反映在來源，但未提交修改時保留現況並回報更新未完成。
-- **複製模式（mode=copy）**：核對 source 的 install.py 與 Git origin 確為此 repo，再執行 `python3 <source>/install.py --update --skill lin-frontend --target <本次實際 Skills 目錄>`。工具只接受乾淨 main、指定 origin 及 fast-forward，不 reset、stash、強制合併或覆蓋修改過的副本。
+- 依當前執行工具的 Skills 目錄讀取 `.Lin-EVO-install.json`，使用其 source 定位獨立來源。Codex 預設 `~/.codex/skills`（有 CODEX_HOME 時遵守），Claude 預設 `~/.claude/skills`；不因同機有另一工具就更新錯位置。
+- **連結模式（mode=link）**：核對 Skill 捷徑確實指向 source 下的 Lin-EVO；每輪工作前偵測到 Git 就執行 `python3 <source>/install.py --update --skill Lin-EVO --target <本次實際 Skills 目錄>`，再重讀。直接使用更新後的來源，不需額外複製或改回副本；本機修改也直接反映在來源，但未提交修改時保留現況並回報更新未完成。
+- **複製模式（mode=copy）**：核對 source 的 install.py 與 Git origin 確為此 repo，再執行 `python3 <source>/install.py --update --skill Lin-EVO --target <本次實際 Skills 目錄>`。工具只接受乾淨 main、指定 origin 及 fast-forward，不 reset、stash、強制合併或覆蓋修改過的副本。
 - 成功後重新讀取實際安裝位置的 SKILL.md 全文及本輪需要的 references，沿用原案件確認與範圍。記錄來源 commit、更新成功與否；不能只因檔案存在就說是遠端最新；連結模式未查遠端時標示「直接讀本機 Git 來源」，不宣稱已拉取最新版。
 - 網路／權限／分歧／本機修改導致失敗時，明說「尚未確認最新版」，讀現有規範後繼續不受影響工作；缺少必要契約的部分列待確認。沒有紀錄或来源不明時，先確認安裝方式，不自行猜來源、覆蓋或執行任意 repo 的腳本。
-- 使用者已授權：本機缺少本輪需要的 Skill 時，從已確認來源直接安裝，不重複請示。LIN 從上述 repo 安裝完整 lin-frontend，只有 LIN 需求時指定 --skill lin-frontend；其他 Skill 使用本案已指定來源或可信安裝器。核對當前工具位置與安裝紀錄，只安裝相關 Skill 及必要依賴，同名不同來源或本機修改不覆蓋。缺來源／帳號／權限時列具體缺口；沒有本機操作能力的網頁／App 不假裝已安裝，改用已啟用 Skill 或提供上傳方式。此授權不擴大為安裝應用程式、JS 套件、工程工具庫或改系統權限；EVO 套件仍依 vendor 契約。安裝後驗證檔案與來源並重讀規範，需重新載入時如實告知，不把安裝成功當成已驗收。
-- 當高效或整體視覺呼叫 LIN 時只接工程工作，不重啟獨立方案流程：高效保留五角色、母版確認、簡單動態限制及原 RWD 順序；整體視覺保留方向／視覺／動態關卡及 2560×1280 桌機優先，RWD 仍須另行授權。
+- 使用者已授權：本機缺少本輪需要的 Skill 時，從已確認來源直接安裝，不重複請示。Lin-EVO 從上述 repo 安裝完整 Lin-EVO，只有 Lin-EVO 需求時指定 --skill Lin-EVO；其他 Skill 使用本案已指定來源或可信安裝器。核對當前工具位置與安裝紀錄，只安裝相關 Skill 及必要依賴，同名不同來源或本機修改不覆蓋。缺來源／帳號／權限時列具體缺口；沒有本機操作能力的網頁／App 不假裝已安裝，改用已啟用 Skill 或提供上傳方式。此授權不擴大為安裝應用程式、JS 套件、工程工具庫或改系統權限；EVO 套件仍依 vendor 契約。安裝後驗證檔案與來源並重讀規範，需重新載入時如實告知，不把安裝成功當成已驗收。
+- 當高效或整體視覺呼叫 Lin-EVO 時只接工程工作，不重啟獨立方案流程：高效保留五角色、母版確認、簡單動態限制及原 RWD 順序；整體視覺保留方向／視覺／動態關卡及 2560×1280 桌機優先，RWD 仍須另行授權。
 
 ## 開始工作
 

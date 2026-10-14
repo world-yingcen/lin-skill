@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install/update LIN and Miffy together, or one selected skill."""
+"""Install/update Lin-EVO and Miffy-EVO together, or one selected skill."""
 import argparse
 import hashlib
 import json
@@ -10,8 +10,10 @@ import subprocess
 import sys
 import tempfile
 
-MANIFEST = '.lin-frontend-install.json'
-SKILLS = ('lin-frontend', 'miffy')
+MANIFEST = '.Lin-EVO-install.json'
+SKILLS = ('Lin-EVO', 'Miffy-EVO')
+# Old names are only accepted for migration from previously managed installs.
+LEGACY = {'Lin-EVO': 'lin-frontend', 'Miffy-EVO': 'miffy'}
 
 
 def manifest_name(skill):
@@ -41,7 +43,7 @@ def git(root, *args):
                           capture_output=True, text=True, timeout=60).stdout.strip()
 
 
-def checked_manifest(root, base, adopt=False, skill='lin-frontend'):
+def checked_manifest(root, base, adopt=False, skill='Lin-EVO'):
     target = base / skill
     record = base / manifest_name(skill)
     info = json.loads(record.read_text()) if record.exists() else None
@@ -71,7 +73,7 @@ def update_source(root):
     if Path(git(root, 'rev-parse', '--show-toplevel')).resolve() != root.resolve():
         raise RuntimeError('必須使用獨立 lin-skill clone，不在案件或上層 repo 更新。')
     if git(root, 'remote', 'get-url', 'origin') not in REMOTES:
-        raise RuntimeError('origin 不是指定的 LIN repo，未更新。')
+        raise RuntimeError('origin 不是指定的 Lin-EVO repo，未更新。')
     if git(root, 'branch', '--show-current') != 'main':
         raise RuntimeError('來源不在 main，保留目前分支。')
     if git(root, 'status', '--porcelain'):
@@ -83,7 +85,7 @@ def update_source(root):
     git(root, 'merge', '--ff-only', 'origin/main')
 
 
-def install(root, base, adopt=False, dry_run=False, skill='lin-frontend', mode=None):
+def install(root, base, adopt=False, dry_run=False, skill='Lin-EVO', mode=None):
     manifest_name(skill)
     source = root / skill
     if not (source / 'SKILL.md').is_file() or not (source / 'references').is_dir():
@@ -138,12 +140,57 @@ def install(root, base, adopt=False, dry_run=False, skill='lin-frontend', mode=N
     print(('已連結：' if mode == 'link' else '已同步：') + str(target) + '；下次呼叫請重新讀取 Skill。')
 
 
+def migrate_legacy(root, base, selected, dry_run=False):
+    plans = []
+    for skill in selected:
+        old = base / LEGACY[skill]
+        old_record = base / ('.' + LEGACY[skill] + '-install.json')
+        if not (old.exists() or old.is_symlink() or old_record.exists()):
+            continue
+        target = base / skill
+        record = base / manifest_name(skill)
+        if target.exists() or target.is_symlink() or record.exists():
+            raise RuntimeError('新舊 Skill 同時存在，保留現況：' + skill)
+        if not old_record.is_file():
+            raise RuntimeError('舊 Skill 未受管理，保留現況：' + str(old))
+        info = json.loads(old_record.read_text())
+        if Path(info.get('source', '')).resolve() != root.resolve():
+            raise RuntimeError('舊安裝屬於其他來源，未改名。')
+        if old.is_symlink():
+            if info.get('mode') != 'link' or old.resolve() != (root / LEGACY[skill]).resolve():
+                raise RuntimeError('舊捷徑指向其他來源，未改名。')
+        elif not old.is_dir() or hashes(old) != info.get('hashes'):
+            raise RuntimeError('舊副本有修改或缺漏，保留現況：' + str(old))
+        if not (root / skill / 'SKILL.md').is_file():
+            raise RuntimeError('改名後來源缺漏：' + skill)
+        plans.append((skill, old, old_record, target, record, info))
+    if dry_run:
+        for skill, *_ in plans:
+            print('待遷移：' + LEGACY[skill] + ' → ' + skill)
+        return
+    for skill, old, old_record, target, record, info in plans:
+        old.rename(target)
+        try:
+            if info.get('mode') == 'link':
+                target.unlink()
+                target.symlink_to((root / skill).resolve(), target_is_directory=True)
+            old_record.rename(record)
+        except Exception:
+            if target.is_symlink():
+                target.unlink()
+                old.symlink_to(root / LEGACY[skill], target_is_directory=True)
+            elif target.exists():
+                target.rename(old)
+            raise
+        print('已遷移：' + LEGACY[skill] + ' → ' + skill)
+
+
 def main():
-    parser = argparse.ArgumentParser(description='LIN／Miffy 安裝與安全更新（不保留舊版備份）')
+    parser = argparse.ArgumentParser(description='Lin-EVO／Miffy-EVO 安裝與安全更新（不保留舊版備份）')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--tool', choices=['codex', 'claude'])
     group.add_argument('--target', type=Path)
-    parser.add_argument('--skill', choices=SKILLS, help='只同步指定 Skill；未指定時一起同步 LIN 與 Miffy')
+    parser.add_argument('--skill', choices=(*SKILLS, *LEGACY.values()), help='只同步指定 Skill；未指定時一起同步 Lin-EVO 與 Miffy-EVO')
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument('--link', dest='mode', action='store_const', const='link', help='直接連到 Git 專案，不建立副本')
     modes.add_argument('--copy', dest='mode', action='store_const', const='copy', help='使用獨立副本')
@@ -152,12 +199,15 @@ def main():
     parser.add_argument('--status', action='store_true')
     parser.add_argument('--dry-run', action='store_true')
     args = parser.parse_args()
+    if args.skill in LEGACY.values():
+        args.skill = next(name for name, old in LEGACY.items() if old == args.skill)
     selected = (args.skill,) if args.skill else SKILLS
     root = Path(__file__).resolve().parent
     base = args.target.expanduser().absolute() if args.target else (
         Path(os.environ.get('CODEX_HOME', str(Path.home() / '.codex'))) / 'skills'
         if args.tool == 'codex' else Path.home() / '.claude/skills')
     try:
+        migrate_legacy(root, base, selected, dry_run=args.dry_run or args.status)
         if args.status:
             for skill in selected:
                 info = checked_manifest(root, base, skill=skill)
@@ -167,7 +217,7 @@ def main():
                     raise RuntimeError(skill + ' 來源已變更，副本待同步（尚未檢查遠端）。')
             print('來源／安裝內容一致（捷徑直接讀來源）；此狀態不代表已檢查遠端最新版本。')
         elif args.update and not args.dry_run:
-            # Existing LIN-only installations can gain Miffy on their next update.
+            # Existing Lin-EVO-only installations can gain Miffy-EVO on their next update.
             records = [checked_manifest(root, base, skill=skill) for skill in selected]
             if not any(records):
                 raise RuntimeError('先完成安裝，再使用 --update。')

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Miffy｜靜態頁面轉 EVO 後台"
-  short_description: "將既有靜態頁面轉成 EVO 可匯入內容，保留設計與互動並驗證可編輯結構"
-  default_prompt: "使用 $miffy，讀取本案靜態頁面與 EVO 工程規格，完成轉換、匯入包與驗證說明。"

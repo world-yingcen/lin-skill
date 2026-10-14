@@ -1,9 +1,9 @@
 ---
-name: miffy
+name: Miffy-EVO
 description: 將已完成的靜態 HTML／SCSS／JavaScript 網頁轉為 EVO（Evomni）後台可匯入與編輯的內容，整理樣式、互動、素材與匯入包並驗證轉換結果。使用者要求靜態頁面轉 EVO、轉後台、整理 EVO 匯入包或修正匯入差異時使用；不接管從 Figma 開始的切版與品牌提案。
 ---
 
-# Miffy｜靜態頁面轉 EVO 後台
+# Miffy-EVO｜靜態頁面轉 EVO 後台
 
 以已完成的靜態網站為基準，完成本案 EVO 版本支援的轉換與交付。使用繁體中文及台灣用語；由 AI 判斷技術對應，設計師確認畫面與操作，不要求設計師填寫技術標記或管理 JSON。
 
@@ -17,7 +17,7 @@ description: 將已完成的靜態 HTML／SCSS／JavaScript 網頁轉為 EVO（E
 
 工程師已提供唯讀發行庫：`http://192.168.168.133/share-skills/evomni-page-composer.git`。開始轉換時必讀 [工程工具與打包規範](references/engineering-kit.md)，使用案件既有工具或取得此庫，不再把工具來源當成未提供。認證沿用本機憑證管理；不得將密碼／Token 寫進 Skill、remote URL、報告或交付檔。
 
-**每次啟用 Miffy 進行轉換或轉換校稿，先更新工程庫，再讀規範、執行工具。** 續作也適用；同一輪不重複更新。依 engineering-kit.md 的更新程序自動核對，不因曾安裝、先前成功或摘要有日期便沿用舊版本。工程庫即時文件是轉換契約的依據，本 Skill 的摘要與查核 commit 僅協助定位，不是鎖版要求。更新成功後重新讀本輪需要的文件與工具參數；更新失敗須明說「尚未確認工程規範最新版」，不得宣稱最新。
+**每次啟用 Miffy-EVO 進行轉換或轉換校稿，先更新工程庫，再讀規範、執行工具。** 續作也適用；同一輪不重複更新。依 engineering-kit.md 的更新程序自動核對，不因曾安裝、先前成功或摘要有日期便沿用舊版本。工程庫即時文件是轉換契約的依據，本 Skill 的摘要與查核 commit 僅協助定位，不是鎖版要求。更新成功後重新讀本輪需要的文件與工具參數；更新失敗須明說「尚未確認工程規範最新版」，不得宣稱最新。
 
 開始轉換前讀 [轉換與驗收檢查](references/conversion-checklist.md)。內頁轉換另必讀 [工程師內頁匯入規範](references/designer-guide-rules.md)，並取得使用者指定的 [DESIGNER-GUIDE.md](http://192.168.168.94/evomni_vue/docs/html-zip-import-cases/DESIGNER-GUIDE.md) 最新內容。此指南的正本是工程師 repo 的 `docs/template-spec/designer-markup-guide.md`，指南補充內頁實測與前台 vendor 路徑；本案工程包負責實際轉換指令與打包格式。
 
@@ -25,7 +25,7 @@ description: 將已完成的靜態 HTML／SCSS／JavaScript 網頁轉為 EVO（E
 
 - 優先找案件指定的工程包或既有 `_page-composer-kit/`。記錄實際路徑、版本／commit、指南與使用的命令；先讀說明及工具參數，再執行，不猜 CLI、檔名或資料格式。
 - 按需查 `knowledge/template-spec.summary.md`、`knowledge/template-spec.json`、`knowledge/designer-markup-guide.md`、`binding-params.json`、`trans-keys.json`，以及轉換、驗證、打包文件與工程師 HTML 匯入指南。這些是查找線索，缺檔時依實際文件定位，不假裝每版都有同一路徑。
-- 已安裝 LIN 時，涉及來源修正再讀其相關工程規範；不複製另一份 LIN 共用規範。不因讀工程包而啟動其他 Skill 的 Figma、固定尺寸、逐 Frame 確認或重新切版流程。
+- 已安裝 Lin-EVO 時，涉及來源修正再讀其相關工程規範；不複製另一份 Lin-EVO 共用規範。不因讀工程包而啟動其他 Skill 的 Figma、固定尺寸、逐 Frame 確認或重新切版流程。
 - 缺工程包、目標格式或必要契約時，仍完成來源盤點、資源清單及不受影響的檢查；將缺口列清楚，不自行產生假 `project-data.json` 或宣稱已可匯入。取得工具的 clone／安裝依本次授權處理，不執行來源不明的腳本。
 
 ## 轉換原則

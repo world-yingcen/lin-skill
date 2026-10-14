@@ -1,4 +1,4 @@
-# LIN｜JavaScript 與動態初始化
+# Lin-EVO｜JavaScript 與動態初始化
 
 靜態工程採以下入口；框架專案沿用既有路由與模組，記錄對應，不擅自重構。
 

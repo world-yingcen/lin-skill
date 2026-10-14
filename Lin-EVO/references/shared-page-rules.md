@@ -1,4 +1,4 @@
-# LIN｜Header、Footer 與內頁
+# Lin-EVO｜Header、Footer 與內頁
 
 靜態 HTML 使用以下載入規範；既有框架使用單一共用 Layout／元件，不額外加 fetch 載入器。RWD 依案件範圍。新站採下列導覽慣例；局部修改保留未在本輪調整範圍的既有行為。
 

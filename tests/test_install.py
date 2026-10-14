@@ -16,19 +16,19 @@ class InstallerTest(unittest.TestCase):
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name) / 'repo'
         self.base = Path(self.tmp.name) / 'skills'
-        (self.root / 'lin-frontend/references').mkdir(parents=True)
-        (self.root / 'lin-frontend/SKILL.md').write_text('version 1')
+        (self.root / 'Lin-EVO/references').mkdir(parents=True)
+        (self.root / 'Lin-EVO/SKILL.md').write_text('version 1')
 
     def test_install_update_and_no_backup(self):
         m.install(self.root, self.base)
-        (self.root / 'lin-frontend/SKILL.md').write_text('version 2')
+        (self.root / 'Lin-EVO/SKILL.md').write_text('version 2')
         m.install(self.root, self.base)
-        self.assertEqual((self.base / 'lin-frontend/SKILL.md').read_text(), 'version 2')
-        self.assertEqual(sorted(x.name for x in self.base.iterdir()), [m.MANIFEST, 'lin-frontend'])
+        self.assertEqual((self.base / 'Lin-EVO/SKILL.md').read_text(), 'version 2')
+        self.assertEqual(sorted(x.name for x in self.base.iterdir()), [m.MANIFEST, 'Lin-EVO'])
 
     def test_local_edits_preserved(self):
         m.install(self.root, self.base)
-        p = self.base / 'lin-frontend/SKILL.md'
+        p = self.base / 'Lin-EVO/SKILL.md'
         p.write_text('user changes')
         with self.assertRaises(RuntimeError):
             m.install(self.root, self.base)
@@ -36,31 +36,31 @@ class InstallerTest(unittest.TestCase):
 
     def test_link_reads_source_changes_without_reinstall(self):
         m.install(self.root, self.base, mode='link')
-        target = self.base / 'lin-frontend'
+        target = self.base / 'Lin-EVO'
         self.assertTrue(target.is_symlink())
-        (self.root / 'lin-frontend/SKILL.md').write_text('live edit')
+        (self.root / 'Lin-EVO/SKILL.md').write_text('live edit')
         self.assertEqual((target / 'SKILL.md').read_text(), 'live edit')
         self.assertEqual(m.checked_manifest(self.root, self.base)['mode'], 'link')
-        self.assertEqual(self.run_cli('--skill', 'lin-frontend', '--status'), 0)
+        self.assertEqual(self.run_cli('--skill', 'Lin-EVO', '--status'), 0)
 
     def test_copy_to_link_and_back_preserves_source(self):
         m.install(self.root, self.base)
         m.install(self.root, self.base, mode='link')
-        self.assertTrue((self.base / 'lin-frontend').is_symlink())
+        self.assertTrue((self.base / 'Lin-EVO').is_symlink())
         m.install(self.root, self.base, mode='copy')
-        self.assertFalse((self.base / 'lin-frontend').is_symlink())
-        self.assertEqual((self.root / 'lin-frontend/SKILL.md').read_text(), 'version 1')
+        self.assertFalse((self.base / 'Lin-EVO').is_symlink())
+        self.assertEqual((self.root / 'Lin-EVO/SKILL.md').read_text(), 'version 1')
 
     def test_link_conversion_rejects_edited_copy(self):
         m.install(self.root, self.base)
-        (self.base / 'lin-frontend/SKILL.md').write_text('user edit')
+        (self.base / 'Lin-EVO/SKILL.md').write_text('user edit')
         with self.assertRaises(RuntimeError):
             m.install(self.root, self.base, mode='link')
-        self.assertEqual((self.base / 'lin-frontend/SKILL.md').read_text(), 'user edit')
+        self.assertEqual((self.base / 'Lin-EVO/SKILL.md').read_text(), 'user edit')
 
     def test_wrong_and_broken_links_preserved(self):
         self.base.mkdir()
-        target = self.base / 'lin-frontend'
+        target = self.base / 'Lin-EVO'
         target.symlink_to(self.root / 'missing')
         with self.assertRaises(RuntimeError):
             m.install(self.root, self.base, mode='link', adopt=True)
@@ -72,20 +72,20 @@ class InstallerTest(unittest.TestCase):
         with patch.object(m.os, 'replace', side_effect=OSError('failure')):
             with self.assertRaises(OSError):
                 m.install(self.root, self.base, mode='link')
-        self.assertTrue((self.base / 'lin-frontend').is_symlink())
-        self.assertEqual((self.root / 'lin-frontend/SKILL.md').read_text(), 'version 1')
+        self.assertTrue((self.base / 'Lin-EVO').is_symlink())
+        self.assertEqual((self.root / 'Lin-EVO/SKILL.md').read_text(), 'version 1')
         self.assertEqual((self.base / m.MANIFEST).read_bytes(), record)
 
     def test_unknown_copy_and_adopt(self):
         import shutil
-        shutil.copytree(self.root / 'lin-frontend', self.base / 'lin-frontend')
+        shutil.copytree(self.root / 'Lin-EVO', self.base / 'Lin-EVO')
         with self.assertRaises(RuntimeError):
             m.install(self.root, self.base)
         m.install(self.root, self.base, adopt=True)
 
     def test_adopt_rejects_difference(self):
-        (self.base / 'lin-frontend').mkdir(parents=True)
-        (self.base / 'lin-frontend/SKILL.md').write_text('different')
+        (self.base / 'Lin-EVO').mkdir(parents=True)
+        (self.base / 'Lin-EVO/SKILL.md').write_text('different')
         with self.assertRaises(RuntimeError):
             m.install(self.root, self.base, adopt=True)
 
@@ -94,31 +94,31 @@ class InstallerTest(unittest.TestCase):
         self.assertFalse(self.base.exists())
 
     def test_miffy_install_isolated_from_lin(self):
-        (self.root / 'miffy/references').mkdir(parents=True)
-        (self.root / 'miffy/SKILL.md').write_text('miffy version 1')
+        (self.root / 'Miffy-EVO/references').mkdir(parents=True)
+        (self.root / 'Miffy-EVO/SKILL.md').write_text('Miffy-EVO version 1')
         m.install(self.root, self.base)
         lin_manifest = (self.base / m.MANIFEST).read_bytes()
-        m.install(self.root, self.base, skill='miffy')
-        (self.root / 'miffy/SKILL.md').write_text('miffy version 2')
-        m.install(self.root, self.base, skill='miffy')
-        self.assertEqual((self.base / 'miffy/SKILL.md').read_text(), 'miffy version 2')
-        self.assertEqual((self.base / 'lin-frontend/SKILL.md').read_text(), 'version 1')
+        m.install(self.root, self.base, skill='Miffy-EVO')
+        (self.root / 'Miffy-EVO/SKILL.md').write_text('Miffy-EVO version 2')
+        m.install(self.root, self.base, skill='Miffy-EVO')
+        self.assertEqual((self.base / 'Miffy-EVO/SKILL.md').read_text(), 'Miffy-EVO version 2')
+        self.assertEqual((self.base / 'Lin-EVO/SKILL.md').read_text(), 'version 1')
         self.assertEqual((self.base / m.MANIFEST).read_bytes(), lin_manifest)
-        self.assertIsNotNone(m.checked_manifest(self.root, self.base, skill='miffy'))
+        self.assertIsNotNone(m.checked_manifest(self.root, self.base, skill='Miffy-EVO'))
 
     def test_miffy_local_edits_preserved(self):
-        (self.root / 'miffy/references').mkdir(parents=True)
-        (self.root / 'miffy/SKILL.md').write_text('miffy version 1')
-        m.install(self.root, self.base, skill='miffy')
-        p = self.base / 'miffy/SKILL.md'
+        (self.root / 'Miffy-EVO/references').mkdir(parents=True)
+        (self.root / 'Miffy-EVO/SKILL.md').write_text('Miffy-EVO version 1')
+        m.install(self.root, self.base, skill='Miffy-EVO')
+        p = self.base / 'Miffy-EVO/SKILL.md'
         p.write_text('user changes')
         with self.assertRaises(RuntimeError):
-            m.install(self.root, self.base, skill='miffy')
+            m.install(self.root, self.base, skill='Miffy-EVO')
         self.assertEqual(p.read_text(), 'user changes')
 
     def bundle_source(self):
-        (self.root / 'miffy/references').mkdir(parents=True)
-        (self.root / 'miffy/SKILL.md').write_text('miffy version 1')
+        (self.root / 'Miffy-EVO/references').mkdir(parents=True)
+        (self.root / 'Miffy-EVO/SKILL.md').write_text('Miffy-EVO version 1')
 
     def run_cli(self, *args):
         with patch.object(m, '__file__', str(self.root / 'install.py')), patch.object(
@@ -128,20 +128,20 @@ class InstallerTest(unittest.TestCase):
     def test_default_cli_installs_both(self):
         self.bundle_source()
         self.assertEqual(self.run_cli(), 0)
-        self.assertEqual((self.base / 'lin-frontend/SKILL.md').read_text(), 'version 1')
-        self.assertEqual((self.base / 'miffy/SKILL.md').read_text(), 'miffy version 1')
+        self.assertEqual((self.base / 'Lin-EVO/SKILL.md').read_text(), 'version 1')
+        self.assertEqual((self.base / 'Miffy-EVO/SKILL.md').read_text(), 'Miffy-EVO version 1')
         self.assertEqual(self.run_cli('--status'), 0)
-        self.assertTrue((self.base / 'lin-frontend').is_symlink())
-        self.assertTrue((self.base / 'miffy').is_symlink())
+        self.assertTrue((self.base / 'Lin-EVO').is_symlink())
+        self.assertTrue((self.base / 'Miffy-EVO').is_symlink())
 
     def test_bundle_preflight_preserves_both_on_edited_copy(self):
         self.bundle_source()
         self.assertEqual(self.run_cli('--copy'), 0)
-        (self.root / 'lin-frontend/SKILL.md').write_text('version 2')
-        (self.base / 'miffy/SKILL.md').write_text('user changes')
+        (self.root / 'Lin-EVO/SKILL.md').write_text('version 2')
+        (self.base / 'Miffy-EVO/SKILL.md').write_text('user changes')
         self.assertEqual(self.run_cli(), 1)
-        self.assertEqual((self.base / 'lin-frontend/SKILL.md').read_text(), 'version 1')
-        self.assertEqual((self.base / 'miffy/SKILL.md').read_text(), 'user changes')
+        self.assertEqual((self.base / 'Lin-EVO/SKILL.md').read_text(), 'version 1')
+        self.assertEqual((self.base / 'Miffy-EVO/SKILL.md').read_text(), 'user changes')
 
     def test_bundle_update_checks_remote_once_and_keeps_default_selection(self):
         self.bundle_source()
@@ -150,6 +150,50 @@ class InstallerTest(unittest.TestCase):
             self.assertEqual(self.run_cli('--update'), 0)
             update.assert_called_once_with(self.root.resolve())
             self.assertNotIn('--skill', call.call_args.args[0])
+
+    def legacy_copy(self, skill='Lin-EVO'):
+        import json, shutil
+        old_name = m.LEGACY[skill]
+        target = self.base / old_name
+        shutil.copytree(self.root / skill, target)
+        record = {'source': str(self.root), 'mode': 'copy', 'hashes': m.hashes(target)}
+        (self.base / ('.' + old_name + '-install.json')).write_text(json.dumps(record))
+        return target
+
+    def test_legacy_copy_migrates_and_updates(self):
+        old = self.legacy_copy()
+        (self.root / 'Lin-EVO/SKILL.md').write_text('renamed version')
+        self.assertEqual(self.run_cli('--skill', 'lin-frontend'), 0)
+        self.assertFalse(old.exists())
+        self.assertEqual((self.base / 'Lin-EVO/SKILL.md').read_text(), 'renamed version')
+        self.assertEqual(self.run_cli('--skill', 'Lin-EVO', '--status'), 0)
+
+    def test_legacy_link_retargets_renamed_source(self):
+        import json
+        self.base.mkdir()
+        old = self.base / 'lin-frontend'
+        old.symlink_to(self.root / 'lin-frontend')
+        (self.base / '.lin-frontend-install.json').write_text(json.dumps(
+            {'source': str(self.root), 'mode': 'link'}))
+        self.assertEqual(self.run_cli('--skill', 'Lin-EVO'), 0)
+        self.assertFalse(old.is_symlink())
+        self.assertEqual((self.base / 'Lin-EVO').resolve(), (self.root / 'Lin-EVO').resolve())
+
+    def test_legacy_bundle_preflight_preserves_edited_copy(self):
+        self.bundle_source()
+        old_lin = self.legacy_copy()
+        old_miffy = self.legacy_copy('Miffy-EVO')
+        (old_miffy / 'SKILL.md').write_text('user edit')
+        self.assertEqual(self.run_cli(), 1)
+        self.assertTrue(old_lin.exists())
+        self.assertTrue(old_miffy.exists())
+        self.assertFalse((self.base / 'Lin-EVO').exists())
+
+    def test_legacy_dry_run_does_not_rename(self):
+        old = self.legacy_copy()
+        self.assertEqual(self.run_cli('--skill', 'Lin-EVO', '--dry-run'), 0)
+        self.assertTrue(old.exists())
+        self.assertFalse((self.base / 'Lin-EVO').exists())
 
     def fake_git(self, dirty='', ahead='0', remote=None, fail_fetch=False):
         def run(root, *args):

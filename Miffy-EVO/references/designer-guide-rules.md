@@ -20,7 +20,7 @@
 - `.team-page .main-content` 命不中外層 main。單頁 overflow 放 wrapper 或區塊，不在 Common 的 `.main-content` 上設 `overflow: hidden` 破壞 sticky；全域裁切也須檢查捲動與釘選影響。
 - 跨頁 Hero／CTA 放 `_innerpage-default.scss` 或本案有效共用檔，各頁 SCSS 只保留自身樣式。不要靠載入其他頁 CSS 補漏。
 - 版面寬度、間距與基本可見性不能藏在 `.is-xxx-motion-ready` 等動效閘門下，初始化失敗仍要正常閱讀。
-- 自製 class 不用平台保留的 `tpl-*`／`tpl-model`；本套件新自製區塊沿用 LIN 已確認的 `designer-tpl-*`，平台元件保留原名。既有衝突逐區查相依後修正，不全站盲目改名。
+- 自製 class 不用平台保留的 `tpl-*`／`tpl-model`；本套件新自製區塊沿用 Lin-EVO 已確認的 `designer-tpl-*`，平台元件保留原名。既有衝突逐區查相依後修正，不全站盲目改名。
 - main 內不放 script 或 inline `on*`，指南表示 `prep-page.mjs` 遇到會 exit 1。JS 另行接入。
 - 圖片在匯入準備稿使用本案 `image/{頁面}/` 相對路徑，包內須有實檔；最終打包工具如要求其他路徑，依實際格式轉換並核對。
 - 固定介面文字如麵包屑「首頁」、回上頁、表單欄位名，依正本翻譯契約與實際 `trans-keys` 掛 `data-trans`，不猜翻譯鍵。缺標記會觸發 validate O5。

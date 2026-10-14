@@ -25,7 +25,7 @@
 
 ## 按階段閱讀
 
-工程文件位於 `.claude/skills/page-composer/`。Miffy 只沿用轉換與接入契約，不啟動它的重新切版流程。
+工程文件位於 `.claude/skills/page-composer/`。Miffy-EVO 只沿用轉換與接入契約，不啟動它的重新切版流程。
 
 | 工作 | 必讀文件 |
 |---|---|
