@@ -89,6 +89,7 @@
 - 使用者範例另有 `_downloads.scss`、`_knowledge.scss`、`_maintenance.scss`、`_news.scss`、`_team.scss`；依實際案件頁面建立，不將範例清單當成每案必備檔案。
 - 切版時就分好共用與單頁來源。全站變數、字體、容器與元件放 Common／共用檔；跨內頁 Hero、CTA、麵包屑等放 `_innerpage-default.scss` 或既有共用元件檔，不藏在某一頁的專屬 SCSS。各頁檔只寫本頁樣式及必要差異。
 - 每頁 HTML 只引用約定共用 CSS、本頁 CSS 與實際需要的套件 CSS；例如 `about.html` 載入 `evomni-root.css` 與 `about.css`，不載入其他頁面 CSS。首頁樣式同樣由首頁單獨引用。共用與單頁分開編譯，不能把所有頁面重新包進共用 CSS 掩蓋依賴。
+- 本機受版本控制的 CSS／JavaScript 引用維持穩定路徑，不由 AI 或設計師在 HTML 手動新增、更新 `?v=`、時間戳或雜湊等 cache-busting 參數，也不因單次 SCSS／JS 修改同步改寫所有頁面。快取版本交由案件既有且已確認的編譯、檔名 fingerprint、部署或平台資源流程處理；沒有這類流程時先維持穩定引用，不自行發明版本號。既有專案若要清除手動版本參數，先找出會重新寫回參數的產生器、同步腳本或 README 流程並一併修正，只移除本機 CSS／JS 引用的 cache-busting，不刪除 CDN／外部套件必要參數、API／搜尋參數或平台契約指定參數。
 - 沿用既有編譯工具與匯入語法，記錄「SCSS 來源 → 編譯 CSS → 引用 HTML」。底線 partial 可透過本頁薄入口輸出；已有多入口或框架按頁輸出就沿用，不強制新增 `pages/`、另一套建置工具或第二份相同樣式。單頁需要 Sass 變數／mixin 時使用既有編譯依賴，避免再次輸出整份 Common CSS。
 - 單頁選擇器限縮在本頁／區塊作用域，不能無意間修改其他頁共用選擇器。保留合理的共用基礎與單頁覆寫，不因 selector 重複就刪除；檢查實際載入順序、選擇器權重及 computed style，不能只認為後載入就一定覆蓋。
 - 上述是靜態製作與校稿的資源分工；EVO 正式站的全站／單頁輸出由工程師按本案轉檔方式對應同一份來源。使用者回報 evo266200 正式 root 仍須保留 common、index、innerpage-default、header、footer，其他內頁已有各自 CSS；這是該案現況，不能據此要求所有新案把 index 放進全站 root，也不能在既有站未核對前移除 index。
