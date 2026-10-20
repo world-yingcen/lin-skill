@@ -9,7 +9,7 @@
 - **`<header>` 只允許用在全站 Navi／主要導覽。** 其他區塊一律不得使用，包括 Hero／Banner、內頁標題、section 標題、article／卡片標題、搜尋結果標題與對話框頂部；使用 `<div>` 等適合容器，保留既有 class、id、data 屬性與 h1～h6 標題。`.header`、`.search-result__header` 等 class 名稱不表示必須使用 `<header>` 標籤。
 - 修改到既有非 Navi 的 `<header>` 時，連同 closing tag 改為適合容器；核對 tag selector、事件及平台引用，避免換標籤後失去樣式或互動。新製作及本輪調整範圍須符合此規則，不擅自批次修改未授權的其他案件。
 
-- 設計師自製版型使用 `designer-tpl-{語意名稱}` 作根 class，例如 `designer-tpl-about`；不附加平台專用的 `tpl-model`，也不自行編造範本實例識別。使用者已轉達工程師確認此命名可用。EVO 已有適用元件時，保留其原本必要 class、data 與結構（例如 `tpl-model tpl-faq001`），依 [T13](shared-page-rules.md) 調整樣式，不改成 designer-tpl 前綴；同用途不同自製版型有需要才加可辨識版本編號。此規則用於新製作與本輪已授權調整的區塊，不自動批次改名既有案件。
+- 設計師自製版型使用 `designer-tpl-{語意名稱}` 作根 class，例如 `designer-tpl-about`；不附加平台專用的 `tpl-model`，也不自行編造範本實例識別。使用者已轉達工程師確認此命名可用。本案採舊平台元件契約且已有適用元件時，保留其原本必要 class、data 與結構（例如 `tpl-model tpl-faq001`），依 [T13](shared-page-rules.md) 調整樣式，不改成 designer-tpl 前綴；同用途不同自製版型有需要才加可辨識版本編號。此規則用於新製作與本輪已授權調整的區塊，不自動批次改名既有案件。
 - 自製版型 class 使用 kebab-case，不用 BEM 的 `__`／`--`。子元素使用 `text-block`、`image-block`、`card-box` 等短語意名稱，版心沿用 Common container，不要求每個子元素重複整段區塊名稱。`tpl-container` 等平台 class 僅在沿用對應元件契約時保留，不作新自製區塊的預設命名。
 - 上述自訂命名規則不覆蓋 Swiper 原生 class 或 EVO 範本必要的 class、ID、data 屬性；先查樣式、初始化及平台依賴，不為統一命名而任意改掉。
 - 不用 left、right、top、bottom、upper、lower 或組合作為版面位置命名；同樣適用 JS 變數與 data 屬性。方向本身是功能時，previous／next 可用；圖示資源如 `arrow-left-icon` 可用。
@@ -29,6 +29,8 @@
 - 平台產生的 wrapper、模組 ID 與雜湊識別不能憑空編造；後台相關事項見 [平台整合邊界](shared-page-rules.md#平台整合邊界)。
 
 ### EVO 內頁的頁面識別與匯入邊界
+
+本節 main 擷取方式適用舊平台流程；整站 HTML 的完整頁面、共用區與匯入邊界依當次工程師套件，不在切版時移除 head／Header／Footer。頁面 wrapper 與選擇器對應的原則仍適用。
 
 將轉 EVO 的內頁，依工程師 [HTML 匯入指南 §1](http://192.168.168.94/evomni_vue/docs/html-zip-import-cases/DESIGNER-GUIDE.md)，把自訂頁面 class 放在 `main` 內第一層 wrapper，供匯入後的 CSS／JS 識別：
 

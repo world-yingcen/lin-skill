@@ -1,5 +1,7 @@
 # 工程師內頁匯入規範
 
+適用既有 JSON／evomni-page-composer 流程；整站 HTML 匯入改讀目前 evomni-html 套件，不套用本檔的標記、載入及打包契約。
+
 來源：[給設計師的切版共識（HTML zip → Evomni 內頁匯入）](http://192.168.168.94/evomni_vue/docs/html-zip-import-cases/DESIGNER-GUIDE.md)。2026-10-12 讀取；指南包含 2026-09-22 至 2026-09-30 案例更新。這是工作摘要，不另立工程規格；執行時重新核對原文與目標站台版本。
 
 正本為工程師 repo 的 `docs/template-spec/designer-markup-guide.md`。本指南補充內頁匯入與 vendor 路徑，不涵蓋所有首頁模式、工具指令及 ZIP 格式。

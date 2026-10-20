@@ -1,5 +1,7 @@
 # 工程工具與打包規範
 
+適用既有 JSON／evomni-page-composer 流程；整站 HTML 匯入改讀目前 evomni-html 套件，不套用本檔的標記、載入及打包契約。
+
 來源：`http://192.168.168.133/share-skills/evomni-page-composer.git`（唯讀工程發行庫）。2026-10-12 核對 HEAD `3c45c1ed8c9aac59e420593238d82e8f68c5e9c0` 的 README、工程 Skill、workflow、packaging、template-injection、frame-slots 與 convert／validate 原始碼。此 commit 是本次查核紀錄，不要求未來鎖死；執行時核對實際版本。
 
 ## 取得與維護
