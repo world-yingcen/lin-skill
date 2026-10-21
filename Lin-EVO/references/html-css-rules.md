@@ -73,6 +73,14 @@
 
 ## T07｜SCSS 結構與寫法
 
+### 切版前的編譯設定與驗證
+
+1. **先查現況**：開始切版或修改 SCSS 前，檢查本案 VSCode 工作區設定、實際使用的編譯擴充功能與版本，以及既有建置／監看流程。已有可用設定就沿用，不啟動第二套編譯器；後續續作先確認設定與輸出仍有效，有變更再重驗。純文件或不涉及樣式的局部修改不因此重建工程。
+2. **補齊專案設定**：缺少設定時，由 Lin 依已確認編譯器的實際支援方式，建立或合併案件層級的 `.vscode/settings.json` 或既有工作區設定，保留其他設定；不修改使用者全域設定。先查該版本的設定說明，不猜擴充功能名稱或設定鍵。確認 `scss/_頁名.scss` 可在存檔後輸出 `css/頁名.css`；底線檔通常作為引用片段，不能假設預設會獨立編譯或自動去掉輸出檔名底線。
+3. **維持資源分工**：`_common.scss`、`_header.scss`、`_footer.scss`、`_innerpage-default.scss` 等共用檔由 `evomni-root.scss` 彙整，輸出 `css/evomni-root.css`，修改共用來源也須觸發更新；不要把所有底線檔一律設為獨立輸出。各頁只保留一支 `_頁名.scss`，不新增同名無底線入口，不把單頁樣式包入共用 CSS。既有框架有不同流程時保留並記錄對應，不為局部修改重建。
+4. **實際驗證才算完成**：以不改變確認畫面的測試，分別確認單頁存檔及共用來源存檔會觸發正確輸出，檢查編譯訊息、產出內容／路徑與 HTML 引用；確認沒有多餘的共用 CSS 輸出、重複打包或遺留測試內容。記錄編譯器版本、設定位置、來源到輸出的對應、啟動方式及驗證結果。只有 CLI 編譯成功，不代表 VSCode 存檔自動編譯已驗證。
+5. **缺能力或不支援時**：先列明缺口與影響，提出最小替代方案；需安裝擴充功能、套件或變更既有編譯方案時先取得使用者授權，不擅改全域設定。Claude App 無法存取本機或控制 VSCode 時，提供可合併的設定檔、放置位置及明確操作／測試步驟，請使用者執行並回傳輸出或錯誤；未看過既有設定時提供合併片段，不要求整份覆蓋。標示「設定已提供／待本機執行／待驗證」，不宣稱已設定或已測試。可繼續不依賴編譯的資料與結構工作，但不得將受影響的樣式成果記為完成。
+
 ### 檔案分工
 
 依下列職責拆檔，SCSS 放在本案既有工程的 scss/；不為符合資料夾名稱擅自搬移案件。既有框架編譯入口不同時記錄對應，不建立第二套入口：
@@ -84,15 +92,26 @@
 | `_index.scss` | 首頁專用樣式 |
 | `_innerpage-default.scss` | 多個內頁共同使用的基礎樣式 |
 | `_about.scss`、`_careers.scss`、`_contact.scss` 等 | 依案件頁面用途命名的專用樣式 |
-| `evomni-root.scss` | 靜態切版的共用樣式入口，只匯入約定共用檔 |
+| `evomni-root.scss` | 靜態切版的共用樣式入口，只匯入 `_common.scss`、`_header.scss`、`_footer.scss`、`_innerpage-default.scss` 等共用檔，不匯入首頁或其他單頁專用檔 |
 | `evomni-root.css` | 共用編譯輸出，由各頁 HTML 引用，不直接手改 |
-| 本頁編譯入口與 CSS（如 `about.scss` → `about.css`） | 只輸出本頁樣式，由對應 HTML 引用；名稱與路徑沿用既有工程 |
+| 本頁 SCSS 與 CSS（如 `scss/_about.scss` → `css/about.css`） | 每頁只保留一支底線開頭的樣式來源，由案件既有 VSCode 編譯設定在存檔後輸出本頁 CSS，供對應 HTML 引用 |
 
 - 使用者範例另有 `_downloads.scss`、`_knowledge.scss`、`_maintenance.scss`、`_news.scss`、`_team.scss`；依實際案件頁面建立，不將範例清單當成每案必備檔案。
 - 切版時就分好共用與單頁來源。全站變數、字體、容器與元件放 Common／共用檔；跨內頁 Hero、CTA、麵包屑等放 `_innerpage-default.scss` 或既有共用元件檔，不藏在某一頁的專屬 SCSS。各頁檔只寫本頁樣式及必要差異。
 - 每頁 HTML 只引用約定共用 CSS、本頁 CSS 與實際需要的套件 CSS；例如 `about.html` 載入 `evomni-root.css` 與 `about.css`，不載入其他頁面 CSS。首頁樣式同樣由首頁單獨引用。共用與單頁分開編譯，不能把所有頁面重新包進共用 CSS 掩蓋依賴。
+- 共用與單頁的編譯／載入關係如下；HTML 引用編譯後的 CSS，不直接引用 SCSS。共用入口不得直接或間接匯入 `_index.scss`、`_about.scss`、`_contact.scss` 等單頁樣式；單頁輸出也不得重複打包整份共用 CSS。
+
+  | SCSS 來源 | 編譯輸出 | HTML 載入範圍 |
+  |---|---|---|
+  | `_common.scss`、`_header.scss`、`_footer.scss`、`_innerpage-default.scss` → `evomni-root.scss` | `css/evomni-root.css` | 全站共用 |
+  | `scss/_index.scss` | `css/index.css` | `index.html`，另載入共用 CSS |
+  | `scss/_about.scss` | `css/about.css` | `about.html`，另載入共用 CSS |
+  | `scss/_contact.scss` | `css/contact.css` | `contact.html`，另載入共用 CSS |
+
 - 本機受版本控制的 CSS／JavaScript 引用維持穩定路徑，不由 AI 或設計師在 HTML 手動新增、更新 `?v=`、時間戳或雜湊等 cache-busting 參數，也不因單次 SCSS／JS 修改同步改寫所有頁面。快取版本交由案件既有且已確認的編譯、檔名 fingerprint、部署或平台資源流程處理；沒有這類流程時先維持穩定引用，不自行發明版本號。既有專案若要清除手動版本參數，先找出會重新寫回參數的產生器、同步腳本或 README 流程並一併修正，只移除本機 CSS／JS 引用的 cache-busting，不刪除 CDN／外部套件必要參數、API／搜尋參數或平台契約指定參數。
-- 沿用既有編譯工具與匯入語法，記錄「SCSS 來源 → 編譯 CSS → 引用 HTML」。底線 partial 可透過本頁薄入口輸出；已有多入口或框架按頁輸出就沿用，不強制新增 `pages/`、另一套建置工具或第二份相同樣式。單頁需要 Sass 變數／mixin 時使用既有編譯依賴，避免再次輸出整份 Common CSS。
+- 各頁只放一支 `scss/_頁名.scss`，例如 `_index.scss`、`_about.scss`、`_contact.scss`；由既有 VSCode 編譯設定在存檔後輸出至 `css/頁名.css`。不再新增只為匯入同名底線檔的 `index.scss`、`about.scss` 或 `contact.scss`。`evomni-root.scss` 仍是彙整共用檔的入口，與這種多餘的單頁入口不同。
+- 編譯器設定、底線檔輸出與能力不足時的處理，依上方「切版前的編譯設定與驗證」執行。
+- 沿用既有匯入語法，記錄「SCSS 來源 → 編譯 CSS → 引用 HTML」，實際驗證存檔後輸出與頁面引用。既有框架已有不同編譯流程時記錄對應，不因局部修改強制改建置或搬檔；不新增 `pages/`、另一套建置工具或第二份相同樣式。單頁需要 Sass 變數／mixin 時使用既有編譯依賴，避免再次輸出整份 Common CSS。
 - 單頁選擇器限縮在本頁／區塊作用域，不能無意間修改其他頁共用選擇器。保留合理的共用基礎與單頁覆寫，不因 selector 重複就刪除；檢查實際載入順序、選擇器權重及 computed style，不能只認為後載入就一定覆蓋。
 - 上述是靜態製作與校稿的資源分工；EVO 正式站的全站／單頁輸出由工程師按本案轉檔方式對應同一份來源。使用者回報 evo266200 正式 root 仍須保留 common、index、innerpage-default、header、footer，其他內頁已有各自 CSS；這是該案現況，不能據此要求所有新案把 index 放進全站 root，也不能在既有站未核對前移除 index。
 
