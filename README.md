@@ -1,5 +1,8 @@
 # Lin-EVO＋Miffy-EVO｜設計師操作手冊
 
+> 本機位置（2026-10-22）：[Lin-EVO](Lin-EVO/SKILL.md) 已搬回本資料夾內；[Miffy-EVO](../Miffy-EVO/SKILL.md) 仍在上一層。`skill-sources.json` 記錄實際位置，Codex／Claude 的連結依此管理。部分拆分期間，本機同步可用，舊整包 Git 更新仍暫停；下方整包更新說明僅適用完整原始配置。
+
+
 更新：2026-10-20 · 適用 Codex、Claude Code 與 Claude Skills
 
 這份手冊帶你從設計稿、網站校稿一路做到 EVO 匯入交付。你負責提供設計、素材與需求，以及確認畫面；AI 負責讀取規範、處理程式、檢查結果與整理檔案。
@@ -252,7 +255,7 @@ EVO 頁面：（網址；問題發生在畫布或前台）
 以下只給維護人員，設計師不用閱讀：
 
 - 工作規範：[Lin-EVO/SKILL.md](Lin-EVO/SKILL.md)。
-- Miffy-EVO 規範：[Miffy-EVO/SKILL.md](Miffy-EVO/SKILL.md)。單獨安裝：`python3 install.py --tool codex --skill Miffy-EVO`，Claude 改 `--tool claude`；更新與核對狀態同樣帶上 `--skill Miffy-EVO`。每個 Skill 有獨立的安裝紀錄，只同步選定的 Skill，不會覆蓋另一個。
+- Miffy-EVO 規範：[Miffy-EVO/SKILL.md](../Miffy-EVO/SKILL.md)。單獨安裝：`python3 install.py --tool codex --skill Miffy-EVO`，Claude 改 `--tool claude`；更新與核對狀態同樣帶上 `--skill Miffy-EVO`。每個 Skill 有獨立的安裝紀錄，只同步選定的 Skill，不會覆蓋另一個。
 - 安裝程式：[install.py](install.py)。需要 Python 3 與 Git；從本 repo clone 到固定本機位置。Codex 使用 `python3 install.py --tool codex`，Claude 使用 `--tool claude`；預設一起安裝 Lin-EVO 與 Miffy-EVO。需要只裝一個時才加 `--skill Lin-EVO` 或 `--skill Miffy-EVO`。新安裝預設連結到來源，不建立副本；既有安裝未指定模式時沿用原模式。將已管理副本改成連結：`python3 install.py --tool codex --skill Lin-EVO --link`（Claude 改 `--tool claude`）；只會轉換未被自行修改的副本。需要獨立副本時加 `--copy`。連結後必須保留 Git 專案在原位置。先加 `--dry-run` 核對。既有未管理副本只能以 `--adopt` 接管與來源完全一致的版本；不同內容會停止，不能直接覆蓋。
 - 更新：`python3 install.py --update --tool codex`（Claude 改 `--tool claude`），預設一起更新兩個 Skill；既有只裝 Lin-EVO 的管理副本，下次更新會連帶安裝 Miffy-EVO。連結模式每輪工作前先安全更新 Git 來源並重讀，不需要額外複製。複製模式仍由 AI 依 SKILL.md 更新並重讀；不是背景服務。只允許乾淨 main 與指定 origin 的 fast-forward。斷網、來源或副本有修改、分歧時會明確回報，不宣稱已最新。
 - `--status` 只核對連結目標或來源與安裝副本，不連網；`--dry-run` 不寫檔也不更新遠端。安裝不保留舊副本備份，不影響其他 Skill。複製安裝以雜湊核對，已修改副本會保留並停止。

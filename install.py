@@ -25,6 +25,16 @@ REMOTES = {'https://github.com/world-yingcen/lin-skill.git',
            'git@github.com:world-yingcen/lin-skill.git'}
 
 
+def source_path(root, skill):
+    manifest_name(skill)
+    config = root / 'skill-sources.json'
+    if config.is_file():
+        paths = json.loads(config.read_text())
+        if skill in paths:
+            return (root / paths[skill]).resolve()
+    return root / skill
+
+
 def hashes(root):
     result = {}
     for item in sorted(root.rglob('*')):
@@ -50,7 +60,7 @@ def checked_manifest(root, base, adopt=False, skill='Lin-EVO'):
     if info and Path(info.get('source', '')).resolve() != root.resolve():
         raise RuntimeError('安裝紀錄屬於其他來源，未覆蓋。')
     if target.is_symlink():
-        if target.resolve() != (root / skill).resolve() or not target.is_dir():
+        if target.resolve() != source_path(root, skill).resolve() or not target.is_dir():
             raise RuntimeError('Skill 捷徑失效或指向其他來源，保留現況。')
         if info and info.get('mode') == 'link':
             return info
@@ -64,12 +74,14 @@ def checked_manifest(root, base, adopt=False, skill='Lin-EVO'):
         if info:
             if actual != info.get('hashes'):
                 raise RuntimeError('本機 Skill 有修改，保留現況，請先核對差異。')
-        elif not adopt or actual != hashes(root / skill):
+        elif not adopt or actual != hashes(source_path(root, skill)):
             raise RuntimeError('既有 Skill 未受管理；僅能用 --adopt 接管與來源完全一致的副本。')
     return info
 
 
 def update_source(root):
+    if any(source_path(root, skill).resolve() != (root / skill).resolve() for skill in SKILLS):
+        raise RuntimeError('Skill 已拆分至外部資料夾，舊整包 Git 更新已停用；請先設定各自的更新來源。本機安裝與同步仍可使用。')
     if Path(git(root, 'rev-parse', '--show-toplevel')).resolve() != root.resolve():
         raise RuntimeError('必須使用獨立 lin-skill clone，不在案件或上層 repo 更新。')
     if git(root, 'remote', 'get-url', 'origin') not in REMOTES:
@@ -87,7 +99,7 @@ def update_source(root):
 
 def install(root, base, adopt=False, dry_run=False, skill='Lin-EVO', mode=None):
     manifest_name(skill)
-    source = root / skill
+    source = source_path(root, skill)
     if not (source / 'SKILL.md').is_file() or not (source / 'references').is_dir():
         raise RuntimeError('來源缺少完整 Skill。')
     if base.resolve() in {root.resolve(), source.resolve()} or source.resolve() in base.resolve().parents:
@@ -113,7 +125,7 @@ def install(root, base, adopt=False, dry_run=False, skill='Lin-EVO', mode=None):
             shutil.copytree(source, stage / 'new', ignore=shutil.ignore_patterns('.DS_Store', '__pycache__', '*.pyc'))
         if hashes(stage / 'new') != desired:
             raise RuntimeError('來源在複製期間變更，未替換。')
-        record = {'source': str(root.resolve()), 'mode': mode}
+        record = {'source': str(root.resolve()), 'skill_path': str(source.resolve()), 'mode': mode}
         if mode == 'copy':
             record['hashes'] = desired
         (stage / 'manifest').write_text(json.dumps(record, ensure_ascii=False, indent=2) + '\n')
@@ -161,7 +173,7 @@ def migrate_legacy(root, base, selected, dry_run=False):
                 raise RuntimeError('舊捷徑指向其他來源，未改名。')
         elif not old.is_dir() or hashes(old) != info.get('hashes'):
             raise RuntimeError('舊副本有修改或缺漏，保留現況：' + str(old))
-        if not (root / skill / 'SKILL.md').is_file():
+        if not (source_path(root, skill) / 'SKILL.md').is_file():
             raise RuntimeError('改名後來源缺漏：' + skill)
         plans.append((skill, old, old_record, target, record, info))
     if dry_run:
@@ -173,7 +185,7 @@ def migrate_legacy(root, base, selected, dry_run=False):
         try:
             if info.get('mode') == 'link':
                 target.unlink()
-                target.symlink_to((root / skill).resolve(), target_is_directory=True)
+                target.symlink_to(source_path(root, skill).resolve(), target_is_directory=True)
             old_record.rename(record)
         except Exception:
             if target.is_symlink():
@@ -213,7 +225,7 @@ def main():
                 info = checked_manifest(root, base, skill=skill)
                 if not info or not (base / skill).is_dir():
                     raise RuntimeError(skill + ' 未安裝或缺少管理紀錄。')
-                if hashes(base / skill) != hashes(root / skill):
+                if hashes(base / skill) != hashes(source_path(root, skill)):
                     raise RuntimeError(skill + ' 來源已變更，副本待同步（尚未檢查遠端）。')
             print('來源／安裝內容一致（捷徑直接讀來源）；此狀態不代表已檢查遠端最新版本。')
         elif args.update and not args.dry_run:
@@ -232,7 +244,7 @@ def main():
         else:
             # Check every selected copy before replacing any of them.
             for skill in selected:
-                source = root / skill
+                source = source_path(root, skill)
                 if not (source / 'SKILL.md').is_file() or not (source / 'references').is_dir():
                     raise RuntimeError(skill + ' 來源缺少完整 Skill。')
                 checked_manifest(root, base, args.adopt, skill)
