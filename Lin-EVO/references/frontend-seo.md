@@ -19,8 +19,8 @@
 
 ## 正式站與工程師的核對邊界
 
-- 切版端保留校稿站 noindex，不因完成 SEO 清單就自行解除；正式站需要索引的頁面，上線時由工程師核對並移除不適用的 noindex。robots.txt 阻擋爬取不等於禁止索引，也不能讓爬蟲讀到被阻擋頁面的 noindex。
-- canonical、正式 URL／轉址、HTTP 狀態、sitemap、robots.txt、語系 hreflang、結構化資料與 Search Console 由本案平台／工程師核對。切版端整理所需頁面、內容與未定欄位，已有平台設定就保留，不自行猜正式網域、替每頁加同一首頁 canonical 或填不存在的商品評價。
+- 一般靜態校稿站需防止索引時，沿用案件既有的環境或部署設定，不因完成 SEO 清單就自行解除。**採 evomni-html 整站 HTML 匯入時，匯入包內不手寫 meta robots／noindex、canonical、hreflang 或 JSON-LD；平台會正式輸出，校稿環境的防索引設定不得混進交付包。**其他流程依案件契約處理。robots.txt 阻擋爬取不等於禁止索引，也不能讓爬蟲讀到被阻擋頁面的 noindex。
+- canonical、正式 URL／轉址、HTTP 狀態、sitemap、robots.txt、語系 hreflang、結構化資料與 Search Console 由本案平台／工程師核對。切版端整理所需頁面、內容與未定欄位；一般流程已有平台設定就保留，整站 HTML 流程依當次工程師套件移除不應隨包匯入的手寫輸出。不自行猜正式網域、替每頁加同一首頁 canonical 或填不存在的商品評價。
 - 本地預覽通過不代表正式站已能被索引、後台輸出的 title／h1 正確或搜尋排名已改善；交付時分開記錄。
 
 ## 逐頁校稿與交付

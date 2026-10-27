@@ -1,4 +1,5 @@
 import importlib.util
+import json
 from pathlib import Path
 import subprocess
 import tempfile
@@ -115,6 +116,27 @@ class InstallerTest(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             m.install(self.root, self.base, skill='Miffy-EVO')
         self.assertEqual(p.read_text(), 'user changes')
+
+    def test_external_miffy_source_uses_config_and_records_path(self):
+        external = Path(self.tmp.name) / 'Miffy-EVO'
+        (external / 'references').mkdir(parents=True)
+        (external / 'SKILL.md').write_text('external Miffy')
+        (self.root / m.SOURCE_CONFIG).write_text(json.dumps({'Miffy-EVO': '../Miffy-EVO'}))
+        m.install(self.root, self.base, skill='Miffy-EVO', mode='link')
+        self.assertEqual((self.base / 'Miffy-EVO').resolve(), external.resolve())
+        record = json.loads((self.base / m.manifest_name('Miffy-EVO')).read_text())
+        self.assertEqual(Path(record['skill_path']), external.resolve())
+        self.assertEqual(m.checked_manifest(self.root, self.base, skill='Miffy-EVO')['mode'], 'link')
+
+    def test_external_miffy_replaces_managed_legacy_link(self):
+        self.bundle_source()
+        m.install(self.root, self.base, skill='Miffy-EVO', mode='link')
+        external = Path(self.tmp.name) / 'Miffy-EVO'
+        (external / 'references').mkdir(parents=True)
+        (external / 'SKILL.md').write_text('external Miffy')
+        (self.root / m.SOURCE_CONFIG).write_text(json.dumps({'Miffy-EVO': '../Miffy-EVO'}))
+        m.install(self.root, self.base, skill='Miffy-EVO', mode='link')
+        self.assertEqual((self.base / 'Miffy-EVO').resolve(), external.resolve())
 
     def bundle_source(self):
         (self.root / 'Miffy-EVO/references').mkdir(parents=True)

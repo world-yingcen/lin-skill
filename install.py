@@ -12,6 +12,7 @@ import tempfile
 
 MANIFEST = '.Lin-EVO-install.json'
 SKILLS = ('Lin-EVO', 'Miffy-EVO')
+SOURCE_CONFIG = 'skill-sources.json'
 # Old names are only accepted for migration from previously managed installs.
 LEGACY = {'Lin-EVO': 'lin-frontend', 'Miffy-EVO': 'miffy'}
 
@@ -23,6 +24,26 @@ def manifest_name(skill):
 REMOTES = {'https://github.com/world-yingcen/lin-skill.git',
            'https://github.com/world-yingcen/lin-skill',
            'git@github.com:world-yingcen/lin-skill.git'}
+MIFFY_REMOTES = {'https://github.com/world-yingcen/Miffy-EVO.git',
+                 'https://github.com/world-yingcen/Miffy-EVO',
+                 'git@github.com:world-yingcen/Miffy-EVO.git'}
+REMOTE_BY_SKILL = {'Lin-EVO': REMOTES, 'Miffy-EVO': MIFFY_REMOTES}
+
+
+def source_path(root, skill):
+    """Resolve one Skill source, allowing a local split-repo mapping."""
+    manifest_name(skill)
+    configured = {}
+    config = root / SOURCE_CONFIG
+    if config.is_file():
+        configured = json.loads(config.read_text())
+        if not isinstance(configured, dict):
+            raise RuntimeError(SOURCE_CONFIG + ' 必須是 JSON 物件。')
+    value = configured.get(skill, skill)
+    if not isinstance(value, str) or not value.strip():
+        raise RuntimeError(SOURCE_CONFIG + ' 的 ' + skill + ' 路徑無效。')
+    path = Path(value).expanduser()
+    return (path if path.is_absolute() else root / path).resolve()
 
 
 def hashes(root):
@@ -47,14 +68,16 @@ def checked_manifest(root, base, adopt=False, skill='Lin-EVO'):
     target = base / skill
     record = base / manifest_name(skill)
     info = json.loads(record.read_text()) if record.exists() else None
+    desired_source = source_path(root, skill)
     if info and Path(info.get('source', '')).resolve() != root.resolve():
         raise RuntimeError('安裝紀錄屬於其他來源，未覆蓋。')
+    recorded_source = Path(info.get('skill_path', root / skill)).resolve() if info else None
     if target.is_symlink():
-        if target.resolve() != (root / skill).resolve() or not target.is_dir():
+        if not target.is_dir():
             raise RuntimeError('Skill 捷徑失效或指向其他來源，保留現況。')
-        if info and info.get('mode') == 'link':
+        if info and info.get('mode') == 'link' and target.resolve() == recorded_source:
             return info
-        if not info and adopt:
+        if not info and adopt and target.resolve() == desired_source:
             return None
         raise RuntimeError('Skill 捷徑與安裝紀錄不符；未管理的同來源捷徑可用 --adopt 接管。')
     if info and info.get('mode') == 'link' and target.exists():
@@ -64,16 +87,16 @@ def checked_manifest(root, base, adopt=False, skill='Lin-EVO'):
         if info:
             if actual != info.get('hashes'):
                 raise RuntimeError('本機 Skill 有修改，保留現況，請先核對差異。')
-        elif not adopt or actual != hashes(root / skill):
+        elif not adopt or actual != hashes(desired_source):
             raise RuntimeError('既有 Skill 未受管理；僅能用 --adopt 接管與來源完全一致的副本。')
     return info
 
 
-def update_source(root):
+def update_source(root, allowed_remotes=REMOTES):
     if Path(git(root, 'rev-parse', '--show-toplevel')).resolve() != root.resolve():
         raise RuntimeError('必須使用獨立 lin-skill clone，不在案件或上層 repo 更新。')
-    if git(root, 'remote', 'get-url', 'origin') not in REMOTES:
-        raise RuntimeError('origin 不是指定的 Lin-EVO repo，未更新。')
+    if git(root, 'remote', 'get-url', 'origin') not in allowed_remotes:
+        raise RuntimeError('origin 不是指定的 Skill repo，未更新。')
     if git(root, 'branch', '--show-current') != 'main':
         raise RuntimeError('來源不在 main，保留目前分支。')
     if git(root, 'status', '--porcelain'):
@@ -87,7 +110,7 @@ def update_source(root):
 
 def install(root, base, adopt=False, dry_run=False, skill='Lin-EVO', mode=None):
     manifest_name(skill)
-    source = root / skill
+    source = source_path(root, skill)
     if not (source / 'SKILL.md').is_file() or not (source / 'references').is_dir():
         raise RuntimeError('來源缺少完整 Skill。')
     if base.resolve() in {root.resolve(), source.resolve()} or source.resolve() in base.resolve().parents:
@@ -113,7 +136,7 @@ def install(root, base, adopt=False, dry_run=False, skill='Lin-EVO', mode=None):
             shutil.copytree(source, stage / 'new', ignore=shutil.ignore_patterns('.DS_Store', '__pycache__', '*.pyc'))
         if hashes(stage / 'new') != desired:
             raise RuntimeError('來源在複製期間變更，未替換。')
-        record = {'source': str(root.resolve()), 'mode': mode}
+        record = {'source': str(root.resolve()), 'skill_path': str(source), 'mode': mode}
         if mode == 'copy':
             record['hashes'] = desired
         (stage / 'manifest').write_text(json.dumps(record, ensure_ascii=False, indent=2) + '\n')
@@ -213,7 +236,7 @@ def main():
                 info = checked_manifest(root, base, skill=skill)
                 if not info or not (base / skill).is_dir():
                     raise RuntimeError(skill + ' 未安裝或缺少管理紀錄。')
-                if hashes(base / skill) != hashes(root / skill):
+                if hashes(base / skill) != hashes(source_path(root, skill)):
                     raise RuntimeError(skill + ' 來源已變更，副本待同步（尚未檢查遠端）。')
             print('來源／安裝內容一致（捷徑直接讀來源）；此狀態不代表已檢查遠端最新版本。')
         elif args.update and not args.dry_run:
@@ -221,7 +244,18 @@ def main():
             records = [checked_manifest(root, base, skill=skill) for skill in selected]
             if not any(records):
                 raise RuntimeError('先完成安裝，再使用 --update。')
-            update_source(root)
+            updated = set()
+            for skill in selected:
+                source = source_path(root, skill)
+                repo = (root.resolve() if source == (root / skill).resolve()
+                        else Path(git(source, 'rev-parse', '--show-toplevel')).resolve())
+                if repo in updated:
+                    continue
+                if repo == root.resolve():
+                    update_source(repo)
+                else:
+                    update_source(repo, REMOTE_BY_SKILL[skill])
+                updated.add(repo)
             # Run the updated installer, even if source HEAD did not change.
             command = [sys.executable, str(root / 'install.py'), '--target', str(base)]
             if args.skill:
@@ -232,7 +266,7 @@ def main():
         else:
             # Check every selected copy before replacing any of them.
             for skill in selected:
-                source = root / skill
+                source = source_path(root, skill)
                 if not (source / 'SKILL.md').is_file() or not (source / 'references').is_dir():
                     raise RuntimeError(skill + ' 來源缺少完整 Skill。')
                 checked_manifest(root, base, args.adopt, skill)

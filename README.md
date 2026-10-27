@@ -14,7 +14,7 @@
 | 已有靜態網頁，要轉成 EVO 匯入包 | Miffy-EVO |
 | 匯入後畫面、圖片或互動不一致 | Miffy-EVO |
 
-安裝 Lin-EVO 套件會一起安裝 Lin-EVO 與 Miffy-EVO。兩個工具接續同一案件，不需要重新建立設計或重做網站。
+維護者可用同一安裝器管理 Lin-EVO 與 Miffy-EVO，但兩者可由不同 Git repo 提供；實際來源以本機安裝紀錄與來源設定為準。兩個工具接續同一案件，不需要重新建立設計或重做網站。
 
 完整流程：**安裝 → 確認案件匯入方式與套件 → Lin-EVO 切版並完成編輯標記 → 工具檢查、預覽與修正 → 客戶確認 → Miffy-EVO 最終檢查與打包 → 授權匯入與後台／前台驗證。**
 
@@ -24,7 +24,7 @@
 
 ### 在本機用 Codex 或 Claude Code
 
-請 Lin-EVO／維護者協助安裝套件，告知你用的是 Codex 還是 Claude Code。安裝時兩個 Skill 會一起處理，你不用分開找 Miffy-EVO。
+請 Lin-EVO／維護者協助安裝套件，告知你用的是 Codex 還是 Claude Code。維護者會依本機來源設定安裝兩個 Skill，你不用自行判斷 repo 位置。
 
 重新開啟 AI 工具，貼上：
 
@@ -252,12 +252,12 @@ EVO 頁面：（網址；問題發生在畫布或前台）
 以下只給維護人員，設計師不用閱讀：
 
 - 工作規範：[Lin-EVO/SKILL.md](Lin-EVO/SKILL.md)。
-- Miffy-EVO 規範：[Miffy-EVO/SKILL.md](Miffy-EVO/SKILL.md)。單獨安裝：`python3 install.py --tool codex --skill Miffy-EVO`，Claude 改 `--tool claude`；更新與核對狀態同樣帶上 `--skill Miffy-EVO`。每個 Skill 有獨立的安裝紀錄，只同步選定的 Skill，不會覆蓋另一個。
-- 安裝程式：[install.py](install.py)。需要 Python 3 與 Git；從本 repo clone 到固定本機位置。Codex 使用 `python3 install.py --tool codex`，Claude 使用 `--tool claude`；預設一起安裝 Lin-EVO 與 Miffy-EVO。需要只裝一個時才加 `--skill Lin-EVO` 或 `--skill Miffy-EVO`。新安裝預設連結到來源，不建立副本；既有安裝未指定模式時沿用原模式。將已管理副本改成連結：`python3 install.py --tool codex --skill Lin-EVO --link`（Claude 改 `--tool claude`）；只會轉換未被自行修改的副本。需要獨立副本時加 `--copy`。連結後必須保留 Git 專案在原位置。先加 `--dry-run` 核對。既有未管理副本只能以 `--adopt` 接管與來源完全一致的版本；不同內容會停止，不能直接覆蓋。
-- 更新：`python3 install.py --update --tool codex`（Claude 改 `--tool claude`），預設一起更新兩個 Skill；既有只裝 Lin-EVO 的管理副本，下次更新會連帶安裝 Miffy-EVO。連結模式每輪工作前先安全更新 Git 來源並重讀，不需要額外複製。複製模式仍由 AI 依 SKILL.md 更新並重讀；不是背景服務。只允許乾淨 main 與指定 origin 的 fast-forward。斷網、來源或副本有修改、分歧時會明確回報，不宣稱已最新。
+- Miffy-EVO 規範以其獨立來源為準；本 repo 內若仍有舊目錄，只供舊安裝遷移，不作為新版工程師套件來源。單獨安裝：`python3 install.py --tool codex --skill Miffy-EVO`，Claude 改 `--tool claude`。每個 Skill 有獨立安裝紀錄，紀錄會保存實際 `skill_path`。
+- 安裝程式：[install.py](install.py)。需要 Python 3 與 Git；從本 repo clone 到固定本機位置。Lin／Miffy 分開維護時，先核對 repo 內的 `skill-sources.json` 是否指向兩個實際來源；相對路徑以本 repo 為基準。Codex 使用 `python3 install.py --tool codex`，Claude 使用 `--tool claude`；需要只裝一個時加 `--skill Lin-EVO` 或 `--skill Miffy-EVO`。新安裝預設連結到各自來源；既有安裝未指定模式時沿用原模式。已管理副本改成連結時只會轉換未被自行修改的內容；需要獨立副本時加 `--copy`。先加 `--dry-run` 核對。
+- 更新：Lin-EVO 可依其規範用 `--update --skill Lin-EVO` 安全更新。Miffy-EVO 的工程師套件採人工替換；人工更新後用不帶 `--update` 的安裝指令同步。只有在 Miffy 獨立 Git 乾淨、遠端已確認且確實要拉取其規範更新時，才對 Miffy 使用 `--update --skill Miffy-EVO`。斷網、來源或副本有修改、分歧時保留現況並明確回報。
 - `--status` 只核對連結目標或來源與安裝副本，不連網；`--dry-run` 不寫檔也不更新遠端。安裝不保留舊副本備份，不影響其他 Skill。複製安裝以雜湊核對，已修改副本會保留並停止。
-- 此 repo 是 Lin-EVO 共用規範唯一來源。整體視覺與高效另安裝本 Skill，只保存方案差異；整站 HTML 契約由人工更新的 `Miffy-EVO/evomni-html/` 提供；既有 JSON 使用的 evomni-page-composer 資料另行取得。
-- 本 repo 的 `Miffy-EVO/evomni-html/` 保留工程師提供的規範、範例與檢查器；範例不等於客戶網站基底。交付／安裝前確認該資料夾已包含在成果內，不能只把它留在維護者的未追蹤檔案中就宣稱同事可取得。本包不含客戶素材，也不含整體視覺提案流程。平台接入仍依工程師規格，未經實際轉檔不可宣稱已驗證。
+- 此 repo 是 Lin-EVO 共用規範與安裝管理來源。整體視覺與高效只保存方案差異；整站 HTML 契約由 Miffy-EVO 獨立來源內人工更新的 `evomni-html/` 提供；既有 JSON 使用的 evomni-page-composer 資料另行取得。
+- 交付／安裝前確認實際 Miffy 來源含完整 `evomni-html/` 規範、範例與檢查器；不能以 lin-skill 內的歷史副本或已產生的舊 ZIP 宣稱同事已取得新版。本包不含客戶素材，也不含整體視覺提案流程。平台接入仍依工程師規格，未經實際轉檔不可宣稱已驗證。
 
 ## Skill 改名
 
