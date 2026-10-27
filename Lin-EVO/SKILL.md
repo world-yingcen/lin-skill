@@ -5,11 +5,11 @@ description: 依 Lin-EVO 切版規範實作、修改與校稿品牌及企業網�
 
 # Lin-EVO 網頁切版與校稿
 
-## 本機來源位置（2026-10-22）
+## 來源與本機安裝位置
 
-本 Skill 位於 `/Users/wd-t160/LINS/git/skills/lin-skill/Lin-EVO`，已搬回共用安裝器來源資料夾。實際路徑依 `skill-sources.json` 與安裝紀錄的 `skill_path` 核對；Codex／Claude 使用連結模式直接讀取此處。
+本 Skill 由 Lin-EVO repo 維護；實際來源以目前工具 Skills 目錄內的 `.Lin-EVO-install.json` 為準，`source` 指向安裝器／來源管理 repo，`skill_path` 指向本 Skill。來源管理 repo 有 `skill-sources.json` 時依其設定解析，不照抄其他電腦的絕對路徑，也不假設安裝一定採連結模式。
 
-Miffy-EVO 目前仍在外層，因此本機仍是部分拆分配置，舊整包 Git 更新暫停。本機讀取與同步可繼續；不要執行下方原整包配置的 `--update` 或宣稱已確認遠端最新版。待所有 Skill 回到原結構或另行設定更新來源後，再恢復對應更新流程。
+Miffy-EVO 由獨立 repo 維護。安裝器可依 `skill-sources.json` 分別定位兩個來源；只在對應 Git 乾淨、位於 `main`、origin 正確且能 fast-forward 時更新指定 Skill。更新 Lin-EVO 不代表 Miffy-EVO 或其工程師套件已更新，反之亦然。
 
 把使用者視為網頁設計師／前端實作者。以繁體中文與台灣用語溝通，先做出完整可用的授權成果，再討論細節；說明問題時直接給可執行的修正。
 
