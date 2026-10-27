@@ -94,6 +94,17 @@ class InstallerTest(unittest.TestCase):
         m.install(self.root, self.base, dry_run=True)
         self.assertFalse(self.base.exists())
 
+    def test_relocated_source_installs_and_reads_live_changes(self):
+        import json
+        external = self.root.parent / 'Lin-EVO'
+        (self.root / 'Lin-EVO').rename(external)
+        (self.root / 'skill-sources.json').write_text(json.dumps({'Lin-EVO': '../Lin-EVO'}))
+        m.install(self.root, self.base, mode='link')
+        self.assertEqual((self.base / 'Lin-EVO').resolve(), external.resolve())
+        (external / 'SKILL.md').write_text('moved live content')
+        self.assertEqual((self.base / 'Lin-EVO/SKILL.md').read_text(), 'moved live content')
+        self.assertEqual(self.run_cli('--skill', 'Lin-EVO', '--status'), 0)
+
     def test_miffy_install_isolated_from_lin(self):
         (self.root / 'Miffy-EVO/references').mkdir(parents=True)
         (self.root / 'Miffy-EVO/SKILL.md').write_text('Miffy-EVO version 1')

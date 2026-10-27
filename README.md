@@ -1,5 +1,8 @@
 # Lin-EVO＋Miffy-EVO｜設計師操作手冊
 
+> 本機位置（2026-10-22）：[Lin-EVO](Lin-EVO/SKILL.md) 已搬回本資料夾內；[Miffy-EVO](../Miffy-EVO/SKILL.md) 仍在上一層。`skill-sources.json` 記錄實際位置，Codex／Claude 的連結依此管理。部分拆分期間，本機同步可用，舊整包 Git 更新仍暫停；下方整包更新說明僅適用完整原始配置。
+
+
 更新：2026-10-20 · 適用 Codex、Claude Code 與 Claude Skills
 
 這份手冊帶你從設計稿、網站校稿一路做到 EVO 匯入交付。你負責提供設計、素材與需求，以及確認畫面；AI 負責讀取規範、處理程式、檢查結果與整理檔案。

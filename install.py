@@ -184,7 +184,7 @@ def migrate_legacy(root, base, selected, dry_run=False):
                 raise RuntimeError('舊捷徑指向其他來源，未改名。')
         elif not old.is_dir() or hashes(old) != info.get('hashes'):
             raise RuntimeError('舊副本有修改或缺漏，保留現況：' + str(old))
-        if not (root / skill / 'SKILL.md').is_file():
+        if not (source_path(root, skill) / 'SKILL.md').is_file():
             raise RuntimeError('改名後來源缺漏：' + skill)
         plans.append((skill, old, old_record, target, record, info))
     if dry_run:
@@ -196,7 +196,7 @@ def migrate_legacy(root, base, selected, dry_run=False):
         try:
             if info.get('mode') == 'link':
                 target.unlink()
-                target.symlink_to((root / skill).resolve(), target_is_directory=True)
+                target.symlink_to(source_path(root, skill).resolve(), target_is_directory=True)
             old_record.rename(record)
         except Exception:
             if target.is_symlink():
