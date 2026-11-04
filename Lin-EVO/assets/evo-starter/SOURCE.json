@@ -10,7 +10,7 @@
     "scss/evomni-root.scss": "ba5769290ca3e711d18dbc8232db2215b0a7c2ae6b99bf123efd3c7add53a55b",
     "scss/_common.scss": "4eca9efbc96b0f9afc6a92deabb73f9c7cfadb280444c749c5306ff4159ee1bd",
     "scss/_footer.scss": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "scss/_header.scss": "87f76933ad170c9cca30108f9293681ae2202773a55bd57433dda131d46cb21c",
+    "scss/_header.scss": "296dd6f9f392838e950d2f9054122472afde7094e733d9f605bb6427fc455651",
     "image/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/page-composer-state.json": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
@@ -53,6 +53,21 @@
       "date": "2026-11-04",
       "file": "scss/_header.scss",
       "change": "依使用者要求補齊所有 var() 備用值，取自既有基底預設；Header 另接上既有輔色變數的一般、hover、active／focus-visible 狀態。"
+    },
+    {
+      "date": "2026-11-04",
+      "file": "scss/_header.scss",
+      "change": "使用者改指定完整 Header（含按鈕）以 evo266200 為唯一基底；從系統及案件 CSS 依序整理，保留 RWD，Header 變數限於 .header，移除 important 並補 fallback。原始 HTML/CSS 另存 assets/header-evo266200 供核對。"
+    },
+    {
+      "date": "2026-11-04",
+      "file": "scss/_header.scss",
+      "change": "使用者改指定完整 Header（含按鈕）以 evo266200 為唯一基底；從系統及案件 CSS 依序整理，保留 RWD，Header 變數限於 .header，移除 important 並補 fallback。原始 HTML/CSS 另存 assets/header-evo266200 供核對。"
+    },
+    {
+      "date": "2026-11-04",
+      "file": "scss/_header.scss",
+      "change": "漢堡切換統一 1199px 以下；同步來源 1512px 及重複 1200px 的收合規則，1200px 起使用桌機導覽。其他外觀斷點保留。"
     }
   ]
 }

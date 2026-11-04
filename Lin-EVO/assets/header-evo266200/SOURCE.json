@@ -1,0 +1,18 @@
+{
+  "source_url": "http://192.168.168.99/php83/sites/evo266200/public/zh-tw",
+  "captured_on": "2026-11-04",
+  "purpose": "原始 Header 與完整來源 CSS 僅供核對；新案替換客戶文字、連結、Logo、媒體及實例識別。",
+  "files": {
+    "system.css": "94564b820d4d6e613b83666aebe025a7e84702787b0409ba699d0cddf696e4c5",
+    "site.css": "b9132db237585050216a3ad598f6ddc04dc4212ded6036e8acd49460184a6508",
+    "header.html": "e028d53264fd34bb33ca207c25953b1b204f9f644e81f19cecbe4eafc1781353"
+  },
+  "original_header_sha256": "e12a30eea163461bb84006255eab270b7f69280a280180bc4507272e62eeed0b",
+  "local_adjustments": [
+    {
+      "date": "2026-11-04",
+      "file": "header.html",
+      "change": "依使用者指定，data-rwdpointer 從 1512 改為 1199；system.css/site.css 保留來源原始快照，實作使用已調整的 _header.scss。"
+    }
+  ]
+}

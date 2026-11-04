@@ -1,6 +1,6 @@
 # LIN 指定切版基底
 
-使用者於 2026-11-04 指定：LIN 切版開始與檔案檢查都必須使用 EVO-common-css 的 `06-切版` 基底。為讓本機與 Claude 上傳包使用同一份資料，基底已完整內附於 [assets/evo-starter/06-切版](../assets/evo-starter/06-切版)，內附版含已記錄的 LIN 調整（移除 !important、加入 Header 跟隨按鈕完整 CSS、互動狀態與 RWD）；原始與目前逐檔雜湊及調整紀錄見 [SOURCE.json](../assets/evo-starter/SOURCE.json)。
+使用者於 2026-11-04 指定：LIN 切版開始與檔案檢查都必須使用 EVO-common-css 的 `06-切版` 基底。為讓本機與 Claude 上傳包使用同一份資料，基底已完整內附於 [assets/evo-starter/06-切版](../assets/evo-starter/06-切版)，內附版含已記錄的 LIN 調整（移除 !important、整個 Header 改以 evo266200 HTML／CSS 為基底，包含按鈕、互動狀態與 RWD）；原始與目前逐檔雜湊及調整紀錄見 [SOURCE.json](../assets/evo-starter/SOURCE.json)。
 
 維護來源為 `/Users/wd-t160/LINS/git/EVO-common-css/06-切版`；日常使用先讀 Skill 內附快照，不依賴該本機絕對路徑，也不宣稱快照自動跟隨來源更新。維護者更新時核對差異，保留必要空檔與資料夾，同步快照及來源紀錄後重新打包。不要在客戶案件工作中回寫來源庫或 Skill 基底。
 
@@ -25,3 +25,5 @@
 LIN 獨立 ZIP 必須包含整個 `assets/evo-starter/`，保留必要空檔與 `image/.gitkeep`，排除 `.DS_Store`、`.git`、node_modules；核對 SOURCE.json 雜湊與相對參考。上傳包內附基底不需要另外啟用 Skill，仍只保留 LIN 一份入口 SKILL.md。
 
 維護者固定使用來源管理 repo 的 `scripts/build_claude_upload.py --output <新ZIP路徑>`；不依賴臨時腳本或舊 ZIP 重建。基底變更後先核對並更新 SOURCE.json，不為通過檢查跳過雜湊驗證。
+
+Header 的原始 HTML 與兩層來源 CSS 另附於 [header-evo266200](../assets/header-evo266200)，切版及檢查都依 [Header 唯一基底規範](evo-header-reference.md) 使用；原始快照的他案內容不得直接發布。

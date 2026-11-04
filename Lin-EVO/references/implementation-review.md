@@ -95,6 +95,6 @@ Header 跟隨按鈕另依 [系統結構](evo-header-reference.md#按鈕與語系
 
 Demo 與正式版分開驗收：Demo 不真的送出，正式版排除模擬檔案且只有原生處理器；需改詢問車／搜尋頁公版 HTML／JS，或分類選單手機版下拉公版邏輯的缺口列工程師待處理；產品頁新增分組不屬於此類缺口。專案有產頁腳本時同步修改，並更新唯一的 `工程師交接說明.md`。
 
-Header 樣式校稿另依 [現行 Header 樣式參考](evo-header-reference.md#現行-header-樣式參考2026-11-04) 核對系統與案件 CSS 載入順序、頁首／scroll-fixed／menu-open 最終背景、Logo 尺寸、data-rwdpointer 與 CSS 斷點一致，以及跟隨按鈕仍使用 LIN 已確認基底。不得只確認 class 存在就判定完成。
+Header 樣式校稿另依 [Header 唯一基底](evo-header-reference.md) 核對系統與案件 CSS 載入順序、頁首／scroll-fixed／menu-open 最終背景、Logo 尺寸、data-rwdpointer 與 CSS 斷點一致，以及跟隨按鈕仍使用 LIN 已確認基底。不得只確認 class 存在就判定完成。
 
 分類側選單依 [left_menu001 優先範本](evo-left-menu-reference.md) 核對外層、aside、手機下拉、標題、主／子分類、文字連結與獨立展開按鈕的層級及 data-param；確認外觀改在 CSS，未重建選單或另綁手機操作。實測目前分類、無子分類、長標題與展開遮擋；來源 HTML 的占位標籤不得當成驗收成功。
