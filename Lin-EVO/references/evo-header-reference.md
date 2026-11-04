@@ -11,6 +11,94 @@
 - [共用載入器](https://system62.webtech.com.tw/demo/evo266200/js/shared-layout.js)：載入 Header／Footer 後依序載入 page-builder.js、masada-page-resource.js。
 - [互動程式](https://system62.webtech.com.tw/demo/evo266200/js/masada-page-resource.js)：nav003 與 lang001 初始化、事件與狀態。
 
+## 現行 Header 樣式參考（2026-11-04）
+
+使用者補充指定[目前 EVO 前台](http://192.168.168.99/php83/sites/evo266200/public/zh-tw) 作為整體 Header 樣式寫法參考。本輪實際讀取 HTML、[系統元件 CSS](http://192.168.168.99/php83/sites/evo266200/public/page-resource/7/css?v=26425233ca814bc3d77f8837d5ccc61a) 與[案件共用 CSS](http://192.168.168.99/php83/sites/evo266200/public/css/evomni-root.css?v=1793774870)；取得的是編譯後 CSS，未取得原始 SCSS，也尚未做瀏覽器操作驗收。上方舊示範站 JS 行為屬先前查核，不代表本輪已重新驗證目前前台的 JS。
+
+**整體 Header 的排列與狀態參考 evo266200；跟隨按鈕仍採下方已確認的 evo266125 完整基底與 LIN 補齊規則。** 不因這次新增整體 Header 參考，退回 evo266200 不同的按鈕 padding、固定 height 或圖示尺寸。
+
+### 樣式來源與編寫順序
+
+- 先確認本案系統元件 CSS，再由既有 `_header.scss` 集中寫案件外觀；參考站先載入 page-resource CSS，後載入 evomni-root.css。不要把編譯 CSS 全檔貼進專案、重複帶入 nav003 或語系元件。
+- 沿用 `.header`、`.tpl-header-logo`、`.tpl-nav003`、`.tpl-nav003-nav`、`.tpl-nav003-toggle-menu-btn`、`.tpl-lang001` 的用途與狀態 class。只新增必要案件覆寫，依「共用變數 → 外框與 Logo → 導覽／功能區 → 捲動／展開狀態 → RWD」集中排列。
+- `:root` 使用現有 Navi 變數；每個 var() 都要有合理 fallback。不得複製來源的 `!important`、重複規則、隨機 instance class 或後台畫布專用 `.header-section-block` 樣式來完成前台。
+- 案件顏色、Logo、間距、底線、陰影及斷點可依已確認設計調整；品牌值不是所有網站的固定規格。
+
+### 外框、Logo 與導覽配置
+
+參考站 `.header` 固定在視窗頂端，寬度 100%、z-index 100、flex 垂直置中，以 `--NaviHeight` 控制最小高度；桌機左右 padding 為 3%，1280px 以下改為 2%。Logo 高度依 NaviHeight 減 20px、寬度 auto；導覽以 margin-left:auto 靠右，桌機寬度 70%、justify-content:flex-end。這些比例以案件設計調整，不能為照抄 70% 擠壓功能按鈕。
+
+以下是整理後的 SCSS 寫法示例（非整份 Header，需搭配系統元件與本檔其餘規則）。保留單一有效樣式來源；不把此片段另貼到每頁 CSS：
+
+```scss
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: var(--NaviHeight, 85px);
+  padding: 0 3%;
+  transition: background-color .3s, box-shadow .3s;
+}
+
+.tpl-header-logo {
+  margin-right: 2%;
+
+  .logo-link .img-responsive {
+    width: auto;
+    height: calc(var(--NaviHeight, 85px) - 20px);
+  }
+}
+
+.tpl-nav003 {
+  margin-left: auto;
+  margin-right: 0;
+  width: 70%;
+  justify-content: flex-end;
+}
+
+@media (max-width: 1512px) {
+  .header {
+    height: auto;
+    padding-right: calc(3% + 30px + 1rem);
+  }
+
+  .tpl-nav003-toggle-menu-btn {
+    right: 3%;
+    top: calc((var(--NaviHeight, 85px) - 30px) / 2);
+  }
+
+  .tpl-nav003 {
+    width: 100%;
+  }
+
+  .tpl-nav003-nav.is-open {
+    background: var(--ColorSecondary, #525252);
+    padding-inline: 2rem;
+  }
+}
+```
+
+Logo 原站使用 !important，本規範不沿用。若本案仍有其他高優先級規則，先查 computed style 並回到有效來源整理，不用 !important 壓過去。固定 Header 下的內容與錨點需依案件配置預留空間；首屏刻意疊在主視覺上的設計依設計保留。
+
+### 捲動、選單展開與功能區
+
+- 區分 `.header` 頁首、`.header.scroll-fixed` 捲動後與 `.header.menu-open` 展開狀態。狀態由本案既有程式管理；CSS 不另建立一套同義 class 或重複捲動監聽。
+- 原站另以 `.header::before` 作背景層：absolute、top/left 0、width 100%、初始 height 0、z-index -1，背景為 `--NaviUpBgColor`，scroll-fixed 時 height 100%；以 height .3s ease 過渡，並加陰影。這是參考手法，採用時檢查層級與捲動效能。
+- **不能只貼偽元素就認為捲動背景完成**：原站系統 CSS 還對 scroll-fixed 直接設定半透明白底；案件需明確統一容器背景與偽元素的責任，核對最後生效值。menu-open 的透明背景／取消陰影也需連同偽元素檢查，避免仍有底色殘留。
+- 頁首功能圖示採 `--NaviTextColor`，捲動後依 `--NaviUpTextColor`；互動用相對應 Hover 變數。原站搜尋、語系控制為 50px 正方形，1280px 以下寬度 45px，語系下拉寬 120px、z-index 200；實際尺寸與配色依案件。保留清楚的鍵盤焦點及觸控操作，不只處理 hover。
+- 不將原站搜尋頁／產品頁對 Header 的額外背景色套成全站規則；首內頁有不同背景需求時在案件既有頁型 class 管理並驗收。
+
+### RWD 契約與驗收
+
+- 實際 HTML 的 `data-rwdpointer="1512"` 與 CSS 的 `max-width:1512px` 必須一起調整。小於等於門檻時，系統提供全視窗遮罩、右側滑入面板與漢堡；面板 max-width 400px，漢堡 30px、z-index 250。不要只改案件 CSS 斷點而漏掉系統生成規則與 JS 門檻。
+- 窄版遮罩平時 pointer-events:none，展開時才可接收事件；面板以 translate(100%)／translate(0) 配合 `.is-open` 切換。保留關閉後不擋畫面的行為，確認長選單可捲動、手機瀏覽器高度變動與跨斷點狀態恢復。
+- 650px 以下跟隨按鈕行為依 LIN 已確認按鈕基底處理；Logo、漢堡、搜尋／語系不得被底部 CTA 的規則一併搬動。
+- 實作後至少檢查：頁首、捲動後、選單開／關、斷點兩側、長選單／長文案、首內頁、鍵盤焦點及手機底部遮擋。沒有實際操作或畫面結果時，標示「樣式已實作，互動／視覺待驗」。
+
 ## 結構與識別
 
 ```text
@@ -81,7 +169,7 @@ header.header
 - 使用者提供的輸出另有 `__p="undefined"`；目前未確認它是必要平台契約，範例不主動補造，既有後台輸出也不因本規範擅自清除。
 - 漢堡、語系與其他系統操作按鈕維持各自契約；一般內文連結型按鈕仍依 [統一按鈕結構](html-css-rules.md#連結型按鈕統一結構)。
 
-- 參考站在 650px 以下把 Header CTA 固定到底部；只在本案有此需求且 RWD 在案件範圍內時採用，並處理內容底部留白。不能把購物車或會員按鈕一併搬到底部。
+- 手機 Header CTA 預設沿用 LIN 基底，在 650px 以下固定到底部，並處理內容底部留白；案件已確認不同設計時再調整。實作與驗收仍依案件約定的 RWD 範圍，不因本條擴大工作範圍。不能把購物車或會員按鈕一併搬到底部。
 - 語系沿用 `.tpl-lang001` 與 `data-mode="dropdown-icon"`、`data-show-lang="true"`；地球圖示按鈕開啟 `.lang-dropdown`。原 JS 以 click 切換 `.is-open`、點擊外部關閉，CSS 另提供 hover 展開。
 - 語系連結保留 `data-lang-code`、`data-lang-link`；目前語系以 `.is-active` 與 `aria-current` 表示。連結需使用本案實際語系路由。
 - 來源只有繁中一項，且連結指向內網；未證實跨語系切換。不能複製內網路徑、虛構英文頁，或把選單可展開當成語系功能完成。

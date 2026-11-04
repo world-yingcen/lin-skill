@@ -53,6 +53,8 @@ Lin-EVO 共用工程規範來源為 https://github.com/world-yingcen/lin-skill �
 
 先依 [EVO 範本查核](references/evo-preflight.md) 判斷匯入方式。**採整站 HTML 匯入的案件**，切版前直接讀取本機 `evomni-html` 的版本與規範，在來源完成頁型、可編輯結構、欄位、共用區及資源安排，並於切版階段執行套件檢查；不等 Miffy-EVO 才重建。工程師套件由人工更新，Lin-EVO 不複製規格或鎖版。以下舊平台專用條文與 references 若涉及搜尋、詢問車、選單、FAQ、表單、資料標記、匯入邊界或套件載入，僅適用原流程；整站 HTML 案件以本次讀取的工程師契約為準，其餘視覺、程式品質、SEO 與 RWD 規範照常適用。
 
+**分類側選單優先沿用系統範本**：遇到產品、文章等分類側選單，先讀 [evo266125 left_menu001](references/evo-left-menu-reference.md)，沿用已確認 HTML、class、data 與原生手機下拉操作，再依案件設計調整 CSS，不先自造側選單。這是使用者指定的優先結構，匯入契約衝突時列明差異，不默默換結構。
+
 **FAQ 統一使用系統範本 HTML**：依使用者 2026-11-04 指定，凡製作或修改 FAQ，必讀 [FAQ 統一系統結構](references/evo-faq-reference.md)，沿用 evo266125 的 `tpl-faq001` 層級、標籤、class 與 data 屬性；CSS／SCSS 外觀可改，HTML 結構不另造。此項明確指定優先於上述「FAQ 僅適用舊流程」的概括分流；匯入契約有衝突時列出待工程師確認，不自行改造範本。
 
 **既有舊平台流程的案件**，每個案件都要有搜尋結果頁，首次網站製作時納入必備頁面，不能只做 Header 搜尋按鈕。製作前必讀 [搜尋頁指定參考](references/evo-search-reference.md)，公版 HTML／JS 不修改；CSS 以系統共用參考為基準，可依案件確認需求調整；既有案局部修正若尚未有搜尋頁，列為待補項目，不因局部修正擅自重做整站。
@@ -89,7 +91,7 @@ HTML 的 `<header>` 標籤只用於全站 Navi／主要導覽；其他區塊、�
 | Header、Footer、Nav、內頁與平台功能 | [共用頁面](references/shared-page-rules.md) |
 | EVO 多層分類、共用列表設計所屬層級 | [多層分類的共用列表頁設計](references/shared-page-rules.md#多層分類的共用列表頁設計) |
 | EVO 列表頁／內容頁沿用外框、主列表替換邊界 | [列表頁與內容頁的替換範圍](references/shared-page-rules.md#列表頁與內容頁的替換範圍) |
-| EVO 選單、漢堡、按鈕、語系 | [Header 指定參考](references/evo-header-reference.md) |
+| EVO Header 樣式、捲動狀態、RWD、選單、漢堡、按鈕、語系 | [Header 指定參考](references/evo-header-reference.md) |
 | 連續 marquee | [marquee 指定參考](references/evo-marquee-reference.md) |
 | 內頁 breadcrumb | [breadcrumb001 指定參考](references/evo-breadcrumb-reference.md) |
 | FAQ | [FAQ 統一系統結構](references/evo-faq-reference.md) |
