@@ -1,19 +1,18 @@
-# FAQ 指定寫法｜tpl-faq001
+# FAQ 統一系統結構｜tpl-faq001
 
-使用者於 2026-10-05 指定 FAQ 參照 [禾雅服務相關問題](https://www.hoya-design.com/zh-tw/post/post-puqxkg2k?via=95) 的 `tpl-faq001`。製作 FAQ 時沿用原生 `details / summary`、既有 class、data 屬性與 Q 標記的做法，依本案調整內容與品牌樣式。
+使用者於 2026-11-04 指定 [evo266125 常見問題](http://192.168.168.99/php83/sites/evo266125/public/zh-tw/post/faqs?via=7) 為 FAQ 系統範本。凡 Lin-EVO 製作或修改 FAQ，統一沿用下列 HTML 層級、標籤、必要 class 與 data 屬性；CSS／SCSS 外觀可依案件自由調整，不另做自訂 accordion 結構。此規則取代舊禾雅參考作為目前的結構依據，不限於舊平台流程；不因此批次重寫本輪範圍外的既有頁面。
 
 ## 來源與驗證範圍
 
-已核對參考頁 HTML、[頁面元件 CSS](https://www.hoya-design.com/page-resource/19/css?scope=own) 與後載入的 [共用 CSS](https://www.hoya-design.com/css/evomni-root.css)。頁面載入的 page-resource/117/js 與 page-resource/19/js 未查得 faq001 專用程式；基本收合由原生元素提供，不因此推定所有平台腳本均未介入。本次未進行瀏覽器操作驗收。
+2026-11-04 已唯讀取得指定網址的前台 HTML：`tpl-faq001` 外層內是 `div[data-faq001="true"]`，其直接子層為逐題 `details`，沒有舊範例的空 `title-block`。每題包含 `summary > span` 及答案 `div`，第一題帶 `open`，並有平台輸出的 FAQPage JSON-LD。本次核對 HTML 結構，未執行瀏覽器互動或後台匯入驗收。
 
 ## HTML 結構範例
 
-以下使用示例文案；實作時填入本案真實問答。平台實例 ID 與實例 class 由本案提供，不複製來源的 jtrnu、隨機 ID 或客戶內容。
+以下使用示例文案；實作時填入本案真實問答。平台實例 ID 與實例 class 由本案平台提供；保留本案既有值，不複製來源的 `data-instance-id="impfq1"`／`faq001-impfq1` 或客戶文案，也不自行編造實例識別。
 
 ```html
 <div data-schema="FAQPage" data-schema-collection="mainEntity" data-template-id="faq001" class="tpl-model tpl-faq001 template-wrapper">
   <div data-faq001="true" class="tpl-container card-area">
-    <div class="title-block"></div>
     <details data-schema-item="Question" class="tpl-faq001-card-box card-box" open>
       <summary class="tpl-faq001-card-title card-title">
         <span data-schema-prop="name" class="tpl-faq001-card-title-text card-title-text">第一題問題</span>
@@ -39,18 +38,17 @@
 - 來源 HTML 沒有共用 `name` 群組，不自行加入只能開一題的互斥行為。問題與答案保留在 HTML，不把問答搬到 JS 陣列。
 - `summary` 裡的 span 是範本原有結構，不受自訂 button 純文字規則限制。保留必要 class／data 屬性，答案按已確認文案保留段落與連結。
 
-## 樣式與收合
+## 結構固定、樣式可調
 
-每題有底部分隔線；標題以 padding 留出左側圓形 Q 標記的位置，`summary::marker` 隱藏原生符號。Q 與圓形背景由 `.card-title::before`／`::after` 呈現，並保留實際問題文字在 HTML。
-
-後載入的共用樣式將問題字級設為 `--FontSizeItemTitle`、字重 500、文字色 `--TextColorPrimary`，分隔線採 `--BorderColorPrimary`；`details[open]` 的 Q 標記使用 `--ColorPrimary` 與白字。樣式集中在本案共用 FAQ／內頁 SCSS，沿用上述角色並依本案品牌調整。
-
-來源 CSS 使用 `::details-content` 的 opacity／block-size 過場，搭配 `content-visibility`、`allow-discrete`；答案另有 padding／max-height 的 0.5 秒過場及展開 max-height 3000px。這些是來源實作，不是所有瀏覽器均已驗證的保證。使用時核對本案瀏覽器支援；不支援動畫時保留原生正常收合，長答案不得因固定高度被裁切。減少動態模式停用收合過場，資訊及操作仍完整。
-
-FAQ 收合是元件狀態過場，沿用此原生機制；AOS 只負責 FAQ 整區進場時的淡入淡出，不控制答案收合。若新增 hover 樣式，依 T08 包在元素內的 `@media (hover: hover) and (pointer: fine)`；鍵盤焦點樣式放外面並保持可見。
+- 保留外層 `data-template-id="faq001"`、`data-schema="FAQPage"`、`data-schema-collection="mainEntity"` 與 `template-wrapper tpl-model tpl-faq001`。
+- 保留 `data-faq001`、逐題 `Question`、問題 `name`、答案 `acceptedAnswer.text`／`Answer`，以及範例中各層 class。不改成自訂 `designer-tpl-*` FAQ 取代系統元件。
+- 保持 `details > summary > span` 與答案 div 的層級及順序。問題文字填在既有 span，答案內容填在既有答案容器；可依本案增減題數、填入真實段落與連結，不為標題層級規則擅自把問題 span 換成 h2／h3，或插入新的收合按鈕與包覆層。
+- 字型、字級、色彩、背景、邊框、圓角、留白、寬度、RWD 與展開指示圖示均可用 CSS／SCSS 調整。Q 標記不是固定視覺要求；需要裝飾或圖示時優先使用既有元素的偽元素，不改系統 HTML。
+- 收合使用原生 `details[open]` 狀態，不以自訂 click／open class 另寫一套。保留鍵盤焦點、長答案完整顯示與減少動態模式；過場依案件瀏覽器支援設定，不支援時仍可正常展開閱讀。AOS 只處理區塊進場，不接管答案收合。
+- 整站 HTML 匯入仍核對當次工程師套件的接入方式；若套件與本指定結構有實際衝突，保留範本，列出衝突交工程師確認，不靜默改成另一套 HTML，也不自行新增未支援的匯入標記。
 
 ## 結構化資料與驗收
 
-來源保留 `FAQPage`、`Question`、`acceptedAnswer.text` 的 data-schema 契約，並輸出 FAQPage JSON-LD。正式 EVO 沿用平台輸出，避免另加重複資料；靜態交付如需 JSON-LD，必須與可見問答一致，不能只靠 data 屬性宣稱結構化資料已完成，也不複製他案答案或費用。
+正式 EVO 沿用平台產生的 FAQPage JSON-LD，避免重複輸出；靜態交付如需 JSON-LD，必須與可見問答一致，不能只靠 data 屬性宣稱已完成，也不複製來源站的問題與答案。
 
-交付前實測滑鼠與 Enter／Space 開關、第一題初始狀態、多題展開、長答案、答案連結、焦點可見、減少動態及本案瀏覽器相容性。紀錄前端操作與平台／結構化資料驗證的實際範圍；本參考不自動啟動 RWD 或其他頁面製作。
+交付前核對 HTML 層級、class、data 屬性及本案實例識別，再實測滑鼠與 Enter／Space 收合、第一題初始狀態、多題展開、長答案、答案連結、焦點可見、減少動態及案件要求的 RWD。分別記錄靜態操作、後台編輯與發布後結果；未測部分標待驗。

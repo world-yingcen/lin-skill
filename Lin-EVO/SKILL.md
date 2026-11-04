@@ -41,6 +41,8 @@ Lin-EVO 共用工程規範來源為 https://github.com/world-yingcen/lin-skill �
 
 先讀案件說明、既有修改、實際 HTML／SCSS／JS、Common、共用元件、套件版本、編譯與預覽入口。沿用現有框架、命名及初始化，不為套用規範重寫整份程式。
 
+**樣式規範不能只檢查檔案分工。** 涉及切版、CSS／SCSS 修改或規範校稿時，先讀 [T06 Common／root](references/html-css-rules.md#t06commonroot-與共用樣式)，核對實際變數定義與使用，再處理本輪樣式；完成前依 [Common 與 root 檢核](references/implementation-review.md#common-與-root-檢核) 回報結果。`evomni-root.scss` 的檔案分工與 CSS `:root` 的變數契約是兩項不同檢查，前者通過不代表後者通過。
+
 **開始切版或修改 SCSS 前，必須先檢查、補齊並驗證本案編譯流程**，依 [切版前的編譯設定與驗證](references/html-css-rules.md#切版前的編譯設定與驗證) 執行，不等使用者另外提醒。已有可用流程就沿用；缺少時在案件範圍準備 VSCode 設定，確認存檔編譯、共用／單頁輸出及 HTML 引用。需要安裝擴充功能或改用其他編譯方案時先取得授權；不能操作本機 VSCode 時提供設定檔與操作步驟，記錄待使用者執行及待驗項目，不把設定檔已建立當成編譯已通過。
 
 建立或接續 Git 專案時，確認 repo 根目錄 `.gitignore` 包含 `.DS_Store`，忽略 macOS 在所有子目錄產生的資料夾資訊檔；保留既有規則。已追蹤檔案的處理與交付排除方式見 [實作與校稿](references/implementation-review.md#系統檔案與-git-追蹤)。
@@ -48,6 +50,8 @@ Lin-EVO 共用工程規範來源為 https://github.com/world-yingcen/lin-skill �
 預計使用 EVO 後台的案件，切版前必讀 [EVO 範本查核](references/evo-preflight.md)。由 AI 查工程師套件，在切版時同步實作已核對的逐筆編輯結構與欄位標記，不只列成後續轉檔待辦；同一份來源仍提供完整靜態校稿與互動。設計師不用判斷技術標記；缺契約逐區列待確認。工程師後續處理匯入、必要接入及編輯／儲存／發布驗證，不自動啟動匯入或打包。
 
 先依 [EVO 範本查核](references/evo-preflight.md) 判斷匯入方式。**採整站 HTML 匯入的案件**，切版前直接讀取本機 `evomni-html` 的版本與規範，在來源完成頁型、可編輯結構、欄位、共用區及資源安排，並於切版階段執行套件檢查；不等 Miffy-EVO 才重建。工程師套件由人工更新，Lin-EVO 不複製規格或鎖版。以下舊平台專用條文與 references 若涉及搜尋、詢問車、選單、FAQ、表單、資料標記、匯入邊界或套件載入，僅適用原流程；整站 HTML 案件以本次讀取的工程師契約為準，其餘視覺、程式品質、SEO 與 RWD 規範照常適用。
+
+**FAQ 統一使用系統範本 HTML**：依使用者 2026-11-04 指定，凡製作或修改 FAQ，必讀 [FAQ 統一系統結構](references/evo-faq-reference.md)，沿用 evo266125 的 `tpl-faq001` 層級、標籤、class 與 data 屬性；CSS／SCSS 外觀可改，HTML 結構不另造。此項明確指定優先於上述「FAQ 僅適用舊流程」的概括分流；匯入契約有衝突時列出待工程師確認，不自行改造範本。
 
 **既有舊平台流程的案件**，每個案件都要有搜尋結果頁，首次網站製作時納入必備頁面，不能只做 Header 搜尋按鈕。製作前必讀 [搜尋頁指定參考](references/evo-search-reference.md)，公版 HTML／JS 不修改；CSS 以系統共用參考為基準，可依案件確認需求調整；既有案局部修正若尚未有搜尋頁，列為待補項目，不因局部修正擅自重做整站。
 
@@ -84,7 +88,7 @@ HTML 的 `<header>` 標籤只用於全站 Navi／主要導覽；其他區塊、�
 | EVO 選單、漢堡、按鈕、語系 | [Header 指定參考](references/evo-header-reference.md) |
 | 連續 marquee | [marquee 指定參考](references/evo-marquee-reference.md) |
 | 內頁 breadcrumb | [breadcrumb001 指定參考](references/evo-breadcrumb-reference.md) |
-| FAQ | [tpl-faq001 指定參考](references/evo-faq-reference.md) |
+| FAQ | [FAQ 統一系統結構](references/evo-faq-reference.md) |
 | 每案必備搜尋頁、Header 搜尋導向與結果狀態 | [搜尋頁指定參考](references/evo-search-reference.md) |
 | 產品分類選單、桌機側欄與下拉外觀 | [left_menu001 指定參考](references/evo-left-menu-reference.md) |
 | 電子表單、聯絡我們表單與欄位樣式 | [電子表單指定參考](references/evo-eforms-reference.md) |
