@@ -57,6 +57,10 @@ Lin-EVO 共用工程規範來源為 https://github.com/world-yingcen/lin-skill �
 
 **FAQ 統一使用系統範本 HTML**：依使用者 2026-11-04 指定，凡製作或修改 FAQ，必讀 [FAQ 統一系統結構](references/evo-faq-reference.md)，沿用 evo266125 的 `tpl-faq001` 層級、標籤、class 與 data 屬性；CSS／SCSS 外觀可改，HTML 結構不另造。此項明確指定優先於上述「FAQ 僅適用舊流程」的概括分流；匯入契約有衝突時列出待工程師確認，不自行改造範本。
 
+**隱私權政策統一使用公版**：依使用者 2026-11-04 指定，凡首次製作網站或補做隱私權政策頁，必讀 [隱私權政策公版](references/evo-privacy-reference.md)。政策正文固定放在 `.innerpage-body`，逐字沿用公版內容與順序，只替換公司完整名稱；版型與指定樣式沿用公版，字型、字級、文字色、標題色、間距等已有本案 `:root` 變數者必須接本案變數，不複製參考站品牌值，讓政策頁與當下網站一致。
+
+**所有電子表單統一使用 contact-form 公版 HTML**：依使用者 2026-11-04 指定，只要頁面出現電子表單，不限聯絡我們或其他用途，都必讀 [contact-form 公版結構](references/evo-eforms-reference.md)，沿用 evo266125 的 `.contact-form`、`form.eforms-wrapper`、欄位層級、class、data、驗證及送出結構；只允許用 CSS／SCSS 調整外觀，不改公版 HTML／JS、不自造另一套表單。表單 ID、action、token、欄位、選項及驗證值由本案平台輸出，不跨案複製。此項明確指定不受下方舊平台概括分流限制；若工程師套件有衝突，保留公版並列明差異確認。
+
 **既有舊平台流程的案件**，每個案件都要有搜尋結果頁，首次網站製作時納入必備頁面，不能只做 Header 搜尋按鈕。製作前必讀 [搜尋頁指定參考](references/evo-search-reference.md)，公版 HTML／JS 不修改；CSS 以系統共用參考為基準，可依案件確認需求調整；既有案局部修正若尚未有搜尋頁，列為待補項目，不因局部修正擅自重做整站。
 
 設計稿是主要視覺依據。核對容器、區塊高度、留白、字型與字重、行高、圖片比例與裁切、對齊及互動狀態；有 Figma 或參考圖時實看，不憑文字印象還原。字型需確認實際載入，缺檔或暫代素材如實標記。
@@ -96,10 +100,11 @@ HTML 的 `<header>` 標籤只用於全站 Navi／主要導覽；其他區塊、�
 | EVO Header 樣式、捲動狀態、RWD、選單、漢堡、按鈕、語系 | [Header 指定參考](references/evo-header-reference.md) |
 | 連續 marquee | [marquee 指定參考](references/evo-marquee-reference.md) |
 | 內頁 breadcrumb | [breadcrumb001 指定參考](references/evo-breadcrumb-reference.md) |
+| 隱私權政策頁 | [隱私權政策公版](references/evo-privacy-reference.md) |
 | FAQ | [FAQ 統一系統結構](references/evo-faq-reference.md) |
 | 每案必備搜尋頁、Header 搜尋導向與結果狀態 | [搜尋頁指定參考](references/evo-search-reference.md) |
 | 產品分類選單、桌機側欄與下拉外觀 | [left_menu001 指定參考](references/evo-left-menu-reference.md) |
-| 電子表單、聯絡我們表單與欄位樣式 | [電子表單指定參考](references/evo-eforms-reference.md) |
+| 所有電子表單、contact-form 結構與欄位樣式 | [contact-form 公版結構](references/evo-eforms-reference.md) |
 | 產品加入詢問車、Header 清單、詢問表單 | [系統公版詢問車](references/evo-inquiry-cart-reference.md) |
 | 開始修改、共用影響檢查與交付校稿 | [實作與校稿](references/implementation-review.md) |
 | 切版完成、功能修改後與交付工程師 | [工程師交接說明](references/engineer-handoff.md) |
