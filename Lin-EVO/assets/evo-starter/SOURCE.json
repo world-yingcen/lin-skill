@@ -10,7 +10,7 @@
     "scss/evomni-root.scss": "ba5769290ca3e711d18dbc8232db2215b0a7c2ae6b99bf123efd3c7add53a55b",
     "scss/_common.scss": "4eca9efbc96b0f9afc6a92deabb73f9c7cfadb280444c749c5306ff4159ee1bd",
     "scss/_footer.scss": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "scss/_header.scss": "296dd6f9f392838e950d2f9054122472afde7094e733d9f605bb6427fc455651",
+    "scss/_header.scss": "aebdca0443d769b33f0ec61921429e520d79eba6f9f486682afe68756a51d610",
     "image/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "assets/page-composer-state.json": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
@@ -68,6 +68,26 @@
       "date": "2026-11-04",
       "file": "scss/_header.scss",
       "change": "漢堡切換統一 1199px 以下；同步來源 1512px 及重複 1200px 的收合規則，1200px 起使用桌機導覽。其他外觀斷點保留。"
+    },
+    {
+      "date": "2026-11-04",
+      "file": "scss/_header.scss",
+      "change": "移除 Header 內與 Common 重複的全站品牌、按鈕、文字、版心、間距及 transition 變數覆寫；只保留 Navi 專用變數，Header 按鈕圓角改用 NaviBtnBorderRadius，讓案件 Common 成為單一來源。"
+    },
+    {
+      "date": "2026-11-04",
+      "file": "scss/_header.scss",
+      "change": "依使用者要求將完整 Header SCSS 收進單一 .header 巢狀作用域；以 & 與 :where(&) 保留原選擇器權重、規則順序、互動狀態及 media 位置，編譯後壓縮 CSS 與修改前完全一致。"
+    },
+    {
+      "date": "2026-11-04",
+      "file": "scss/_header.scss",
+      "change": "依使用者要求移除來源中命名不清的 --pl 暫存變數；原本 15px 倍數的多層手機選單縮排改為等值的 30px、45px、60px、75px 與 22.5px，避免版面改變。"
+    },
+    {
+      "date": "2026-11-04",
+      "file": "scss/_header.scss",
+      "change": "將反整理自編譯 CSS 的 text-decoration、white-space 與 transition 展開屬性改回標準 shorthand；移除 white-space-collapse、text-wrap-mode 及 transition-behavior 等不必要的展開寫法，保留相同狀態與時間參數。"
     }
   ]
 }
