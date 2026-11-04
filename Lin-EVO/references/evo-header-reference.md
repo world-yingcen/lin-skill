@@ -21,9 +21,7 @@ header.header
 │  │  └─ ul.nav-menu → li.nav-item → a.nav-link
 │  │     └─ 有子選單：li.has-child → ul.sub-menu
 │  └─ button.tpl-nav003-toggle-menu-btn → span.menu-bar × 3
-├─ .tpl-header-btn-box.btn-group → .btn-item → a.header-btn-link.btn-link.main-btn
-│  ├─ .btn-text
-│  └─ .btn-icon-box → svg.btn-icon
+├─ .tpl-header-btn-box.btn-group → a.header-btn-link.btn-link.main-btn（直接文字）
 ├─ .tpl-header_search_full（本案需要搜尋時才採用）
 └─ .tpl-lang001 [data-template-id="lang001"] [data-component="web-lang"]
    └─ .tpl-lang001-container
@@ -59,7 +57,7 @@ header.header
 
 ## 按鈕與語系
 
-- 前往頁面的 CTA 沿用 `a.header-btn-link.btn-link`，文字與圖示分為 `.btn-text`、`.btn-icon-box`；`main-btn`／`sub-btn`／`outline-btn` 沿用共用樣式角色，Header 尺寸與色彩由 `--NaviBtn*` 調整。
+- Header 導頁 CTA 依 2026-11-04 使用者指定的 [統一按鈕結構](html-css-rules.md#連結型按鈕統一結構)：`div.btn-group > a.btn-link`，文字直接放在 a 內，樣式擇一使用 `main-btn`／`sub-btn`／`outline-btn`。這取代舊參考的 `.btn-item`、`.btn-text`、`.btn-icon-box`／SVG 子結構；可保留本案必要的 `tpl-header-btn-box`／`header-btn-link` 附加 class，Header 尺寸與色彩依既有 `--NaviBtn*`。漢堡與語系操作元件維持原契約。
 - 參考站在 650px 以下把 Header CTA 固定到底部；只在本案有此需求且 RWD 在案件範圍內時採用，並處理內容底部留白。不能把購物車或會員按鈕一併搬到底部。
 - 語系沿用 `.tpl-lang001` 與 `data-mode="dropdown-icon"`、`data-show-lang="true"`；地球圖示按鈕開啟 `.lang-dropdown`。原 JS 以 click 切換 `.is-open`、點擊外部關閉，CSS 另提供 hover 展開。
 - 語系連結保留 `data-lang-code`、`data-lang-link`；目前語系以 `.is-active` 與 `aria-current` 表示。連結需使用本案實際語系路由。

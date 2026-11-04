@@ -57,6 +57,28 @@
 - 電商（購物車）與會員 icon 小螢幕**留在 header**，不移去別處（EVO 系統既有行為，2026-09-11 使用者指定）；只有 header 跟隨的行動按鈕（如訂位、預約類 CTA）才在小螢幕置底固定於畫面下方。
 - 本案實際驗證尺寸要記錄；公司尚未定案的尺寸、容差與細則不自行補成正式規定。
 
+## 連結型按鈕統一結構
+
+2026-11-04 使用者指定：所有作為按鈕呈現的導頁連結／CTA（含 Header CTA），一律使用 `div.btn-group > a.btn-link`。即使只有一顆按鈕，也保留 `btn-group`；文字直接放在 a 內，不另包 span、圖示或其他子元素，不增加中間的 `btn-item`。同組多顆按鈕可共用一個 btn-group。
+
+```html
+<div class="btn-group">
+  <a href="about.html" class="btn-link main-btn">關於我們</a>
+</div>
+```
+
+`about.html` 僅為示例，交付時換成案件實際目標網址，不照抄參考站的站號、內網網址或選單參數。
+
+| 設計樣式 | a 的必要 class |
+|---|---|
+| 主色按鈕 | `btn-link main-btn` |
+| 輔色按鈕 | `btn-link sub-btn` |
+| 外框按鈕 | `btn-link outline-btn` |
+
+- 按設計選擇其中一種樣式 class，不將 main-btn、sub-btn、outline-btn 同時疊加。保留 btn-group 與 btn-link，不另造同義按鈕結構或 class 取代它們。
+- 外觀沿用案件 Common 按鈕樣式與既有變數調整；顏色、尺寸、圓角、間距及互動效果依設計稿。裝飾圖示用 CSS 偽元素，避免為外觀改動 HTML；hover、觸控與鍵盤狀態依 T08。
+- 本規則適用連結型按鈕，不把一般導覽文字連結全部改成 CTA。表單送出、切換、開關等操作仍使用語意正確的 button 及其既有規範，不改成假 href；漢堡、語系、詢問車等系統操作元件保留必要契約。
+
 ## T06｜Common、root 與共用樣式
 
 - 實作前讀本案 `_common.scss`。既有 reset、container、spacing、title、button、image、RWD utility 符合用途就直接使用，不在頁面 SCSS 重寫。

@@ -71,6 +71,8 @@ HTML 的 `<header>` 標籤只用於全站 Navi／主要導覽；其他區塊、�
 
 **詢問車頁／抽屜與搜尋頁的公版 CSS 可依案件調整，公版 HTML／JS 不可修改**，此限制不擴及產品頁；產品頁可以新增 `.inquiry-group` 分組並調整加入按鈕位置，保留原生加入功能的識別與綁定；詢問車依 [指定功能架構](references/evo-inquiry-cart-reference.md) 保留產品加入、Header 清單、確認頁與原生表單。使用者要求的靜態 Demo 可獨立模擬，正式接入前必須停用，不能同時綁兩套操作。產品分類選單依 [left_menu001](references/evo-left-menu-reference.md) 沿用原生結構與操作，桌機以 CSS 套案件外觀，手機版下拉邏輯是公版，不改寫或另綁一套事件。
 
+**連結型按鈕統一結構**：所有導頁 CTA（含 Header CTA）必須使用 `div.btn-group > a.btn-link`，文字直接放在 a 內；依設計擇一搭配 `main-btn`（主色）、`sub-btn`（輔色）、`outline-btn`（外框）。詳見 [連結型按鈕規範](references/html-css-rules.md#連結型按鈕統一結構)。
+
 ## 按需讀取規範
 
 涉及下列項目時完整讀取對應文件；同輪未變的文件不用重讀。先完成匯入方式分流；表內舊平台指定元件與 vendor 契約不套入整站 HTML 流程，該流程直接查工程師套件，不為滿足舊條文而額外植入舊標記或系統頁。
