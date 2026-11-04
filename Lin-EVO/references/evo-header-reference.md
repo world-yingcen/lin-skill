@@ -21,7 +21,9 @@ header.header
 │  │  └─ ul.nav-menu → li.nav-item → a.nav-link
 │  │     └─ 有子選單：li.has-child → ul.sub-menu
 │  └─ button.tpl-nav003-toggle-menu-btn → span.menu-bar × 3
-├─ .tpl-header-btn-box.btn-group → a.header-btn-link.btn-link.main-btn（直接文字）
+├─ .tpl-model.tpl-header-btn-box.btn-group → .btn-item → a.header-btn-link.btn-link.main-btn
+│  ├─ div.btn-text [data-trans]
+│  └─ span.btn-icon-box → svg.btn-icon → path
 ├─ .tpl-header_search_full（本案需要搜尋時才採用）
 └─ .tpl-lang001 [data-template-id="lang001"] [data-component="web-lang"]
    └─ .tpl-lang001-container
@@ -44,7 +46,7 @@ header.header
 | 按鈕共用 | `--BtnBorderRadius`、`--BtnWidth`、`--BtnHeight`、`--BtnFontSize`，以及 `--BtnPrimary*`、`--BtnSecondary*`、`--BtnOutline*` 色彩變數 |
 | Header 按鈕 | `--NaviBtnWidth`、`--NaviBtnHeight`，以及 `--NaviBtnPrimary*`、`--NaviBtnSecondary*` 色彩變數 |
 
-沿用名稱及角色，在案件共用樣式集中設定本案值。參考站 `--NaviHeight` 初值 85px、`--NaviBtnHeight: calc(var(--NaviHeight) - 30px)`，屬該案尺寸，不是每案固定規定。Logo、漢堡垂直位置與按鈕尺寸依導覽高度形成關係，不各區另造一組相同用途的變數。
+沿用名稱及角色，在案件共用樣式集中設定本案值。參考站 `--NaviHeight` 初值 85px、`--NaviBtnHeight: calc(var(--NaviHeight, 85px) - 30px)`，屬該案尺寸，不是每案固定規定。Logo、漢堡垂直位置與按鈕尺寸依導覽高度形成關係，不各區另造一組相同用途的變數。
 
 ## 漢堡與導覽行為
 
@@ -57,15 +59,74 @@ header.header
 
 ## 按鈕與語系
 
-- Header 導頁 CTA 依 2026-11-04 使用者指定的 [統一按鈕結構](html-css-rules.md#連結型按鈕統一結構)：`div.btn-group > a.btn-link`，文字直接放在 a 內，樣式擇一使用 `main-btn`／`sub-btn`／`outline-btn`。這取代舊參考的 `.btn-item`、`.btn-text`、`.btn-icon-box`／SVG 子結構；可保留本案必要的 `tpl-header-btn-box`／`header-btn-link` 附加 class，Header 尺寸與色彩依既有 `--NaviBtn*`。漢堡與語系操作元件維持原契約。
+2026-11-04 使用者確認：Header 跟隨按鈕使用下列系統結構，優先於一般 `btn-group > a` 純文字規則；不能刪除 btn-item、文字容器或圖示容器。
+
+```html
+<div class="tpl-model tpl-header-btn-box btn-group">
+  <div class="btn-item">
+    <a href="本案實際目標網址" target="_self" class="header-btn-link btn-link main-btn">
+      <div data-trans="evo-ecommerce::storefront_product_detail.cta.buy_now" class="btn-text">立即購買</div>
+      <span class="btn-icon-box">
+        <svg viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true" class="btn-icon">
+          <path d="M530-481 332-679l43-43 241 241-241 241-43-43 198-198Z"></path>
+        </svg>
+      </span>
+    </a>
+  </div>
+</div>
+```
+
+- 保留上述 HTML 層級、標籤與必要 class；CSS 須先符合下方指定基準，再依案件調整品牌外觀。按設計擇一使用 main-btn（主色）、sub-btn（輔色）、outline-btn（外框），保留 header-btn-link 與 btn-link，Header 尺寸沿用 `--NaviBtn*`；主色款使用 `--NaviBtnPrimary*` 配色。LIN 基底已補上 sub-btn 的一般、hover、active／focus-visible 對應，使用 `--NaviBtnSecondary*`；outline-btn 沿用 Common 的 `--BtnOutline*`，不另造 Header 外框色彩變數。
+- 範例為「立即購買」，其 data-trans 對應此用途；其他 CTA 使用本案已確認的翻譯鍵，不把購買翻譯鍵套到不同文案。網址改用本案目標，不複製他案站號或選單參數。
+- 使用者提供的輸出另有 `__p="undefined"`；目前未確認它是必要平台契約，範例不主動補造，既有後台輸出也不因本規範擅自清除。
+- 漢堡、語系與其他系統操作按鈕維持各自契約；一般內文連結型按鈕仍依 [統一按鈕結構](html-css-rules.md#連結型按鈕統一結構)。
+
 - 參考站在 650px 以下把 Header CTA 固定到底部；只在本案有此需求且 RWD 在案件範圍內時採用，並處理內容底部留白。不能把購物車或會員按鈕一併搬到底部。
 - 語系沿用 `.tpl-lang001` 與 `data-mode="dropdown-icon"`、`data-show-lang="true"`；地球圖示按鈕開啟 `.lang-dropdown`。原 JS 以 click 切換 `.is-open`、點擊外部關閉，CSS 另提供 hover 展開。
 - 語系連結保留 `data-lang-code`、`data-lang-link`；目前語系以 `.is-active` 與 `aria-current` 表示。連結需使用本案實際語系路由。
 - 來源只有繁中一項，且連結指向內網；未證實跨語系切換。不能複製內網路徑、虛構英文頁，或把選單可展開當成語系功能完成。
 - 來源的 icon 模式未像 text 模式同步 `aria-expanded`，另有重複語系程式但以旗標防止重複綁定；沿用結構時補齊必要狀態並維持單一初始化。來源全域移除 outline 的寫法也不能取代本案可見的鍵盤焦點。
 
+## Header 跟隨按鈕 CSS 基準
+
+2026-11-04 使用者指定：Header 跟隨按鈕必須沿用以下 CSS，不只保留 HTML。寫入案件既有 Header 樣式來源，沿用編譯流程，不在各頁重複追加覆寫。
+
+```css
+.tpl-header-btn-box .header-btn-link {
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    gap: var(--Space1, 1rem);
+    width: var(--NaviBtnWidth, 200px);
+    min-height: var(--NaviBtnHeight, calc(85px - 30px));
+    margin-top: 0;
+    padding: 0 5px 0 var(--Space2, max(2vw, 1.5rem));
+    font-size: var(--FontSizeNavi, clamp(0.9375rem, 0.7768rem + 0.1786vw, 1.0625rem));
+    line-height: 1;
+    min-width: unset;
+}
+```
+
+- 保留上述選擇器、屬性、數值與變數對應；品牌色與 main-btn／sub-btn／outline-btn 外觀依案件 Common 調整，尺寸優先調整已存在的 NaviBtn 變數，不另造同義變數或用一般按鈕尺寸覆蓋這段。
+- 確認 Common 已定義 `--Space1`、`--Space2`、`--NaviBtnWidth`、`--NaviBtnHeight`、`--FontSizeNavi` 且值有效。依使用者後續要求，包含 Header 在內的每個 var() 都補上合理 fallback；備用值取自內附基底預設值，案件調整時一併核對用途與數值。
+- 這段依賴既有按鈕基礎樣式的 flex 排版；檢查 `.header-btn-link` 最終 computed display 是否為 flex／inline-flex，確保文字與圖示兩端對齊。若基礎樣式未載入，先修正依賴，不宣稱只貼這段就已完成。
+- 校稿核對實際生效的寬度、最小高度、間距、padding、字級、line-height、margin-top 與 min-width，確認未被其他按鈕規則蓋掉；在本案範圍內檢查長文字與 RWD，不因尺寸限制裁掉文字。
+
 ## 適用邊界
 
 使用者指定保留的 EVO 漢堡、語系與圖示操作按鈕，可保留必要的 `span`／`svg` 子元素，作為 T04「自訂 button 純文字」規則的局部例外。不要為符合純文字限制而改壞範本結構。
 
 本次只整理工程參考，不啟動客戶案件；尺寸與 RWD 依案件範圍。實作驗收須分別記錄結構沿用、外觀、實際操作與平台串接；未經瀏覽器驗證不可標記通過。
+
+### 完整 Header 跟隨按鈕基底
+
+2026-11-04 已依[使用者指定前台](http://192.168.168.99/php83/sites/evo266125/public/zh-tw) 的實際共用 CSS 核對，完整規則收在[基底 _header.scss](../assets/evo-starter/06-切版/scss/_header.scss)。上方片段只說明按鈕本體，不是完整元件；切版必須連同以下規則使用，不得只複製該片段：
+
+- `.tpl-header-btn-box` 的 flex 排列、gap、左右間距。
+- `.header-btn-link` 的尺寸、內距與對齊，以及 `.btn-icon-box` 圓形底、`.btn-icon` 尺寸與顏色。
+- `.main-btn` 一般、hover、active／focus-visible 配色；hover 保留精細指標裝置條件。
+- 1200px 以下的外框間距與 NaviBtn 寬度；650px 以下的底部固定、全寬 btn-item、按鈕置中、取消圓角與隱藏圖示，以及 NaviBtn 尺寸覆寫。
+
+基底依賴 Common 的 `.btn-group .btn-link` 共用樣式與變數，必須先載入 Common 再載入 Header。`.btn-text` 在參考站沒有獨立專用宣告，保留 HTML 並繼承按鈕文字設定，不虛構一份來源樣式。原站主色款之外的配色依上方說明處理。
+
+桌機品牌色與尺寸可依案件調整，手機固定底部為此基底的預設行為；若案件已確認不同導覽行為則依案件調整。驗收時檢查桌機、1200px／650px 斷點兩側、手機底部是否遮住內容，以及 hover／鍵盤焦點；需要底部預留空間時於案件版面配置，不把固定按鈕直接蓋在最後一段內容上。此處完整規則為指定系統基底的一部分；保留結構與變數對應，依使用者要求補上 fallback。

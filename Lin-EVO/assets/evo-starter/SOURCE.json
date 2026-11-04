@@ -1,0 +1,58 @@
+{
+  "source_path": "/Users/wd-t160/LINS/git/EVO-common-css/06-切版",
+  "snapshot_date": "2026-11-04",
+  "source_commit": "dbd1d5ed1cc5b5a7d580a10ddf7e8af8e7ef4e9f",
+  "source_working_tree_modified": true,
+  "files": {
+    "index.html": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "js/main.js": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scss/_index.scss": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scss/evomni-root.scss": "ba5769290ca3e711d18dbc8232db2215b0a7c2ae6b99bf123efd3c7add53a55b",
+    "scss/_common.scss": "4eca9efbc96b0f9afc6a92deabb73f9c7cfadb280444c749c5306ff4159ee1bd",
+    "scss/_footer.scss": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scss/_header.scss": "87f76933ad170c9cca30108f9293681ae2202773a55bd57433dda131d46cb21c",
+    "image/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "assets/page-composer-state.json": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "original_files": {
+    "index.html": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "js/main.js": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scss/_index.scss": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scss/evomni-root.scss": "ba5769290ca3e711d18dbc8232db2215b0a7c2ae6b99bf123efd3c7add53a55b",
+    "scss/_common.scss": "d7d363521fd8c7f2c022dc5ac227e07458e9abfe0a48f78d8d684c2effacaf79",
+    "scss/_footer.scss": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scss/_header.scss": "8867e75e4662d524e4c16186614f3e52575581f5c58df72128e1dd46c94ea9e8",
+    "image/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "assets/page-composer-state.json": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "local_adjustments": [
+    {
+      "date": "2026-11-04",
+      "file": "scss/_common.scss",
+      "change": "依使用者指示移除 .main-content 的 !important，保留 margin-top: 0；未回寫外部維護來源。"
+    },
+    {
+      "date": "2026-11-04",
+      "file": "scss/_header.scss",
+      "change": "加入使用者指定 Header 跟隨按鈕 CSS，保留原值與變數。"
+    },
+    {
+      "date": "2026-11-04",
+      "file": "scss/_header.scss",
+      "source_url": "http://192.168.168.99/php83/sites/evo266125/public/zh-tw",
+      "stylesheet_url": "http://192.168.168.99/php83/sites/evo266125/public/css/evomni-root.css?v=1793774870",
+      "stylesheet_sha256": "50d247bb7e2a8dadcd04ffdf1d87b6a80dfd8e5a651df6862c77c8b0cf99f4e6",
+      "change": "補齊參考站全部 .tpl-header-btn-box 規則，保留 hover 條件、RWD 斷點與手機 NaviBtn 尺寸覆寫；保留基底原有桌機品牌變數。"
+    },
+    {
+      "date": "2026-11-04",
+      "file": "scss/_common.scss",
+      "change": "依使用者要求補齊所有 var() 備用值，取自既有基底預設，保留原有變數及 RWD 覆寫。"
+    },
+    {
+      "date": "2026-11-04",
+      "file": "scss/_header.scss",
+      "change": "依使用者要求補齊所有 var() 備用值，取自既有基底預設；Header 另接上既有輔色變數的一般、hover、active／focus-visible 狀態。"
+    }
+  ]
+}

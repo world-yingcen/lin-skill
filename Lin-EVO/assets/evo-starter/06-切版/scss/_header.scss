@@ -1,0 +1,165 @@
+:root {
+    // Navi
+    --NaviHeight: 85px;
+    --NaviStickyOffset: calc(var(--NaviHeight, 85px) + 1rem);
+    --NaviTextColor: #ffffff;
+    --NaviHoverTextColor: var(--ColorPrimary, #1e1b18);
+    --NaviUpTextColor: #ffffff;
+    --NaviUpHoverTextColor: #b2b2b2;
+    --NaviUpBgColor: rgb(15 13 11 / 88%);
+    --NaviUpHoverTextColor: #b2b2b2;
+    //螢幕2560px-1200px 大小17px-15px
+    --FontSizeNavi: clamp(0.9375rem, 0.7768rem + 0.1786vw, 1.0625rem);
+
+
+    --NaviBtnPrimaryTextColor: white;
+    --NaviBtnPrimaryBg: var(--ColorPrimary, #1e1b18);
+    --NaviBtnPrimaryHoverTextColor: #000;
+    --NaviBtnPrimaryHoverBg: #ffffff;
+    --NaviBtnSecondaryTextColor: var(--BtnSecondaryTextColor, white);
+    --NaviBtnSecondaryBg: #19191a;
+    --NaviBtnSecondaryHoverTextColor: var(--BtnSecondaryHoverTextColor, white);
+    --NaviBtnSecondaryHoverBg: #19191a;
+    --NaviBtnWidth: 200px;
+    --NaviBtnHeight: calc(var(--NaviHeight, 85px) - 30px);
+}
+
+// Header 跟隨按鈕：2026-11-04 核對 evo266125 前台完整元件規則。
+.tpl-header-btn-box {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: var(--Space1, 1rem);
+    margin-right: var(--Space2, max(2vw, 1.5rem));
+    margin-left: var(--Space2, max(2vw, 1.5rem));
+}
+
+.tpl-header-btn-box .header-btn-link {
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    gap: var(--Space1, 1rem);
+    width: var(--NaviBtnWidth, 200px);
+    min-height: var(--NaviBtnHeight, calc(85px - 30px));
+    margin-top: 0;
+    padding: 0 5px 0 var(--Space2, max(2vw, 1.5rem));
+    font-size: var(--FontSizeNavi, clamp(0.9375rem, 0.7768rem + 0.1786vw, 1.0625rem));
+    line-height: 1;
+    min-width: unset;
+}
+
+.tpl-header-btn-box .header-btn-link .btn-icon-box {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    width: calc(var(--NaviBtnHeight, calc(85px - 30px)) - 14px);
+    height: calc(var(--NaviBtnHeight, calc(85px - 30px)) - 14px);
+    border-radius: 50%;
+    -webkit-transition: background-color .15s;
+    transition: background-color .15s;
+}
+
+.tpl-header-btn-box .header-btn-link .btn-icon {
+    width: 18px;
+    height: 18px;
+    color: #fff;
+}
+
+.tpl-header-btn-box .main-btn {
+    color: var(--NaviBtnPrimaryTextColor, white);
+    background-color: var(--NaviBtnPrimaryBg, #1e1b18);
+}
+
+.tpl-header-btn-box .main-btn .btn-icon-box {
+    background-color: var(--ColorPrimary, #41220f);
+}
+
+@media(hover: hover)and (pointer: fine) {
+    .tpl-header-btn-box .main-btn:hover {
+        color: var(--NaviBtnPrimaryHoverTextColor, #000);
+        background-color: var(--NaviBtnPrimaryHoverBg, #ffffff);
+    }
+
+    .tpl-header-btn-box .main-btn:hover .btn-icon-box {
+        background-color: var(--ColorSecondary, #5c4030);
+    }
+
+}
+
+.tpl-header-btn-box .main-btn:is(:active,:focus-visible) {
+    color: var(--NaviBtnPrimaryHoverTextColor, #000);
+    background-color: var(--NaviBtnPrimaryHoverBg, #ffffff);
+}
+
+// LIN 補齊：輔色款使用既有 Header 專用色彩變數。
+.tpl-header-btn-box .sub-btn {
+    color: var(--NaviBtnSecondaryTextColor, white);
+    background-color: var(--NaviBtnSecondaryBg, #19191a);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .tpl-header-btn-box .sub-btn:hover {
+        color: var(--NaviBtnSecondaryHoverTextColor, white);
+        background-color: var(--NaviBtnSecondaryHoverBg, #19191a);
+    }
+}
+
+.tpl-header-btn-box .sub-btn:is(:active, :focus-visible) {
+    color: var(--NaviBtnSecondaryHoverTextColor, white);
+    background-color: var(--NaviBtnSecondaryHoverBg, #19191a);
+}
+
+@media(max-width: 1200px) {
+    :root {
+        --NaviBtnWidth: 200px;
+    }
+
+    .tpl-header-btn-box {
+        margin-left: auto;
+        margin-right: var(--Space1, 1rem);
+    }
+
+}
+
+@media(max-width: 650px) {
+    :root {
+        --NaviBtnWidth: 100%;
+        --NaviBtnHeight: 55px;
+    }
+
+    .tpl-header-btn-box {
+        position: fixed;
+        inset: auto 0 0;
+        z-index: 40;
+        gap: 0;
+        width: 100%;
+        margin: 0;
+        border-top: var(--BorderPrimary, 1px solid #a1a1a1);
+    }
+
+    .tpl-header-btn-box .btn-item {
+        width: 100%;
+    }
+
+    .tpl-header-btn-box .header-btn-link {
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        border: 0;
+        border-radius: 0;
+    }
+
+    .tpl-header-btn-box .header-btn-link .btn-icon-box {
+        display: none;
+    }
+
+}
+

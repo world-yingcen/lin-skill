@@ -59,7 +59,7 @@
 
 ## 連結型按鈕統一結構
 
-2026-11-04 使用者指定：所有作為按鈕呈現的導頁連結／CTA（含 Header CTA），一律使用 `div.btn-group > a.btn-link`。即使只有一顆按鈕，也保留 `btn-group`；文字直接放在 a 內，不另包 span、圖示或其他子元素，不增加中間的 `btn-item`。同組多顆按鈕可共用一個 btn-group。
+2026-11-04 使用者指定：一般作為按鈕呈現的導頁連結／CTA（Header 跟隨按鈕除外），一律使用 `div.btn-group > a.btn-link`。即使只有一顆按鈕，也保留 `btn-group`；文字直接放在 a 內，不另包 span、圖示或其他子元素，不增加中間的 `btn-item`。同組多顆按鈕可共用一個 btn-group。
 
 ```html
 <div class="btn-group">
@@ -77,17 +77,18 @@
 
 - 按設計選擇其中一種樣式 class，不將 main-btn、sub-btn、outline-btn 同時疊加。保留 btn-group 與 btn-link，不另造同義按鈕結構或 class 取代它們。
 - 外觀沿用案件 Common 按鈕樣式與既有變數調整；顏色、尺寸、圓角、間距及互動效果依設計稿。裝飾圖示用 CSS 偽元素，避免為外觀改動 HTML；hover、觸控與鍵盤狀態依 T08。
-- 本規則適用連結型按鈕，不把一般導覽文字連結全部改成 CTA。表單送出、切換、開關等操作仍使用語意正確的 button 及其既有規範，不改成假 href；漢堡、語系、詢問車等系統操作元件保留必要契約。
+- Header 跟隨按鈕依 [系統指定結構](evo-header-reference.md#按鈕與語系)，保留 btn-item、btn-text、btn-icon-box 與 SVG，不套用一般按鈕的直接純文字結構。
+- 本規則適用一般連結型按鈕，不把一般導覽文字連結全部改成 CTA。表單送出、切換、開關等操作仍使用語意正確的 button 及其既有規範，不改成假 href；漢堡、語系、詢問車等系統操作元件保留必要契約。
 
 ## T06｜Common、root 與共用樣式
 
-- 實作前讀本案 `_common.scss`。既有 reset、container、spacing、title、button、image、RWD utility 符合用途就直接使用，不在頁面 SCSS 重寫。
+- 實作前先讀 [LIN 指定基底](starter-baseline.md) 內附的 `_common.scss`，再讀案件副本比對。既有 reset、container、spacing、title、button、image、RWD utility 符合用途就直接使用，不在頁面 SCSS 重寫。
 - 全站品牌、文字、背景、字級與間距優先對應已存在且語意符合的 Common token；依已確認品牌更新案件值，保留既有名稱，不逐區重複硬寫同一全站品牌值。
 - 完全符合的 Common class 直接使用；用途相同但部分屬性不同時，加短別名並在區塊根下覆寫差異；核心用途不同或需大量反向覆寫時不用。
 - 沒有合適 token／class 時，先寫有依據的區塊值，記共用候選，不為每個數值中斷切版。
 - 不自行新增自訂 root token，不在單頁或區塊輸出另一份 `:root`。全站變數依案件 Common 管理，沿用案件既有定義位置；Swiper 優先沿用套件預設值，需要全站調整時才依 T11 在此集中覆寫原生 CSS 變數，不重複宣告預設值或另造同義變數。
 - 字級需配合版面調整時，優先由案件 Common 已有且用途相符的字級變數搭配 `calc()` 計算，讓全站基準調整時維持字級比例，避免各區塊任意寫固定數值。主標題使用適合標題的變數，提示文字使用適合提示的變數；不要只因數值接近，就拿提示文字變數控制主標題。確認 `--FontSizeHint` 存在且用途相符時，可使用 `font-size: calc(var(--FontSizeHint, 16px) * 2);`；範例備用值與倍率依案件設定，不是全站固定規格。手機版依字數、換行與版面調整倍率，不強迫所有尺寸使用同一比例。沒有合適變數或計算方式無法合理呈現時，才使用有依據的明確數值，不為計算另建 root 變數。
-- 每個 `var()` 都要有合理 fallback。變數名稱及用途以案件 Common 為準。
+- 每個 `var()` 都要有合理 fallback，包含內附 Common、Header 與變數定義內的引用，不設 Header 例外。備用值依變數用途與基底預設值設定，案件調整時同步核對；仍須確認引用變數已定義，不能用 fallback 掩蓋漏載 Common。變數名稱及用途以案件 Common 為準。
 - 一般內容區優先使用現有 `.section-spacing`、`.section-spacing-top`、`.section-spacing-bottom`，同用途不要再疊加固定 padding。滿版圖片／影片、固定比例或輪播舞台可依構圖例外，需有明確理由。
 - 區塊容器**依資料量與內容型態選級距**（2026-09-11 使用者修訂），`container-85` 是無特別理由時的預設，不是每區固定答案。選法以已確認構圖與官方參考站的用法為依據：文章列表、窄欄文字收窄（如 70／75）提高可讀性；一般內容區 85；資料飽滿或圖區放寬（90／95／fluid）。選 85 以外的級距在該區塊註記依據（資料量、已確認構圖對應或參考站做法）即可，不需提案；不因已確認構圖「看起來」較窄就縮，要有內容理由。
 - 版心一律**直接在 HTML 掛 Common 既有的 `container-95`～`container-60`／`container-fluid` class**，不另造功能相同的自訂 class（如自定義 `tpl-container` 再寫一次寬度）也不在區塊 SCSS 重定義版心寬。系統版型與後台整合認的是這組官方 class；自造同義 class 在交接時會對不上（2026-09-11 年年3／大自然2 實測發現兩案都繞過了這組）。
@@ -221,4 +222,4 @@
 
 ## Common 適用補充
 
-新案尚無 Common 時，依已確認視覺系統集中建立一次；不可在各區各造 root。官方 container class 規則用於有此基底的案件，缺基底先核對，不假裝 class 已存在。沉浸式滿版、疊層與釘選舞台可依已確認構圖例外，記錄理由；不能為容器級距簡化確認過的設計。
+新案尚無 Common 時，必須使用 [LIN 內附指定基底](starter-baseline.md) 建立案件副本，再依已確認視覺調整值，不自行從零建立替代 Common；不可在各區各造 root。官方 container class 規則用於有此基底的案件，缺基底先核對，不假裝 class 已存在。沉浸式滿版、疊層與釘選舞台可依已確認構圖例外，記錄理由；不能為容器級距簡化確認過的設計。

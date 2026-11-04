@@ -2,6 +2,10 @@
 
 先依 [EVO 範本查核](evo-preflight.md) 分流；下文公版指定元件、搜尋頁、vendor 宣告及平台匯入邊界屬舊流程。整站 HTML 對這些項目使用當次工程師契約與檢查工具，其餘視覺、操作及交付檢查共用。
 
+## 指定基底比對
+
+每次檢查檔案先完整讀 [LIN 指定基底](starter-baseline.md)，以內附 `assets/evo-starter/06-切版/` 對照案件 Common、Header、共用 class 與編譯入口。區分基底缺漏與案件合理差異，記錄結果；不以只檢查案件現有檔案代替基底比對，不整包覆蓋既有成果。
+
 ## 工程與修改範圍
 
 - 盤點實際編譯、匯入、預覽與 Git 狀態，保留未提交修改。沿用既有版本與工程入口，不強制把 @import 改為 @use。
@@ -12,7 +16,9 @@
 
 ## 連結型按鈕檢核
 
-逐一核對本輪導頁 CTA（含 Header）：HTML 為 `div.btn-group > a.btn-link`，即使單顆也有外框；a 直接放文字，沒有額外 btn-item、span 或圖示子元素；依設計只選一種 main-btn／sub-btn／outline-btn，網址指向本案正確目標。另驗 hover、觸控與鍵盤焦點；操作型 button、系統控制及一般文字連結依各自用途檢查，不為統一外觀破壞語意或平台功能。
+逐一核對本輪一般導頁 CTA（不含 Header 跟隨按鈕）：HTML 為 `div.btn-group > a.btn-link`，即使單顆也有外框；a 直接放文字，沒有額外 btn-item、span 或圖示子元素；依設計只選一種 main-btn／sub-btn／outline-btn，網址指向本案正確目標。另驗 hover、觸控與鍵盤焦點；操作型 button、系統控制及一般文字連結依各自用途檢查，不為統一外觀破壞語意或平台功能。
+
+Header 跟隨按鈕另依 [系統結構](evo-header-reference.md#按鈕與語系) 核對 btn-group → btn-item → a.header-btn-link.btn-link，並保留 div.btn-text、span.btn-icon-box、svg.btn-icon；核對翻譯鍵、目的網址及樣式 class，不依一般按鈕規則拆除子元素。另依 [Header 跟隨按鈕 CSS 基準](evo-header-reference.md#header-跟隨按鈕-css-基準) 檢查指定宣告、Common 變數定義、flex 基礎與最終 computed style，不只檢查 class 名稱。
 
 ## Common 與 root 檢核
 

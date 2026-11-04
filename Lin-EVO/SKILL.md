@@ -39,6 +39,8 @@ Lin-EVO 共用工程規範來源為 https://github.com/world-yingcen/lin-skill �
 - 已授權的製作工作中，只有工作目錄乾淨、有 upstream 且單純落後時，才對已取得的 upstream 執行 `git merge --ff-only @{upstream}` 安全更新，再核對狀態並讀取案件檔案。有未提交修改或分歧時保留現況，先詢問處理方式，不自動合併或開始受影響檔案的修改；使用者已明確要求保留現況繼續時依其範圍執行，不重複詢問。
 - 缺 upstream、detached HEAD、無 Git 工具、網路／權限失敗時，回報「尚未確認遠端最新版」及原因；可先做不受影響的唯讀盤點，需要帶著操作時先詢問。不是 Git 的資料夾不自行初始化。不為通過檢查而 reset、stash、rebase、切換分支或自行 commit／push；提交與推送仍須另依使用者授權。
 
+**切版開始與檔案檢查都必讀指定基底**：[LIN 切版基底](references/starter-baseline.md)。先讀內附 `assets/evo-starter/06-切版/` 的 Common、Header 與入口檔；新案以完整基底建立案件副本，既有案以它比對差異，不直接覆蓋。不得省略基底、自行建立替代 Common，或只檢查檔案分工。
+
 先讀案件說明、既有修改、實際 HTML／SCSS／JS、Common、共用元件、套件版本、編譯與預覽入口。沿用現有框架、命名及初始化，不為套用規範重寫整份程式。
 
 **樣式規範不能只檢查檔案分工。** 涉及切版、CSS／SCSS 修改或規範校稿時，先讀 [T06 Common／root](references/html-css-rules.md#t06commonroot-與共用樣式)，核對實際變數定義與使用，再處理本輪樣式；完成前依 [Common 與 root 檢核](references/implementation-review.md#common-與-root-檢核) 回報結果。`evomni-root.scss` 的檔案分工與 CSS `:root` 的變數契約是兩項不同檢查，前者通過不代表後者通過。
@@ -71,7 +73,7 @@ HTML 的 `<header>` 標籤只用於全站 Navi／主要導覽；其他區塊、�
 
 **詢問車頁／抽屜與搜尋頁的公版 CSS 可依案件調整，公版 HTML／JS 不可修改**，此限制不擴及產品頁；產品頁可以新增 `.inquiry-group` 分組並調整加入按鈕位置，保留原生加入功能的識別與綁定；詢問車依 [指定功能架構](references/evo-inquiry-cart-reference.md) 保留產品加入、Header 清單、確認頁與原生表單。使用者要求的靜態 Demo 可獨立模擬，正式接入前必須停用，不能同時綁兩套操作。產品分類選單依 [left_menu001](references/evo-left-menu-reference.md) 沿用原生結構與操作，桌機以 CSS 套案件外觀，手機版下拉邏輯是公版，不改寫或另綁一套事件。
 
-**連結型按鈕統一結構**：所有導頁 CTA（含 Header CTA）必須使用 `div.btn-group > a.btn-link`，文字直接放在 a 內；依設計擇一搭配 `main-btn`（主色）、`sub-btn`（輔色）、`outline-btn`（外框）。詳見 [連結型按鈕規範](references/html-css-rules.md#連結型按鈕統一結構)。
+**連結型按鈕統一結構**：一般導頁 CTA 必須使用 `div.btn-group > a.btn-link`，文字直接放在 a 內；依設計擇一搭配 `main-btn`（主色）、`sub-btn`（輔色）、`outline-btn`（外框）。Header 跟隨按鈕是系統例外，保留 `btn-item`、`btn-text`、`btn-icon-box` 與 SVG，依 [Header 按鈕結構](references/evo-header-reference.md#按鈕與語系) 與 [指定 CSS 基準](references/evo-header-reference.md#header-跟隨按鈕-css-基準) 一起實作。一般按鈕詳見 [連結型按鈕規範](references/html-css-rules.md#連結型按鈕統一結構)。
 
 ## 按需讀取規範
 

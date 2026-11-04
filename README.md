@@ -265,3 +265,16 @@ EVO 頁面：（網址；問題發生在畫布或前台）
 ## Skill 改名
 
 正式名稱及資料夾為 `Lin-EVO`、`Miffy-EVO`，大小寫依此使用。受管理的舊安裝由 `install.py` 遷移名稱與安裝紀錄，再同步內容；會保留原有連結／副本模式。來源不同、副本有修改或新舊名稱同時存在時停止，不覆蓋。`--dry-run` 只列遷移計畫；舊名稱僅作安裝遷移相容，不再作為工作入口。
+
+
+## LIN 獨立 Claude 網頁版打包
+
+從本 repo 執行固定打包程式，輸出名稱使用本次日期或版本；既有 ZIP 不覆蓋：
+
+```bash
+python3 scripts/build_claude_upload.py --output dist/Lin-EVO-Claude-YYYYMMDD.zip
+```
+
+程式直接讀本機 Lin-EVO，不讀舊 ZIP，也不把 Miffy 包進去。上傳入口由 `scripts/templates/Lin-EVO-Claude.md` 維護。每包只保留一個 SKILL.md，包含完整 `assets/evo-starter/`、必要空檔及 image/.gitkeep；自動檢查基底清單、雜湊、包內相對參考與 ZIP 完整性。來源 commit 與未提交狀態另存 SOURCE.json，不把未提交快照冒充已提交版。雜湊不符時先確認基底修改及更新來源紀錄，不跳過驗證。
+
+基底是 EVO-common-css 的內附副本，LIN 的必要調整記於基底 SOURCE.json 的 local_adjustments，原始雜湊保留在 original_files。打包不自動安裝、提交、推送或上傳 Claude；上傳後停用重複的舊 LIN。
