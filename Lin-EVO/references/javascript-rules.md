@@ -6,7 +6,7 @@
 
 先依 [EVO 範本查核](evo-preflight.md) 分流。整站 HTML 的套件與模組載入、共用資源順序及初始化契約直接讀當次工程師套件；下文系統 vendor／工具列與共用片段執行時載入僅適用舊流程。
 
-舊平台流程使用第三方套件前，必讀 [系統套件載入契約](evo-vendor-libraries.md)：Swiper／GLightbox／Lenis 使用已核對的 data-vendor 宣告，GSAP／AOS 由編輯器工具列啟用，不自行加套件 script／link 或 CDN。Lenis 尚待系統更新，先確認本案版本支援，不預設已可用；非 EVO 工程沿用案件既有載入方式。
+舊平台流程使用第三方套件前，必讀 [系統套件載入契約](evo-vendor-libraries.md)：Swiper／GLightbox／Lenis 使用已核對的 data-vendor 宣告，GSAP／AOS 由編輯器工具列啟用，不自行加套件 script／link 或 CDN。工程師已於 2026-11-06 確認 Lenis 1.3.26 開放，需要時可宣告並在版型 JS 初始化，發布後驗證；非 EVO 工程沿用案件既有載入方式。
 
 - 沿用案件既有套件版本與載入方式；一般簡單功能可由原生 JavaScript 完成時，不額外加入大型套件。輪播統一依 T11 使用 Swiper，網站區塊淡入淡出統一使用 AOS。
 

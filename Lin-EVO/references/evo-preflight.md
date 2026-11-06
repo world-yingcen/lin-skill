@@ -44,7 +44,7 @@
 
 ## 舊平台流程：第三方套件先核對平台載入契約
 
-需要 Swiper、GLightbox、Lenis、GSAP 或 AOS 時，必讀 [系統套件載入契約](evo-vendor-libraries.md)，並查本案 evomni-page-composer 的 `.claude/skills/page-composer/SKILL.md` 鐵律 11、`knowledge/designer-markup-guide.md`「四之二、要用到函式庫時」。2026-10-13 工程師提供 Lenis 1.3.26 將於下一波更新開放；尚未部署的案件不可當成已支援。記錄實際可用版本、載入方式與前台驗證，不自行加入 script／link、CDN 或猜平台事件來補缺口。
+需要 Swiper、GLightbox、Lenis、GSAP 或 AOS 時，必讀 [系統套件載入契約](evo-vendor-libraries.md)，並查本案 evomni-page-composer 的 `.claude/skills/page-composer/SKILL.md` 鐵律 11、`knowledge/designer-markup-guide.md`「四之二、要用到函式庫時」。2026-11-06 工程師已確認 Lenis 1.3.26 正式開放，使用 data-vendor="lenis" 宣告；不再套用先前「下一波更新」的限制。記錄實際可用版本、載入方式與前台驗證，不自行加入 script／link、CDN 或猜平台事件來補缺口。
 
 ## 舊平台流程：AI 負責判斷
 
