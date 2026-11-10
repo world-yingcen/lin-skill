@@ -83,6 +83,8 @@ HTML 的 `<header>` 標籤只用於全站 Navi／主要導覽；其他區塊、�
 
 **連結型按鈕統一結構**：一般導頁 CTA 必須使用 `div.btn-group > a.btn-link`，文字直接放在 a 內；依設計擇一搭配 `main-btn`（主色）、`sub-btn`（輔色）、`outline-btn`（外框）。Header 跟隨按鈕是系統例外，保留 `btn-item`、`btn-text`、`btn-icon-box` 與 SVG，依 [Header 按鈕結構](references/evo-header-reference.md#按鈕與語系) 與 [指定 CSS 基準](references/evo-header-reference.md#header-跟隨按鈕-css-基準) 一起實作。一般按鈕詳見 [連結型按鈕規範](references/html-css-rules.md#連結型按鈕統一結構)。
 
+**列表／內容頁替換容器必須完整輸出**：只要使用 `detail-content` 替換邊界，同一個 `<div>` 必須同時具有 `data-list-group-container="true"` 與 `data-replace="detail-content"`。兩個屬性不得省略其中一個、不得拆到父子層；只有 `<div data-replace="detail-content">` 視為不完整結構，校稿時必須修正。完整寫法與適用範圍依 [列表頁與內容頁的替換範圍](references/shared-page-rules.md#列表頁與內容頁的替換範圍)。
+
 ## 按需讀取規範
 
 涉及下列項目時完整讀取對應文件；同輪未變的文件不用重讀。先完成匯入方式分流；表內舊平台指定元件與 vendor 契約不套入整站 HTML 流程，該流程直接查工程師套件，不為滿足舊條文而額外植入舊標記或系統頁。
