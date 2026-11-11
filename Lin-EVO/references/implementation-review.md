@@ -100,3 +100,7 @@ Demo 與正式版分開驗收：Demo 不真的送出，正式版排除模擬檔�
 Header 樣式校稿另依 [Header 唯一基底](evo-header-reference.md) 核對系統與案件 CSS 載入順序、頁首／scroll-fixed／menu-open 最終背景、Logo 尺寸、data-rwdpointer 與 CSS 斷點一致，以及跟隨按鈕仍使用 LIN 已確認基底。不得只確認 class 存在就判定完成。
 
 分類側選單依 [left_menu001 優先範本](evo-left-menu-reference.md) 核對外層、aside、手機下拉、標題、主／子分類、文字連結與獨立展開按鈕的層級及 data-param；確認外觀改在 CSS，未重建選單或另綁手機操作。實測目前分類、無子分類、長標題與展開遮擋；來源 HTML 的占位標籤不得當成驗收成功。
+
+Blog／專業知識列表即使只有「所有／熱門／最新文章」單層導覽，也須核對 left_menu001 完整結構，不能以自訂列表或只加同名 class 代替。搜尋、熱門關鍵字須為選單外的獨立區塊；另外核對排序／分類語意、實際路由與目前項目狀態，不因範本結構符合就判定排序功能完成。
+
+Blog 另依 [evo260865 公版](evo-blog-reference.md) 核對最新／熱門的 bloglinks 位置、search001 搜尋範圍、hotkeywords001 路由與 bloglist001 卡片層級；卡片內不巢狀放連結，來源站識別與網址不可跨案照抄。
