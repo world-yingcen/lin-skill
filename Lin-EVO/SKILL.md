@@ -99,6 +99,7 @@ HTML 的 `<header>` 標籤只用於全站 Navi／主要導覽；其他區塊、�
 | 捲動動畫、GSAP pin／scrub、減少動態模式 | [雙模式動態規範](references/reduced-motion.md) |
 | EVO 第三方套件載入、data-vendor、Lenis 開放狀態 | [系統套件載入契約](references/evo-vendor-libraries.md) |
 | Header、Footer、Nav、內頁與平台功能 | [共用頁面](references/shared-page-rules.md) |
+| 所有可新增、刪除或排序的內容與互動 | [可增減或排序的內容](references/shared-page-rules.md#可增減或排序的內容) |
 | EVO 多層分類、共用列表設計所屬層級 | [多層分類的共用列表頁設計](references/shared-page-rules.md#多層分類的共用列表頁設計) |
 | EVO 列表頁／內容頁沿用外框、主列表替換邊界 | [列表頁與內容頁的替換範圍](references/shared-page-rules.md#列表頁與內容頁的替換範圍) |
 | EVO Header 樣式、捲動狀態、RWD、選單、漢堡、按鈕、語系 | [Header 指定參考](references/evo-header-reference.md) |
