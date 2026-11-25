@@ -61,6 +61,8 @@ Lin-EVO 共用工程規範來源為 https://github.com/world-yingcen/lin-skill �
 
 **隱私權政策統一使用公版**：依使用者 2026-11-04 指定，凡首次製作網站或補做隱私權政策頁，必讀 [隱私權政策公版](references/evo-privacy-reference.md)。政策正文固定放在 `.innerpage-body`，逐字沿用公版內容與順序，只替換公司完整名稱；版型與指定樣式沿用公版，字型、字級、文字色、標題色、間距等已有本案 `:root` 變數者必須接本案變數，不複製參考站品牌值，讓政策頁與當下網站一致。
 
+**新頁面與表單的下拉選單**：單選下拉箭頭預設距欄位右框 `1rem`（約 16px）、垂直置中，文字右側至少預留 `2.5rem`，桌機、平板與手機皆適用。優先沿用既有元件與圖示，依 [下拉選單箭頭與文字間距](references/html-css-rules.md#下拉選單箭頭與文字間距) 實作，並依 [下拉選單檢核](references/implementation-review.md#下拉選單檢核) 驗收。
+
 **所有電子表單統一使用 contact-form 公版 HTML**：依使用者 2026-11-04 指定，只要頁面出現電子表單，不限聯絡我們或其他用途，都必讀 [contact-form 公版結構](references/evo-eforms-reference.md)，沿用 evo266125 的 `.contact-form`、`form.eforms-wrapper`、欄位層級、class、data、驗證及送出結構；只允許用 CSS／SCSS 調整外觀，不改公版 HTML／JS、不自造另一套表單。表單 ID、action、token、欄位、選項及驗證值由本案平台輸出，不跨案複製。此項明確指定不受下方舊平台概括分流限制；若工程師套件有衝突，保留公版並列明差異確認。
 
 **既有舊平台流程的案件**，每個案件都要有搜尋結果頁，首次網站製作時納入必備頁面，不能只做 Header 搜尋按鈕。製作前必讀 [搜尋頁指定參考](references/evo-search-reference.md)，公版 HTML／JS 不修改；CSS 以系統共用參考為基準，可依案件確認需求調整；既有案局部修正若尚未有搜尋頁，列為待補項目，不因局部修正擅自重做整站。

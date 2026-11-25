@@ -8,7 +8,7 @@
     "js/main.js": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "scss/_index.scss": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "scss/evomni-root.scss": "ba5769290ca3e711d18dbc8232db2215b0a7c2ae6b99bf123efd3c7add53a55b",
-    "scss/_common.scss": "4eca9efbc96b0f9afc6a92deabb73f9c7cfadb280444c749c5306ff4159ee1bd",
+    "scss/_common.scss": "9e28e535525f86d07e1b8a46e65505215f7b710fe0d6f7c03a415daab6f5c94a",
     "scss/_footer.scss": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "scss/_header.scss": "aebdca0443d769b33f0ec61921429e520d79eba6f9f486682afe68756a51d610",
     "image/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -88,6 +88,11 @@
       "date": "2026-11-04",
       "file": "scss/_header.scss",
       "change": "將反整理自編譯 CSS 的 text-decoration、white-space 與 transition 展開屬性改回標準 shorthand；移除 white-space-collapse、text-wrap-mode 及 transition-behavior 等不必要的展開寫法，保留相同狀態與時間參數。"
+    },
+    {
+      "date": "2026-11-25",
+      "file": "scss/_common.scss",
+      "change": "加入單選下拉欄位預設樣式，箭頭距右框 1rem 並垂直置中，文字右側預留 2.5rem，保留原生 select 操作。"
     }
   ]
 }

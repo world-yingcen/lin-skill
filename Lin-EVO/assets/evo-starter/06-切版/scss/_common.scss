@@ -66,6 +66,17 @@ select {
   text-transform: none;
 }
 
+// 單選下拉欄位使用背景箭頭，保留原生 select 操作。
+select:where(:not([multiple]):is(:not([size]), [size="1"])) {
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 2.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='m1 1.5 5 5 5-5' fill='none' stroke='%23525252' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 0.75rem auto;
+}
+
 button,
 input[type="button"],
 input[type="reset"],
