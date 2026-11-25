@@ -75,7 +75,7 @@ Header 跟隨按鈕另依 [系統結構](evo-header-reference.md#按鈕與語系
 
 ## 共用影響與交付
 
-列表頁與內容頁沿用外框時，搜尋每一個 `data-replace="detail-content"`；同一個元素必須同時具有 `data-list-group-container="true"`，反向搜尋也必須成對。只寫一個屬性、把兩個屬性拆到父子層、重複巢狀替換容器，皆視為結構不完整，交付前必須修正。
+EVO 商品或文章的動態主列表依實際流程校稿。[後台做版／Project JSON](shared-page-rules.md#後台做版project-json) 核對原生區塊、適用的替換邊界與後台畫布。[整站 HTML 匯入](shared-page-rules.md#整站-html-匯入) 核對本案套件版本、HTML 檢查結果及匯入後的資料與頁面。依各節實測前台，將結果及未驗項目寫入交接說明。
 
 舊平台流程有詢問車時，依 [系統公版詢問車](evo-inquiry-cart-reference.md) 查產品加入入口、Header badge／側欄、確認頁、數量／移除、空狀態、聯絡欄位與驗證碼，以及既有系統 JS 的實際載入。正式版確認沒有 Demo 的 localStorage 車、示範資料、重複事件或假成功訊息；正式加入／數量／移除／送出等未實測項目逐項標待驗。公版缺陷或本案版本差異回報工程師，不擅改系統功能。
 

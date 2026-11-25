@@ -77,6 +77,10 @@ HTML 的 `<header>` 標籤只用於全站 Navi／主要導覽；其他區塊、�
 
 **公司內部規定：每個完整頁面必須有且只有一個 `<h1>`**，不是 Google 的排名硬性要求；`<h2>`～`<h6>` 依內容父子關係逐層安排，不往下跳級、不用標題標籤控制字級。校稿以共用元件及 JS 載入後的完整 DOM 核對，詳見 [HTML／SCSS](references/html-css-rules.md)。
 
+**EVO 商品與文章主列表依本案流程製作及驗收**。[後台做版／Project JSON](references/shared-page-rules.md#後台做版project-json) 使用原生「列表區塊」，依目標站核對 `list-group` 與適用的內容頁替換邊界。[整站 HTML 匯入](references/shared-page-rules.md#整站-html-匯入) 依本案 `evomni-html` 套件交付列表、分頁與單筆內容頁 HTML，再驗收實際匯入結果。
+
+**新站切版時就寫好本案匯入所需的 `data` 標記。** 商品內頁要沿用列表外框時，切版當下就依本案流程安排共用外框與商品詳情的範圍，發布後從前台列表點進一筆商品確認。製作與驗收依 [列表頁與內容頁的替換範圍](references/shared-page-rules.md#列表頁與內容頁的替換範圍)。
+
 **以下為舊平台流程規則；整站 HTML 匯入依工程師套件處理系統頁與連結。**
 
 **詢問車頁／抽屜與搜尋頁的公版 CSS 可依案件調整，公版 HTML／JS 不可修改**，此限制不擴及產品頁；產品頁可以新增 `.inquiry-group` 分組並調整加入按鈕位置，保留原生加入功能的識別與綁定；詢問車依 [指定功能架構](references/evo-inquiry-cart-reference.md) 保留產品加入、Header 清單、確認頁與原生表單。使用者要求的靜態 Demo 可獨立模擬，正式接入前必須停用，不能同時綁兩套操作。產品分類選單依 [left_menu001](references/evo-left-menu-reference.md) 沿用原生結構與操作，桌機以 CSS 套案件外觀，手機版下拉邏輯是公版，不改寫或另綁一套事件。
@@ -84,8 +88,6 @@ HTML 的 `<header>` 標籤只用於全站 Navi／主要導覽；其他區塊、�
 **Header 統一基底**：整體 HTML 結構與預設 CSS（含跟隨按鈕）一律先使用 [evo266200 內附基底](references/evo-header-reference.md)，再依案件修改；不再混用 evo266125 Header 按鈕規則。
 
 **連結型按鈕統一結構**：一般導頁 CTA 必須使用 `div.btn-group > a.btn-link`，文字直接放在 a 內；依設計擇一搭配 `main-btn`（主色）、`sub-btn`（輔色）、`outline-btn`（外框）。Header 跟隨按鈕是系統例外，保留 `btn-item`、`btn-text`、`btn-icon-box` 與 SVG，依 [Header 按鈕結構](references/evo-header-reference.md#按鈕與語系) 與 [指定 CSS 基準](references/evo-header-reference.md#header-跟隨按鈕-css-基準) 一起實作。一般按鈕詳見 [連結型按鈕規範](references/html-css-rules.md#連結型按鈕統一結構)。
-
-**列表／內容頁替換容器必須完整輸出**：只要使用 `detail-content` 替換邊界，同一個 `<div>` 必須同時具有 `data-list-group-container="true"` 與 `data-replace="detail-content"`。兩個屬性不得省略其中一個、不得拆到父子層；只有 `<div data-replace="detail-content">` 視為不完整結構，校稿時必須修正。完整寫法與適用範圍依 [列表頁與內容頁的替換範圍](references/shared-page-rules.md#列表頁與內容頁的替換範圍)。
 
 ## 按需讀取規範
 
@@ -101,7 +103,7 @@ HTML 的 `<header>` 標籤只用於全站 Navi／主要導覽；其他區塊、�
 | Header、Footer、Nav、內頁與平台功能 | [共用頁面](references/shared-page-rules.md) |
 | 所有可新增、刪除或排序的內容與互動 | [可增減或排序的內容](references/shared-page-rules.md#可增減或排序的內容) |
 | EVO 多層分類、共用列表設計所屬層級 | [多層分類的共用列表頁設計](references/shared-page-rules.md#多層分類的共用列表頁設計) |
-| EVO 列表頁／內容頁沿用外框、主列表替換邊界 | [列表頁與內容頁的替換範圍](references/shared-page-rules.md#列表頁與內容頁的替換範圍) |
+| EVO 列表與內容頁，後台做版／Project JSON 或整站 HTML 的製作與驗收 | [列表頁與內容頁的替換範圍](references/shared-page-rules.md#列表頁與內容頁的替換範圍) |
 | EVO Header 樣式、捲動狀態、RWD、選單、漢堡、按鈕、語系 | [Header 指定參考](references/evo-header-reference.md) |
 | 連續 marquee | [marquee 指定參考](references/evo-marquee-reference.md) |
 | 內頁 breadcrumb | [breadcrumb001 指定參考](references/evo-breadcrumb-reference.md) |
