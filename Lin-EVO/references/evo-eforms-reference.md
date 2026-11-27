@@ -138,6 +138,7 @@
 - 保留平台 `vendor/page-builder/css/eforms.css`、`page-builder.js` 與 `eforms-validate.js`；不直接修改 vendor，不另綁送出、驗證、驗證碼刷新或成功訊息流程。
 - 案件 CSS／SCSS 在公版樣式後載入，只調整寬度、排列、間距、字型、字級、色彩、背景、邊框、圓角、按鈕與 responsive；優先使用本案 `:root` 變數，避免重複宣告品牌值。
 - 樣式 selector 以 `.contact-form` 或本頁範圍收斂，避免影響詢問車、會員或其他系統表單；不得為了 CSS 方便修改 HTML 層級或新增無意義 wrapper。
+- 單選下拉欄位依 [下拉選單箭頭與文字間距](html-css-rules.md#下拉選單箭頭與文字間距) 調整，保留平台輸出的 `<select>` 與驗證標記，並在桌機、平板、手機依 [下拉選單檢核](implementation-review.md#下拉選單檢核) 驗收。
 - 保留 label 點選、鍵盤焦點、錯誤文字、送出中、成功／失敗、disabled、captcha 更新及長內容狀態。hover 只套可 hover 裝置，觸控與鍵盤狀態放在外面。
 
 ## 校稿與交接
